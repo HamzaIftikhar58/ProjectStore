@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+ <link rel="icon" type="image/png"  href="{% static 'Images/circle.png' %}">
+    <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+        />
+       <title>Order Confirmation | Project Store</title>
+       <meta name="description" content="Thank you for your order! Your purchase has been successfully placed on Project Store. Review your order details and next steps here.">
+       <meta name="keywords" content="order confirmation, purchase successful, order details, Project Store, online shopping, payment confirmed">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.2/easyzoom.min.css">
+        <meta name="description" content="" />
+        <!-- Fonts -->
+        <link rel="stylesheet" href="{% static 'style.css'%}">
+      
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+        rel="stylesheet"
+   
+        />
+
+     
+        <link rel="stylesheet" href="{% static 'assets/vendor/libs/swiper/swiper.css' %}" />
+    
+        <!-- Page CSS -->
+        <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/ui-carousel.css' %}" />
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
+        <link
+    rel="stylesheet"
+    href="https://unpkg.com/swiper/swiper-bundle.min.css"
+  />
+      </head>
+<body>
+    {% include 'Includes/navbar2.html' %}
+
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="confirmation-container">
+                <h2 class="text-center mb-4">Thank You for Your Order!</h2>
+                <p class="text-center">Your order has been successfully placed. You'll receive a confirmation email soon.</p>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Order Details</h5>
+                        <p><strong>Order ID:</strong> {{ order.id }}</p>
+                        <p><strong>Order Date:</strong> {{ order.created_at|date:"F d, Y H:i A" }}</p>
+                        <p><strong>Email:</strong> {{ order.email }}</p>
+                        <p><strong>Payment Method:</strong> 
+                            {% if order.payment_method == 'online_payment' %}
+                                Online Payment (NayPay)
+                                {% if order.payment_slip %}
+                                 <a href="{{ order.payment_slip.url }}" target="_blank" class="ms-2">View Payment Slip</a>
+                                {% endif %}
+                            {% else %}
+                                Cash on Delivery
+                            {% endif %}
+                        </p>
+                        <p><strong>Total:</strong> Rs {{ order.total|floatformat:2 }}</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Delivery Address</h5>
+                        <p>{{ order.first_name }} {{ order.last_name }}</p>
+                        <p>{{ order.address }}{% if order.apartment %}, {{ order.apartment }}{% endif %}</p>
+                        <p>{{ order.city }}, {{ order.state }} {{ order.zip_code }}</p>
+                        <p>{{ order.country }}</p>
+                        <p><strong>Phone:</strong> {{ order.phone }}</p>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Order Items</h5>
+                        {% for item in order.items.all %}
+                            <div class="order-item d-flex justify-content-between align-items-center mb-3">
+                                <div class="d-flex align-items-center">
+                                    <img src="{% if item.variant.image %}{{ item.variant.image.url }}{% else %}{{ item.product.main_image.url }}{% endif %}" alt="{{ item.product.name }}" width="50" height="50" class="me-3">
+                                    <div>
+                                        <p class="fw-bold mb-0">{{ item.product.name }}</p>
+                                        <p class="mb-0">Quantity: {{ item.quantity }}</p>
+                                        {% if item.variant %}
+                                            <p class="mb-0">Variant: {{ item.variant.name }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <p class="mb-0">Rs {{ item.price|floatformat:2 }} x {{ item.quantity }} = Rs {{ item.total_price|floatformat:2 }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'order_history' %}" class="btn btn-outline-secondary">View Order History</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container-fluid py-1 bg-dark mt-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-6">
+                        <h2 class="text-white">Categories</h2>
+                        <ul class="list-unstyled text-white py-2">
+                            <li><a class="py-2 text-decoration-none text-white" href="{% url 'hardwarepage' %}">Hardware Projects</a></li>
+                            <li class="mt-2"><a class="py-2 text-decoration-none text-white" href="{% url 'softwarepage' %}">Software Projects</a></li>
+                            <li class="mt-2"><a class="py-2 text-decoration-none text-white" href="{% url 'AIpage' %}">AI Projects</a></li>
+                            <li class="mt-2"><a class="py-2 text-decoration-none text-white" href="{% url 'Electronicspage' %}">Electronics Projects</a></li>
+                            <li class="mt-2"><a class="py-2 text-decoration-none text-white" href="{% url 'Robotspage' %}">DIY Robotics</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-6 text-white">
+                        <h2 class="text-white">Main Menu</h2>
+                        <ul class="list-unstyled text-white py-2">
+                            <li><a class="py-2 text-decoration-none text-white" href="{% url 'home' %}">Home</a></li>
+                            <li class="mt-2"><a class="py-2 text-decoration-none text-white" href="{% url 'product' %}">Products</a></li>
+                            <li class="mt-2"><a class="py-2 text-decoration-none text-white" href="">Categories</a></li>
+                            <li class="mt-2"><a class="py-2 text-decoration-none text-white" href="#faq">FAQs</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <h2 class="text-white">Links</h2>
+                        <ul class="list-unstyled text-white py-2">
+                            <li class="py-2"><i class="fa-solid fa-phone mx-2 fs-6"></i>0313-345678985</li>
+                            <li class="py-2"><i class="fa-brands fa-facebook mx-2"></i>Facebook</li>
+                            <li class="py-2"><i class="fa-brands fa-whatsapp mx-2"></i>WhatsApp</li>
+                            <li class="py-2"><i class="fa-brands fa-instagram mx-2"></i>Instagram</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <h2 class="text-white">About Us</h2>
+                        <p class="fs-6" style="color:white">ProjectStore is your go-to eCommerce store for hardware projects, software projects, electronics kits, AI, and robotics projects. We provide high-quality, ready-made and DIY tech solutions for students, developers, and enthusiasts. Explore our collection and bring your ideas to life!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <section id="bottomfooter" class="p-0 m-0">
+        <div class="container-fluid py-0" id="bt">
+            <div class="row">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img id="img1" src="{% static 'Images/renamebg.png' %}" alt="Logo" style="width: 200px; height: 80px; object-fit: cover; margin-top: 0px;">
+                    <p class="fs-2 mt-2">|</p>
+                    <h6 class="fw-bold mt-1 px-2" style="margin-left:0px" id="h56">
+                        <a href="https://www.isol.pk/" class="text-decoration-none text-dark">Powered by <img src="{% static 'Images/wlogo.png' %}" id="isol" alt=""></a>
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </section>
+
+ <div class="position-fixed bottom-0 end-0 m-4" style="z-index:1000;">
+  <!-- Small screens (icon only) -->
+  <a href="https://wa.me/923104505008" target="_blank"
+     class="btn btn-success rounded-circle shadow-lg d-flex align-items-center justify-content-center d-md-none"
+     style="width:60px; height:60px;">
+    <i class="bi bi-whatsapp fs-3 text-white"></i>
+  </a>
+
+  <!-- Medium & Large screens (icon + text) -->
+  <a href="https://wa.me/923104505008" target="_blank"
+     class="btn btn-success shadow-lg d-none d-md-flex align-items-center px-3 py-2">
+    <i class="bi bi-whatsapp fs-3 text-white me-2"></i>
+    <span class="fs-5 text-white fw-bold">Chat on WhatsApp</span>
+  </a>
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Back to Top Button
+        {% comment %} const backToTopButton = document.getElementById("backToTop");
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+        backToTopButton.onclick = function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }; {% endcomment %}
+    </script>
+</body>
+</html>

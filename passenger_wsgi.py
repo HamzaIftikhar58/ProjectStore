@@ -1,0 +1,1 @@
+from ProjectStore.wsgi import application

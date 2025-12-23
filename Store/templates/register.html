@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProjectStore - Register</title>
+    <meta name="description" content="Create a new account on ProjectStore to explore, track, and manage your software, hardware, AI, robotics, and electronics projects. Sign up now for a personalized experience.">
+    <meta name="keywords" content="ProjectStore register, create account, sign up, user registration, software projects, hardware projects, AI projects, robotics projects, electronics projects">
+
+
+    <!-- Fonts & Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      .card {
+        max-width: 1700px;
+        width: 100%;
+        margin: 0 auto;
+      }
+      #project {
+        height: 100px;
+      }
+      #reg1 {
+        background-color: #3939cd;
+        color: white;
+      }
+      @media screen and (max-width: 576px) {
+        .card {
+          margin-top: 80px;
+          margin-bottom: 60px;
+        }
+      }
+      
+      /* Password field with eye icon */
+      .password-container {
+        position: relative;
+      }
+      .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+         color: #6c757d; 
+        z-index: 5;
+        {% comment %} background: white; {% endcomment %}
+        padding: 5px;
+        border-radius: 4px;
+      }
+      .form-control.py-2.fs-5 {
+        padding-right: 40px !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container-fluid bg-light">
+      <div class="row">
+        <!-- Left Image Section -->
+        <div class="d-none d-md-flex col-md-8  vh-100 justify-content-center align-items-center">
+          <img
+            src="{% static 'assets/img/light4.png' %}"
+            alt="auth-register-cover"
+            class="img-fluid"
+            style="max-width: 50%; height: auto;"
+          />
+        </div>
+
+        <!-- Right Form Section -->
+        <div class="d-flex col-12 col-lg-4 align-items-center authentication-bg p-sm-12 p-6">
+          <div class="w-px-400 mx-auto mt-12 pt-5">
+          <h3 class="text-center mb-4 fw-bold px-3">Create an Account</h3>
+
+          {% comment %} <div class="text-center mb-3">
+            <img
+              src="{% static 'Images/rename.png' %}"
+              class="img-thumbnail"
+              id="project"
+              alt="Logo"
+            />
+          </div> {% endcomment %}
+
+          {% include 'Includes/messages.html' %}
+
+          <form id="registrationForm" action="{% url 'register' %}" method="POST">
+            
+            {% csrf_token %}
+            <div class="row mt-1">
+              
+              <div class="col-12 col-md-6 mb-3 text-start">
+                <label for="username" class="form-label fw-bold fs-5">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  name="username"
+                  class="form-control py-2 fs-5"
+                  {% comment %} value="hamza" {% endcomment %}
+                  required
+                />
+              </div>
+              <div class="col-12 col-md-6 mb-3 text-start">
+                <label for="email" class="form-label fw-bold fs-5">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control py-2 fs-5"
+                  {% comment %} value="hamzayaseen0317@gmail.com" {% endcomment %}
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="mb-3 text-start">
+              <label for="phone" class="form-label fw-bold fs-5">Phone Number</label>
+              <input type="tel" id="phone" name="phone" class="form-control py-2 fs-5" />
+            </div>
+
+            <div class="mb-3 text-start password-container">
+              <label for="password" class="form-label fw-bold fs-5">Password</label>
+              <input type="password" id="password" name="password" class="form-control py-2 fs-5" required />
+              <i class="toggle-password fas fa-eye mt-3"></i>
+            </div>
+
+            <div class="mb-3 text-start password-container">
+              <label for="confirmpassword" class="form-label fw-bold fs-5">Confirm Password</label>
+              <input type="password" id="confirmpassword" name="confirmpassword" class="form-control py-2 fs-5" required />
+              <i class="toggle-password fas fa-eye mt-3"></i>
+            </div>
+
+            <button type="submit" class="btn w-100 py-2 fw-bold" style="background-color:#3939cd; color:white;">
+              Next
+            </button>
+          </form>
+
+          <div class="text-center mt-4 fs-5">
+            <p>
+              Already have an Account?
+              <span class="text-primary">
+                <a href="{% url 'login' %}" style="text-decoration: none;" class="fw-bold">Login</a>
+              </span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+      </div>
+    </div>
+
+    <!-- jQuery and Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+      $(document).ready(function() {
+        // Toggle password visibility
+        $('.toggle-password').click(function() {
+          // Find the associated input field
+          const input = $(this).prev('input');
+          
+          // Toggle the input type
+          if (input.attr('type') === 'password') {
+            input.attr('type', 'text');
+            $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+          } else {
+            input.attr('type', 'password');
+            $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

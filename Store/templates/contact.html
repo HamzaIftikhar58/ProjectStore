@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Project Store</title>
+    <meta name="description" content="Get in touch with Project Store for inquiries, support, or feedback. Our team is ready to assist you with your projects and orders.">
+    <meta name="keywords" content="contact Project Store, customer support, inquiries, help desk, feedback, support team, project assistance">
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.2/easyzoom.min.css">
+        <meta name="description" content="" />
+        <!-- Fonts -->
+      
+     
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+        rel="stylesheet"
+   
+        />
+
+     
+     
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+        />
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+           
+           
+        }
+        .cart-sidebar {
+            width: 100%;
+            max-width: 390px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            background: #fff;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+            transition: right 0.3s ease;
+            z-index: 10000;
+        }
+        .cart-sidebar.open {
+            right: 0;
+        }
+        .cart-item img {
+            object-fit: cover;
+        }
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        #backToTop:hover {
+            background-color: #0056b3;
+        }
+        .contact-section {
+            margin-top: 30px;
+        }
+        .form-control:focus {
+            border-color: #198754;
+            box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+        }
+        .alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1100;
+            width: 350px;
+        }
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+        }
+        #loadingIndicator {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    {% include 'Includes/navbar.html' %}
+
+    <!-- Alert Container -->
+    <div class="alert-container">
+        <!-- Alerts will be inserted here -->
+    </div>
+  
+    <!-- Contact Us Section -->
+    <section class="contact-section py-1 py-md-3 d-none d-md-block">
+        <div class="container ">
+            <div class="px-0 mt-2">
+                <h1 class="fw-bold text-center">Want to get in touch?</h1>
+                <p class="fs-4 text-center">We'd love to hear from you! Here's how you can reach us.</p>
+            </div>
+            <div class="row g-0 py-sm-1 py-md-5" >
+                <div class="col-lg-6">
+                    <div class="p-0">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center contact-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h3 class="mb-1">Email:</h3>
+                                <p class="mb-0">info@isol.pk</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center contact-icon">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h3 class="mb-1">Call:</h3>
+                                <p class="mb-0">+92 310 4505008</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center contact-icon">
+                                <i class="bi bi-geo-alt"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h3 class="mb-1">Location:</h3>
+                                <p class="mb-0 d-flex flex-wrap">Punajb Small Industrial State, Lahore</p>
+                            </div>
+                        </div>
+                         <div class="row g-3">
+    <div class="col-md-12">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3403.716452873059!2d74.34219477916633!3d31.45436378197306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDI3JzE1LjciTiA3NMKwMjAnMzEuOSJF!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s&markers=label:Our%20Office%7C31.45436378197306,74.34219477916633" 
+            width="100%" 
+            height="350" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy"
+            class="rounded-3 shadow-sm">
+        </iframe>
+    </div>
+</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 bg-light rounded-3 shadow-sm">
+                    <div class="p-4">
+                        <form id="contactForm" novalidate>
+                            <h1 class="text-center mb-4">Contact Us</h1>
+                            <div id="formMessages"></div>
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <label for="name" class="form-label fs-5">Name</label>
+                                    <input type="text" class="form-control py-2" id="name" name="name" placeholder="Your Name" required>
+                                    <div class="invalid-feedback">Please provide your name.</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="email" class="form-label fs-5">Email</label>
+                                    <input type="email" class="form-control py-2" id="email" name="email" placeholder="Your Email" required>
+                                    <div class="invalid-feedback">Please provide a valid email.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="subject" class="form-label fs-5">Subject</label>
+                                    <input type="text" class="form-control py-2" id="subject" name="subject" placeholder="Subject" required>
+                                    <div class="invalid-feedback">Please provide a subject.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label fs-5">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
+                                    <div class="invalid-feedback">Please write your message.</div>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-success px-4 py-2">
+                                        <span id="submitText">Send Message</span>
+                                        <span id="loadingIndicator" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     <section class="contact-section py-1 py-md-3 d-block d-md-none " >
+        <div class="container-fluid">
+            <div class="px-0 mt-2">
+                <h1 class="fw-bold text-center">Want to get in touch?</h1>
+                <p class="fs-4 text-center">We'd love to hear from you! Here's how you can reach us.</p>
+            </div>
+            <div class="row g-0 py-sm-1 py-md-5">
+                <div class="col-lg-6">
+                    <div class="p-0">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center contact-icon">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h3 class="mb-1">Email:</h3>
+                                <p class="mb-0">info@isol.pk</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center contact-icon">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h3 class="mb-1">Call:</h3>
+                                <p class="mb-0">+92 310 4505008</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-success text-white rounded-circle d-flex justify-content-center align-items-center contact-icon">
+                                <i class="bi bi-geo-alt"></i>
+                            </div>
+                            <div class="ms-3">
+                                <h3 class="mb-1">Location:</h3>
+                                <p class="mb-0 d-flex flex-wrap">Punajb Small Industrial State, Lahore</p>
+                            </div>
+                        </div>
+                         <div class="row g-3">
+    <div class="col-md-12">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3403.716452873059!2d74.34219477916633!3d31.45436378197306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDI3JzE1LjciTiA3NMKwMjAnMzEuOSJF!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s&markers=label:Our%20Office%7C31.45436378197306,74.34219477916633" 
+            width="100%" 
+            height="350" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy"
+            class="rounded-3 shadow-sm">
+        </iframe>
+    </div>
+</div>
+                    </div>
+                </div>
+                <div class="col-lg-6 bg-light rounded-3 shadow-sm">
+                    <div class="p-4">
+                        <form id="contactForm" novalidate>
+                            <h1 class="text-center mb-4">Contact Us</h1>
+                            <div id="formMessages"></div>
+                            <div class="row g-3">
+                                <div class="col-md-12">
+                                    <label for="name" class="form-label fs-5">Name</label>
+                                    <input type="text" class="form-control py-2" id="name" name="name" value="{{ request.user.username }}"  required>
+                                    <div class="invalid-feedback">Please provide your name.</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="email" class="form-label fs-5">Email</label>
+                                    <input type="email" class="form-control py-2" id="email" name="email" placeholder="{{ request.user.email }}" required>
+                                    <div class="invalid-feedback">Please provide a valid email.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="subject" class="form-label fs-5">Subject</label>
+                                    <input type="text" class="form-control py-2" id="subject" name="subject" placeholder="Subject" required>
+                                    <div class="invalid-feedback">Please provide a subject.</div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label fs-5">Message</label>
+                                    <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
+                                    <div class="invalid-feedback">Please write your message.</div>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                   
+                                    <button type="submit" class="btn btn-success px-4 py-2">
+                                        <span id="submitText">Send Message</span>
+                                        <span id="loadingIndicator" class="spinner-border spinner-border-sm ms-2" role="status" aria-hidden="true"></span>
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <button class="btn-close float-end mt-3 me-3" id="closeCart"></button>
+        <div class="p-3">
+            <h5>Shopping Cart</h5>
+        </div>
+        <div id="cartItems" class="px-3"></div>
+        <div class="p-3">
+            <p><strong>Subtotal:</strong> Rs <span id="cartTotal">0</span> PKR</p>
+            <a class="btn btn-success w-100" href="{% url 'checkout' %}">Checkout</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'Includes/footer.html' %}
+  <div class="position-fixed bottom-0 end-0 m-4" style="z-index:1000;">
+  <!-- Small screens (icon only) -->
+  <a href="https://wa.me/923104505008" target="_blank"
+     class="btn btn-success rounded-circle shadow-lg d-flex align-items-center justify-content-center d-md-none"
+     style="width:60px; height:60px;">
+    <i class="bi bi-whatsapp fs-3 text-white"></i>
+  </a>
+
+  <!-- Medium & Large screens (icon + text) -->
+  <a href="https://wa.me/923104505008" target="_blank"
+     class="btn btn-success shadow-lg d-none d-md-flex align-items-center px-3 py-2">
+    <i class="bi bi-whatsapp fs-3 text-white me-2"></i>
+    <span class="fs-5 text-white fw-bold">Chat</span>
+  </a>
+</div>
+
+     
+  </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Get CSRF token for AJAX requests
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        // Back to Top Button
+        {% comment %} const backToTopButton = document.getElementById("backToTop");
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.style.display = "block";
+            } else {
+                backToTopButton.style.display = "none";
+            }
+        };
+        backToTopButton.onclick = function () {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }; {% endcomment %}
+
+        // Cart Functionality
+        const cartSidebar = document.getElementById("cartSidebar");
+        const cartItems = document.getElementById("cartItems");
+        const cartTotal = document.getElementById("cartTotal");
+
+        // Open Cart Sidebar when clicking the cart icons
+        document.querySelectorAll("[id^=cartIcon]").forEach(icon => {
+            icon.addEventListener("click", function (event) {
+                event.preventDefault();
+                openCart();
+                fetchCartItems();
+            });
+        });
+
+        // Close Sidebar
+        document.getElementById("closeCart").addEventListener("click", function () {
+            closeCart();
+        });
+
+        // Open Cart Sidebar
+        function openCart() {
+            cartSidebar.classList.add("open");
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close Cart Sidebar
+        function closeCart() {
+            cartSidebar.classList.remove("open");
+            document.body.style.overflow = '';
+        }
+
+        // Fetch and display cart items
+        function fetchCartItems() {
+            $.ajax({
+                url: "{% url 'get_cart' %}",
+                type: "GET",
+                success: function(response) {
+                    cartItems.innerHTML = "";
+                    let total = 0;
+                    if (response.items && Array.isArray(response.items)) {
+                        if (response.items.length === 0) {
+                            cartItems.innerHTML = '<div class="text-center py-4"><p>Your cart is empty</p></div>';
+                        } else {
+                            response.items.forEach(item => {
+                                const itemElement = document.createElement("div");
+                                itemElement.classList.add("cart-item", "d-flex", "justify-content-between", "align-items-center", "mb-3", "p-2", "bg-light", "rounded");
+                                itemElement.innerHTML = `
+                                    <div class="d-flex align-items-center">
+                                        <img src="${item.image || "{% static 'Images/download.jpeg' %}"}" alt="${item.name}" width="60" height="60" class="me-3 rounded">
+                                        <div>
+                                            <h6 class="mb-0">${item.name}</h6>
+                                            <p class="mb-0">Rs ${item.price.toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-sm btn-outline-secondary minus-btn" data-item-id="${item.id}">
+                                            <i class="bi bi-dash"></i>
+                                        </button>
+                                        <span class="mx-2 quantity">${item.quantity}</span>
+                                        <button class="btn btn-sm btn-outline-secondary plus-btn" data-item-id="${item.id}">
+                                            <i class="bi bi-plus"></i>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm delete-item ms-2" data-item-id="${item.id}">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                `;
+                                cartItems.appendChild(itemElement);
+                                total += item.price * item.quantity;
+                            });
+                        }
+                    }
+                    cartTotal.textContent = total.toFixed(2);
+                    updateCartCount();
+                },
+                error: function(xhr) {
+                    console.error("Error fetching cart:", xhr.status, xhr.statusText);
+                    showAlert('An error occurred while fetching the cart.', 'danger');
+                }
+            });
+        }
+
+        // Update quantity in cart
+        cartItems.addEventListener("click", function(e) {
+            if (e.target.closest(".minus-btn") || e.target.closest(".plus-btn")) {
+                const button = e.target.closest("button");
+                const itemId = button.dataset.itemId;
+                const change = button.classList.contains("minus-btn") ? -1 : 1;
+                updateCartItemQuantity(itemId, change);
+            }
+            if (e.target.closest(".delete-item")) {
+                const itemId = e.target.closest(".delete-item").dataset.itemId;
+                removeCartItem(itemId);
+            }
+        });
+
+        function updateCartItemQuantity(itemId, change) {
+            $.ajax({
+                url: "{% url 'update_cart' %}",
+                type: "POST",
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                data: {
+                    item_id: itemId,
+                    change: change
+                },
+                success: function(response) {
+                    if (response.success) {
+                        fetchCartItems();
+                    } else {
+                        console.error("Error updating item:", response.message);
+                        showAlert("Error: " + response.message, 'danger');
+                    }
+                },
+                error: function(xhr) {
+                    console.error("Error updating cart:", xhr.status, xhr.statusText);
+                    showAlert('An error occurred while updating the cart.', 'danger');
+                }
+            });
+        }
+
+        function removeCartItem(itemId) {
+            $.ajax({
+                url: "{% url 'remove_from_cart' %}",
+                type: "POST",
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                data: {
+                    item_id: itemId
+                },
+                success: function(response) {
+                    if (response.success) {
+                        fetchCartItems();
+                        showAlert('Item removed from cart', 'success');
+                    } else {
+                        console.error("Error removing item:", response.message);
+                        showAlert("Error: " + response.message, 'danger');
+                    }
+                },
+                error: function(xhr) {
+                    console.error("Error removing item:", xhr.status, xhr.statusText);
+                    showAlert('An error occurred while removing the item.', 'danger');
+                }
+            });
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            fetch("{% url 'cart_count' %}")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.querySelectorAll('.cartCount').forEach(el => {
+                        el.textContent = data.count || 0;
+                        el.style.display = data.count > 0 ? 'inline-block' : 'none';
+                    });
+                })
+                .catch(err => console.error('Error fetching cart count:', err));
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            const alertContainer = document.querySelector('.alert-container');
+            const alertId = 'alert-' + Date.now();
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type} alert-dismissible fade show shadow`;
+            alert.role = 'alert';
+            alert.id = alertId;
+            alert.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            alertContainer.appendChild(alert);
+            
+            // Auto dismiss after 5 seconds
+            setTimeout(() => {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            }, 5000);
+        }
+
+        // Handle contact form submission
+        document.getElementById("contactForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const form = e.target;
+            
+            // Validate form
+            if (!form.checkValidity()) {
+                e.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const submitText = document.getElementById('submitText');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            
+            submitText.textContent = 'Sending...';
+            loadingIndicator.style.display = 'inline-block';
+            submitBtn.disabled = true;
+            
+            // Prepare form data
+            const formData = new FormData(form);
+            
+            // Send AJAX request
+            fetch("{% url 'contact' %}", {
+                method: "POST",
+                headers: {
+                    "X-CSRFToken": csrftoken,
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    showAlert('Your message has been sent successfully!', 'success');
+                    
+                    // Reset form
+                    form.reset();
+                    form.classList.remove('was-validated');
+                } else {
+                    // Show error message
+                    showAlert(data.message || 'There was an error sending your message.', 'danger');
+                    console.error("Error sending message:", data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                showAlert(error.message || 'An error occurred while sending your message.', 'danger');
+            })
+            .finally(() => {
+                // Reset button state
+                submitText.textContent = 'Send Message';
+                loadingIndicator.style.display = 'none';
+                submitBtn.disabled = false;
+            });
+        });
+
+        // Initial calls
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchCartItems();
+            updateCartCount();
+            
+            // Initialize Bootstrap tooltips
+            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+        });
+
+        // Optionally refresh cart count every 10 seconds
+        setInterval(updateCartCount, 10000);
+    </script>
+</body>
+</html>

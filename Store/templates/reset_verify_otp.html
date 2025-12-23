@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Verify OTP</h2>
+    <p class="text-center">We sent a 6-digit OTP to your email. Enter it below:</p>
+
+    <form method="POST" class="w-50 mx-auto">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="otp">Enter OTP</label>
+            <input type="text" name="otp" id="otp" class="form-control" placeholder="Enter OTP" required>
+        </div>
+
+        {% if error %}
+        <p class="text-danger">{{ error }}</p>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary w-100">Verify OTP</button>
+    </form>
+</div>
+{% endblock %}

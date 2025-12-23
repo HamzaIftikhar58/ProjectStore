@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>Project Store | Software, Hardware, AI, Robotics & Electronics Projects</title>
+  <meta name="description" content="Welcome to Project Store! Explore a wide range of projects including software, hardware, AI, robotics, and electronics. Perfect for students, developers, and innovators.">
+  <meta name="keywords" content="Project Store, software projects, hardware projects, AI projects, robotics projects, electronics projects, student projects, final year projects, DIY projects, web apps, embedded systems">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.2/easyzoom.min.css">
+  <meta name="description" content="" />
+  <!-- Fonts -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'assets/vendor/libs/swiper/swiper.css' %}" />
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/ui-carousel.css' %}" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <style>
+    body {
+      font-family: poppins;
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* Swiper Styles */
+    .swiper {
+      width: 100%;
+      padding: 20px 0;
+    }
+
+    
+
+    .swiper-wrapper {
+      display: flex;
+      align-items: center;
+    }
+
+    .card {
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 100%;
+    }
+
+    .card img {
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card-body {
+      padding: 10px;
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #007bff;
+      text-align: start;
+    }
+
+    .card-text {
+      font-size: 1rem;
+      color: #555;
+      text-align: start;
+    }
+
+    .card-price {
+      font-size: 1.25rem;
+      color: #dc3545;
+      font-weight: bold;
+    }
+
+    .btn-add-to-cart {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-add-to-cart:hover {
+      background-color: #218838;
+    }
+
+    /* Arrow Controls */
+    .swiper-button-next,
+    .swiper-button-prev {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      color: #000;
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .swiper-button-next {
+      right: 10px;
+    }
+
+    .swiper-button-prev {
+      left: 10px;
+    }
+
+    #isol1 {
+      width: 50px;
+      height: 50px;
+    }
+
+    #isol {
+      height: 50px;
+      width: 120px;
+      object-fit: cover;
+      margin-left: 10px;
+      margin-top: -2px;
+    }
+
+    /* Cart Sidebar Styles */
+    .cart-sidebar {
+      width: 100%;
+      max-width: 390px;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      right: -100%;
+      background: #fff;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s ease;
+      z-index: 10000;
+    }
+
+    .cart-sidebar.open {
+      right: 0;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    /* Alert Container Styles */
+    .alert-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1100;
+      width: 350px;
+    }
+
+    /* Back to Top Button */
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    #backToTop:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 576px) {
+      .swiper-button-next,
+      .swiper-button-prev {
+        width: 40px;
+        height: 40px;
+      }
+      #img {
+        width: 150px;
+        height: 80px;
+        object-fit: cover;
+        margin-left: -25px;
+      }
+      #img1 {
+        width: 30px;
+        height: 60px;
+        object-fit: cover;
+        margin-left: -15px;
+      }
+      #isol1 {
+        width: 40px;
+        height: 40px;
+      }
+      #isol {
+        height: 40px;
+        width: 70px;
+        object-fit: cover;
+        margin-left: 5px;
+        margin-top: -2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  {% include 'Includes/navbar.html' %}
+  {% include 'Includes/messages.html' %}
+
+  <!-- Alert Container -->
+  <div class="alert-container">
+    <!-- Alerts will be inserted here -->
+  </div>
+
+  <section style="background-color: rgb(20, 11, 73);">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <!-- First Slide -->
+        <div class="carousel-item active">
+          <div class="container">
+            <div class="row justify-content-center align-items-center min-vh-90">
+              <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                <div class="text-white px-md-5">
+                  <h1 class="fw-bold">
+                    Empower Your Vision With Our <b>Innovative <span class='text-warning mx-2'>Software</span>Solutions</b>
+                  </h1>
+                  <h1 class="mt-4">
+                    Building the future of technology Explorers <i class="fa-solid fa-laptop-code fs-1 mx-0"></i>
+                  </h1>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <img src="{% static 'Images/collage.jpg' %}" class="img-fluid rounded" alt="Explorers STEM Kit" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Slide -->
+        <div class="carousel-item">
+          <div class="container">
+            <div class="row justify-content-center align-items-center min-vh-90">
+              <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                <div class="text-white px-md-5">
+                  <h1 class="fw-bold">
+                    Empower Your Vision With Our <b>Innovative <span class='text-warning mx-2'>Hardware</span>Solutions</b>
+                  </h1>
+                  <h1 class="mt-4">
+                    Building the future of technology Explorers <i class="fa-solid fa-laptop-code fs-1 mx-0"></i>
+                  </h1>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <img src="{% static 'Images/collages.jpg' %}" class="img-fluid rounded" alt="AI Coders STEM Kit" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Third Slide -->
+        <div class="carousel-item">
+          <div class="container">
+            <div class="row justify-content-center align-items-center min-vh-80">
+              <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                <div class="text-white px-md-5">
+                  <h1 class="fw-bold">
+                    Empower Your Vision With Our <b>Innovative <span class='text-warning mx-2'>AI</span>Solutions</b>
+                  </h1>
+                  <h1 class="mt-4">
+                    Building the future of technology Explorers <i class="fa-solid fa-laptop-code fs-1 mx-0"></i>
+                  </h1>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <img src="{% static 'Images/collage12.jpg' %}" class="img-fluid rounded" alt="Astronauts STEM Kit" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel Controls -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </section>
+<div class="text-carousel">
+    <div class="scrolling-text">
+      <div class="text-warning fw-bold text-center py-3 fs-3">
+  🚀 <span class='text-danger fs-3 fw-bold'>3D Printing </span>Available – Fast, Reliable & Affordable 
+</div>
+
+    </div>
+  </div>
+  <div class="container-fluid bg-light">
+  <div class="container py-4">
+    <h1 class="text-center">Services</h1>
+    <div class="row d-flex justify-content-center text-center py-1">
+      
+      <!-- Hardware -->
+      <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+        <a href="{% url 'hardwarepage' %}" class="text-decoration-none text-dark">
+          <img src="{% static 'Images/settings.png' %}" width="80" alt="">
+          <h4 class="mt-3">Hardware Projects</h4>
+        </a>
+      </div>
+      
+      <!-- Software -->
+      <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+        <a href="{% url 'softwarepage' %}" class="text-decoration-none text-dark">
+          <img src="{% static 'Images/software.png' %}" width="80" alt="">
+          <h4 class="mt-3">Software Projects</h4>
+        </a>
+      </div>
+      
+      <!-- Electronics -->
+      <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+        <a href="{% url 'Electronicspage' %}" class="text-decoration-none text-dark">
+          <img src="{% static 'Images/computer.png' %}" width="80" alt="">
+          <h4 class="mt-3">Electronics Kits</h4>
+        </a>
+      </div>
+      
+      <!-- Robots -->
+      <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+        <a href="{% url 'Robotspage' %}" class="text-decoration-none text-dark">
+          <img src="{% static 'Images/robot.png' %}" width="80" alt="">
+          <h4 class="mt-3">DIY Robots</h4>
+        </a>
+      </div>
+    </div>
+    
+    <div class="row d-flex justify-content-center text-center">
+      <!-- AI Projects -->
+      <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4">
+        <a href="{% url 'AIpage' %}" class="text-decoration-none text-dark">
+          <img src="{% static 'Images/artificial-intelligence.png' %}" width="80" alt="">
+          <h4 class="mt-3">AI Projects</h4>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="text-carousel">
+    <div class="scrolling-text">
+      {% comment %} <span>• No restocking fee</span> {% endcomment %}
+      <span>• No final sale items</span>
+      <span>• 100% Payment Secure</span>
+      {% comment %} <span>• Online Support</span> {% endcomment %}
+      <span>• Free Shipping</span>
+      <span>• 3d Printing Available</span>
+      {% comment %} <span>• Hassle-Free Returns</span> {% endcomment %}
+      <span>• 24/7 Customer Support</span>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <section class="container my-5">
+      <div class="row text-center">
+        <!-- Delivery Shipping -->
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="mb-3">
+            <i class="fa-solid fa-truck feature-icon text-primary"></i>
+          </div>
+          <h5 class="feature-heading">Return Policy</h5>
+          <p class="feature-text">Return Accepted For 7 Days</p>
+        </div>
+
+        <!-- Customer Support -->
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="mb-3">
+            <i class="fa-solid fa-headset feature-icon"></i>
+          </div>
+          <h5 class="feature-heading">Customer Support</h5>
+          <p class="feature-text">
+            Monday to Saturday<br />
+            9 AM to 5 PM
+          </p>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="col-lg-3 col-md-6 col-sm-6">
+          <div class="mb-3">
+            <i class="fa-solid fa-cart-shopping feature-icon text-primary"></i>
+          </div>
+          <h5 class="feature-heading">Payment Method</h5>
+          <p class="feature-text">
+            1. Bank Transfer<br />
+            2. Cash on Delivery
+          </p>
+        </div>
+
+        <!-- Secure Payment -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="mb-3">
+            <i class="fa-solid fa-lock feature-icon"></i>
+          </div>
+          <h5 class="feature-heading">100% Payment Secure</h5>
+          <p class="feature-text">
+            We ensure secure payment with NayaPay
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="bg-light" id="faq">
+    <div class="container-fluid px-2 px-md-5">
+      <div class="row d-flex flex-md-wrap">
+        <div class="col-lg-5 px-4 py-4">
+          <div class="text-center">
+            <h1 class="text-black fw-bold mt-1">
+              Have questions? Check out our FAQs!
+            </h1>
+            <img src="{% static 'Images/bg.png' %}" class="img-fluid mt-3" width="400" alt="" style="object-fit: cover;">
+          </div>
+        </div>
+        <div class="col-lg-7 p-4">
+          <div class="accordion" id="accordionExample">
+            <!-- Question 1 -->
+            <div class="accordion-item bg-transparent text-black border-0">
+              <hr class="w-100 text-black" style="height: 2px;">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-transparent text-black border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                  <h5 class="fs-3">1. What is Project Store?</h5>
+                </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p class="fs-4">Project Store is your online hub where you can purchase products and kits related to software development, hardware projects, IoT devices, robotics, AI projects, and electronics. Whether you're a student, hobbyist, or professional, you’ll find tools and resources to bring your ideas to life.</p>
+                </div>
+              </div>
+              <hr class="w-100 text-black" style="height: 2px;">
+            </div>
+
+            <!-- Question 2 -->
+            <div class="accordion-item bg-transparent text-black border-0">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-transparent text-black shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                  <h5 class="fs-3">2. What type of products do you offer?</h5>
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p class="fs-4">We offer a wide variety of project kits, components, and modules, including Arduino boards, Raspberry Pi kits, sensors, motors, AI-based kits, programming tools, and fully assembled robotics and electronics projects.</p>
+                </div>
+              </div>
+              <hr class="w-100 text-black" style="height: 2px;">
+            </div>
+
+            <!-- Question 3 -->
+            <div class="accordion-item bg-transparent text-black border-0">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-transparent text-black shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                  <h5 class="fs-3">3. Who can use Project Store?</h5>
+                </button>
+              </h2>
+              <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p class="fs-4">Our store is for everyone! Students, engineers, researchers, hobbyists, and even companies looking for ready-made or customizable project solutions can find what they need here.</p>
+                </div>
+              </div>
+              <hr class="w-100 text-black" style="height: 2px;">
+            </div>
+
+            <!-- Question 4 -->
+            <div class="accordion-item bg-transparent text-black border-0">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-transparent text-black shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                  <h5 class="fs-3">4. Do you provide custom project development?</h5>
+                </button>
+              </h2>
+              <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p class="fs-4">Yes! If you have an idea in mind, we can design, develop, and deliver a custom solution for you. Just share your requirements and we’ll make it happen.</p>
+                </div>
+              </div>
+              <hr class="w-100 text-black" style="height: 2px;">
+            </div>
+
+            <!-- Question 5 -->
+            <div class="accordion-item bg-transparent text-black border-0">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-transparent text-black shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
+                  <h5 class="fs-3">5. Do you offer tutorials and guides?</h5>
+                </button>
+              </h2>
+              <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p class="fs-4">Absolutely! Many of our products come with detailed guides, video tutorials, and sample code to help you get started quickly and learn as you build.</p>
+                </div>
+              </div>
+              <hr class="w-100 text-black" style="height: 2px;">
+            </div>
+
+            <!-- Question 6 -->
+            <div class="accordion-item bg-transparent text-black border-0">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed bg-transparent text-black shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix">
+                  <h5 class="fs-3">6. How can I place an order?</h5>
+                </button>
+              </h2>
+              <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                  <p class="fs-4">Ordering is simple: browse our store, select your products, add them to your cart, and proceed to checkout. We support multiple payment methods for your convenience.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="position-fixed bottom-0 end-0 m-4" style="z-index:1000;">
+  <!-- Small screens (icon only) -->
+  <a href="https://wa.me/923104505008" target="_blank"
+     class="btn btn-success rounded-circle shadow-lg d-flex align-items-center justify-content-center d-md-none"
+     style="width:60px; height:60px;">
+    <i class="bi bi-whatsapp fs-3 text-white"></i>
+  </a>
+
+  <!-- Medium & Large screens (icon + text) -->
+  <a href="https://wa.me/923104505008" target="_blank"
+     class="btn btn-success shadow-lg d-none d-md-flex align-items-center px-3 py-2">
+    <i class="bi bi-whatsapp fs-3 text-white me-2"></i>
+    <span class="fs-5 text-white fw-bold">Chat</span>
+  </a>
+</div>
+
+
+  {% include 'Includes/footer.html' %}
+
+  <div class="cart-sidebar" id="cartSidebar">
+    <button class="btn-close float-end mt-3 me-3" id="closeCart"></button>
+    <div class="p-3">
+      <h5>Shopping Cart</h5>
+    </div>
+    <div id="cartItems" class="px-3"></div>
+    <div class="p-3">
+      <p><strong>Subtotal:</strong> Rs <span id="cartTotal">0</span> PKR</p>
+      <a class="btn btn-success w-100" href="{% url 'checkout' %}">Checkout</a>
+    </div>
+  </div>
+
+
+  
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Get CSRF token for AJAX requests
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    // Back to Top Button
+    {% comment %} const backToTopButton = document.getElementById("backToTop");
+    window.onscroll = function () {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        backToTopButton.style.display = "block";
+      } else {
+        backToTopButton.style.display = "none";
+      }
+    };
+    backToTopButton.onclick = function () {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }; {% endcomment %}
+
+    // Cart Functionality
+    const cartSidebar = document.getElementById("cartSidebar");
+    const cartItems = document.getElementById("cartItems");
+    const cartTotal = document.getElementById("cartTotal");
+
+    // Open Cart Sidebar when clicking the cart icons
+    document.querySelectorAll("[id^=cartIcon]").forEach(icon => {
+      icon.addEventListener("click", function (event) {
+        event.preventDefault();
+        openCart();
+        fetchCartItems();
+      });
+    });
+
+    // Close Sidebar
+    document.getElementById("closeCart").addEventListener("click", function () {
+      closeCart();
+    });
+
+    // Open Cart Sidebar
+    function openCart() {
+      cartSidebar.classList.add("open");
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close Cart Sidebar
+    function closeCart() {
+      cartSidebar.classList.remove("open");
+      document.body.style.overflow = '';
+    }
+
+    // Show alert message
+    function showAlert(message, type) {
+      const alertContainer = document.querySelector('.alert-container');
+      const alertId = 'alert-' + Date.now();
+      const alert = document.createElement('div');
+      alert.className = `alert alert-${type} alert-dismissible fade show shadow`;
+      alert.role = 'alert';
+      alert.id = alertId;
+      alert.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      `;
+      alertContainer.appendChild(alert);
+
+      // Auto dismiss after 5 seconds
+      setTimeout(() => {
+        const bsAlert = new bootstrap.Alert(alert);
+        bsAlert.close();
+      }, 5000);
+    }
+
+    // Add Item to Cart
+    document.querySelectorAll(".btn-add-to-cart").forEach(button => {
+      button.addEventListener("click", function () {
+        const productId = this.dataset.productId;
+        const name = this.dataset.name;
+        const price = parseFloat(this.dataset.price);
+        const image = this.dataset.image;
+        const quantity = 1;
+        addItemToCart(name, price, productId, quantity, null, image);
+        openCart();
+      });
+    });
+
+    function addItemToCart(name, price, productId, quantity, variantId, image) {
+      $.ajax({
+        url: "{% url 'add_to_cart' %}",
+        type: "POST",
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        data: {
+          product_id: productId,
+          quantity: quantity,
+          variant_id: variantId
+        },
+        success: function(response) {
+          if (response.success) {
+            fetchCartItems();
+            showAlert("Item added to cart!", "success");
+          } else {
+            console.error("Error adding item:", response.message);
+            showAlert("Error: " + response.message, "danger");
+          }
+        },
+        error: function(xhr) {
+          console.error("Error adding item to cart:", xhr.status, xhr.statusText);
+          showAlert("An error occurred while adding the item to the cart.", "danger");
+        }
+      });
+    }
+
+    // Fetch and display cart items
+    function fetchCartItems() {
+      $.ajax({
+        url: "{% url 'get_cart' %}",
+        type: "GET",
+        success: function(response) {
+          cartItems.innerHTML = "";
+          let total = 0;
+          if (response.items && Array.isArray(response.items)) {
+            if (response.items.length === 0) {
+              cartItems.innerHTML = '<div class="text-center py-4"><p>Your cart is empty</p></div>';
+            } else {
+              response.items.forEach(item => {
+                const itemElement = document.createElement("div");
+                itemElement.classList.add("cart-item", "d-flex", "justify-content-between", "align-items-center", "mb-3", "p-2", "bg-light", "rounded");
+                itemElement.innerHTML = `
+                  <div class="d-flex align-items-center">
+                    <img src="${item.image || "{% static 'Images/download.jpeg' %}"}" alt="${item.name}" width="60" height="60" class="me-3 rounded">
+                    <div>
+                      <h6 class="mb-0">${item.name}</h6>
+                      <p class="mb-0">Rs ${item.price.toFixed(2)}</p>
+                    </div>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <button class="btn btn-sm btn-outline-secondary minus-btn" data-item-id="${item.id}">
+                      <i class="bi bi-dash"></i>
+                    </button>
+                    <span class="mx-2 quantity">${item.quantity}</span>
+                    <button class="btn btn-sm btn-outline-secondary plus-btn" data-item-id="${item.id}">
+                      <i class="bi bi-plus"></i>
+                    </button>
+                    <button class="btn btn-danger btn-sm delete-item ms-2" data-item-id="${item.id}">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                `;
+                cartItems.appendChild(itemElement);
+                total += item.price * item.quantity;
+              });
+            }
+          }
+          cartTotal.textContent = total.toFixed(2);
+          updateCartCount();
+        },
+        error: function(xhr) {
+          console.error("Error fetching cart:", xhr.status, xhr.statusText);
+          showAlert("An error occurred while fetching the cart.", "danger");
+        }
+      });
+    }
+
+    // Update quantity in cart
+    cartItems.addEventListener("click", function(e) {
+      if (e.target.closest(".minus-btn") || e.target.closest(".plus-btn")) {
+        const button = e.target.closest("button");
+        const itemId = button.dataset.itemId;
+        const change = button.classList.contains("minus-btn") ? -1 : 1;
+        updateCartItemQuantity(itemId, change);
+      }
+      if (e.target.closest(".delete-item")) {
+        const itemId = e.target.closest(".delete-item").dataset.itemId;
+        removeCartItem(itemId);
+      }
+    });
+
+    function updateCartItemQuantity(itemId, change) {
+      $.ajax({
+        url: "{% url 'update_cart' %}",
+        type: "POST",
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        data: {
+          item_id: itemId,
+          change: change
+        },
+        success: function(response) {
+          if (response.success) {
+            fetchCartItems();
+            showAlert("Cart updated successfully!", "success");
+          } else {
+            console.error("Error updating item:", response.message);
+            showAlert("Error: " + response.message, "danger");
+          }
+        },
+        error: function(xhr) {
+          console.error("Error updating cart:", xhr.status, xhr.statusText);
+          showAlert("An error occurred while updating the cart.", "danger");
+        }
+      });
+    }
+
+    function removeCartItem(itemId) {
+      $.ajax({
+        url: "{% url 'remove_from_cart' %}",
+        type: "POST",
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        data: {
+          item_id: itemId
+        },
+        success: function(response) {
+          if (response.success) {
+            fetchCartItems();
+            showAlert("Item removed from cart!", "success");
+          } else {
+            console.error("Error removing item:", response.message);
+            showAlert("Error: " + response.message, "danger");
+          }
+        },
+        error: function(xhr) {
+          console.error("Error removing item:", xhr.status, xhr.statusText);
+          showAlert("An error occurred while removing the item.", "danger");
+        }
+      });
+    }
+
+    // Update cart count
+    function updateCartCount() {
+      fetch("{% url 'cart_count' %}")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          document.querySelectorAll('.cartCount').forEach(el => {
+            el.textContent = data.count || 0;
+            el.style.display = data.count > 0 ? 'inline-block' : 'none';
+          });
+        })
+        .catch(err => console.error('Error fetching cart count:', err));
+    }
+
+    // Initial calls
+    document.addEventListener("DOMContentLoaded", function () {
+      fetchCartItems();
+      updateCartCount();
+    });
+
+    // Optionally refresh cart count every 10 seconds
+    setInterval(updateCartCount, 10000);
+  </script>
+</body>
+</html>

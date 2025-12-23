@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Project Store</title>
+    <meta name="description" content="Complete your order securely on the Project Store checkout page. Review your cart, provide shipping details, and make payment safely.">
+    <meta name="keywords" content="checkout, shopping cart, secure payment, order review, online shopping, Project Store">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        .cart-sidebar {
+            width: 100%;
+            max-width: 390px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            background: #fff;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+            transition: right 0.3s ease;
+            z-index: 10000;
+        }
+        .cart-sidebar.open {
+            right: 0;
+        }
+        .cart-item img {
+            object-fit: cover;
+        }
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        #backToTop:hover {
+            background-color: #0056b3;
+        }
+        .order-summary {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fff;
+        }
+        .order-summary img {
+            border-radius: 4px;
+        }
+        .payment-details, .delivery-details {
+            display: none;
+        }
+        .payment-details.active, .delivery-details.active {
+            display: block;
+        }
+        .payment-slip-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        /* Loading Overlay Styles */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 99999;
+        }
+        
+        .loading-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #28a745;
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .loading-subtext {
+            font-size: 1rem;
+            color: #666;
+            text-align: center;
+            max-width: 300px;
+        }
+        
+        .loading-steps {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .loading-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        
+        .loading-step.active {
+            opacity: 1;
+        }
+        
+        .step-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .loading-step.active .step-icon {
+            background-color: #28a745;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .step-text {
+            font-size: 0.95rem;
+            color: #333;
+        }
+        
+        .step-check {
+            display: none;
+            color: #28a745;
+            font-size: 18px;
+        }
+        
+        .loading-step.completed .step-check {
+            display: block;
+        }
+        
+        .loading-step.completed .step-number {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Processing Your Order</div>
+        <div class="loading-subtext">Please wait while we process your order. This may take a few moments...</div>
+        
+        <div class="loading-steps">
+            <div class="loading-step" id="step1">
+                <div class="step-icon">
+                    <span class="step-number">1</span>
+                    <i class="step-check fas fa-check"></i>
+                </div>
+                <div class="step-text">Validating order details</div>
+            </div>
+            <div class="loading-step" id="step2">
+                <div class="step-icon">
+                    <span class="step-number">2</span>
+                    <i class="step-check fas fa-check"></i>
+                </div>
+                <div class="step-text">Processing payment information</div>
+            </div>
+            <div class="loading-step" id="step3">
+                <div class="step-icon">
+                    <span class="step-number">3</span>
+                    <i class="step-check fas fa-check"></i>
+                </div>
+                <div class="step-text">Creating order confirmation</div>
+            </div>
+            <div class="loading-step" id="step4">
+                <div class="step-icon">
+                    <span class="step-number">4</span>
+                    <i class="step-check fas fa-check"></i>
+                </div>
+                <div class="step-text">Finalizing your order</div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'Includes/navbar2.html' %}
+   
+
+    <div class="container-fluid py-2">
+        <div class="container">
+             {% include 'Includes/messages.html' %}
+            <div class="row">
+                <!-- Left Column: Checkout Form -->
+                <div class="col-md-7 order-2 order-md-1">
+                    <form id="checkoutForm" enctype="multipart/form-data">
+                        <!-- Contact Section -->
+                        <div class="mb-4">
+                            <h5>Contact</h5>
+                            <input type="email" class="form-control mb-2" name="email" placeholder="Email" required>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="offers" id="offersCheckbox">
+                                <label class="form-check-label" for="offersCheckbox">
+                                    Be the first to know about our exclusive offers, news, and updates.
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Selection -->
+                        <div class="mb-4">
+                            <h5>Payment Method</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" id="onlinePaymentRadio" value="online_payment" checked>
+                                <label class="form-check-label" for="onlinePaymentRadio">Online Payment (NayaPay)</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" id="codRadio" value="cash_on_delivery">
+                                <label class="form-check-label" for="codRadio">Cash on Delivery</label>
+                            </div>
+                        </div>
+
+                        <!-- Online Payment Details -->
+                        <div class="payment-details active" id="onlinePaymentDetails">
+                            <h5>NayaPay Payment</h5>
+                            <p>Please send payment to the following NayaPay account:</p>
+                            <p><strong>Account Name:</strong>Hamza Iftikhar</p>
+                            <p><strong>Account ID:</strong>03104505008</p>
+                            <div class="mb-2">
+                                <label for="paymentSlip" class="form-label">Upload Payment Slip</label>
+                                <input type="file" class="form-control" name="payment_slip" id="paymentSlip" accept="image/*,application/pdf">
+                                <div class="payment-slip-preview" id="paymentSlipPreview"></div>
+                            </div>
+                        </div>
+
+                        <!-- Delivery Section -->
+                        <div class="delivery-details active" id="deliveryDetails">
+                            <h5>Delivery</h5>
+                            <select class="form-select mb-2" name="country" required>
+                                <option value="Pakistan">Pakistan</option>
+                            </select>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <input type="text" class="form-control" name="first_name" placeholder="First name (optional)">
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <input type="text" class="form-control" name="last_name" placeholder="Last name" required>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control mb-2" name="address" placeholder="Address" required>
+                            <input type="text" class="form-control mb-2" name="apartment" placeholder="Apartment, suite, etc. (optional)">
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <input type="text" class="form-control" name="city" placeholder="City" required>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <select class="form-select" name="state" required>
+                                        <option value="" disabled selected>Select State</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Sindh">Sindh</option>
+                                        <option value="Khyber Pakhtunkhwa">Khyber Pakhtunkhwa</option>
+                                        <option value="Balochistan">Balochistan</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <input type="text" class="form-control" name="zip_code" placeholder="ZIP code" required>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control mb-2" name="phone" placeholder="Phone" required>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="save_info" id="saveInfoCheckbox">
+                                <label class="form-check-label" for="saveInfoCheckbox">Save this information for next time</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="text_offers" id="textOffersCheckbox">
+                                <label class="form-check-label" for="textOffersCheckbox">Text me with news and offers</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 mt-4" id="submitOrderBtn">
+                            <i class="fas fa-shopping-cart me-2"></i>Complete Order
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Column: Order Summary -->
+                <div class="col-md-5 order-1 order-md-2">
+                    <div class="order-summary">
+                        <h5>Order Summary</h5>
+                        <div id="orderItems" class="mb-3"></div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span>Subtotal</span>
+                            <span>Rs <span id="orderSubtotal">0</span></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Shipping</span>
+                            <span id="orderShipping">Please enter shipping details</span>
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <strong>Total</strong>
+                            <strong>Rs <span id="orderTotal">0</span></strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <button class="btn-close float-end mt-3" id="closeCart"></button>
+        <div class="p-3">
+            <h5>Shopping Cart</h5>
+        </div>
+        <div id="cartItems" class="px-3"></div>
+        <div class="p-3">
+            <p><strong>Subtotal:</strong> Rs <span id="cartTotal">0</span></p>
+            <a class="btn btn-success w-100" href="{% url 'checkout' %}">Checkout</a>
+        </div>
+    </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Get CSRF token for AJAX requests
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+
+// Loading animation functions
+function showLoadingAnimation() {
+    const overlay = document.getElementById('loadingOverlay');
+    const submitBtn = document.getElementById('submitOrderBtn');
+    
+    // Disable submit button
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+    
+    // Show overlay
+    overlay.classList.add('active');
+    
+    // Start step animation sequence
+    animateSteps();
+}
+
+function hideLoadingAnimation() {
+    const overlay = document.getElementById('loadingOverlay');
+    overlay.classList.remove('active');
+    
+    // Reset steps
+    const steps = document.querySelectorAll('.loading-step');
+    steps.forEach(step => {
+        step.classList.remove('active', 'completed');
+    });
+}
+
+function animateSteps() {
+    const steps = document.querySelectorAll('.loading-step');
+    let currentStep = 0;
+    
+    function nextStep() {
+        if (currentStep < steps.length) {
+            // Mark previous step as completed
+            if (currentStep > 0) {
+                steps[currentStep - 1].classList.add('completed');
+                steps[currentStep - 1].classList.remove('active');
+            }
+            
+            // Activate current step
+            if (currentStep < steps.length) {
+                steps[currentStep].classList.add('active');
+            }
+            
+            currentStep++;
+            
+            // Schedule next step or finish
+            if (currentStep <= steps.length) {
+                const delay = currentStep === steps.length ? 1000 : 1500;
+                setTimeout(nextStep, delay);
+            }
+        }
+    }
+    
+    // Start animation
+    setTimeout(nextStep, 500);
+}
+
+// Cart Functionality
+const cartSidebar = document.getElementById("cartSidebar");
+const cartItems = document.getElementById("cartItems");
+const cartTotal = document.getElementById("cartTotal");
+const orderItems = document.getElementById("orderItems");
+const orderSubtotal = document.getElementById("orderSubtotal");
+const orderTotal = document.getElementById("orderTotal");
+const orderShipping = document.getElementById("orderShipping");
+
+// Open Cart Sidebar when clicking the cart icons
+document.querySelectorAll("[id^=cartIcon]").forEach(icon => {
+    icon.addEventListener("click", function (event) {
+        event.preventDefault();
+        openCart();
+        fetchCartItems();
+    });
+});
+
+// Close Sidebar
+document.getElementById("closeCart").addEventListener("click", function () {
+    closeCart();
+});
+
+function openCart() {
+    cartSidebar.classList.add("open");
+}
+function closeCart() {
+    cartSidebar.classList.remove("open");
+}
+
+// Helper to update shipping info
+function updateShippingAddress() {
+    let city = document.querySelector('input[name="city"]').value;
+    let state = document.querySelector('select[name="state"]').value;
+    if (city && state) {
+        orderShipping.textContent = `${city}, ${state}`;
+    } else {
+        orderShipping.textContent = "Please enter shipping details";
+    }
+}
+
+// Fetch and display cart items
+function fetchCartItems() {
+    $.ajax({
+        url: "{% url 'get_cart' %}",
+        type: "GET",
+        success: function(response) {
+            cartItems.innerHTML = "";
+            orderItems.innerHTML = "";
+            let total = 0;
+
+            if (response.items && Array.isArray(response.items)) {
+                response.items.forEach(item => {
+                    // Cart Sidebar
+                    const cartItemElement = document.createElement("div");
+                    cartItemElement.classList.add("cart-item", "d-flex", "justify-content-between", "align-items-center", "mb-3");
+                    cartItemElement.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <img src="${item.image || "{% static 'Images/download.jpeg' %}"}" alt="${item.name}" width="50" height="50" class="me-3">
+                            <div>
+                                <h6 class="mb-0">${item.name}</h6>
+                                <p class="mb-0">Rs ${item.price.toFixed(2)}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-sm btn-outline-secondary minus-btn" data-item-id="${item.id}">
+                                <i class="bi bi-dash"></i>
+                            </button>
+                            <span class="mx-2 quantity">${item.quantity}</span>
+                            <button class="btn btn-sm btn-outline-secondary plus-btn" data-item-id="${item.id}">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                            <button class="btn btn-danger btn-sm delete-item ms-3" data-item-id="${item.id}">
+                                <i class="bi bi-trash fs-4"></i>
+                            </button>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItemElement);
+
+                    // Order Summary
+                    const orderItemElement = document.createElement("div");
+                    orderItemElement.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-2");
+                    orderItemElement.innerHTML = `
+                        <div class="d-flex align-items-center">
+                            <img src="${item.image || "{% static 'Images/download.jpeg' %}"}" alt="${item.name}" width="50" height="50" class="me-3">
+                            <div>
+                                <p class="fw-bold mb-0">${item.name}</p>
+                                <p class="mb-0">Quantity: ${item.quantity}</p>
+                            </div>
+                        </div>
+                        <p class="mb-0">Rs ${(item.price * item.quantity).toFixed(2)}</p>
+                    `;
+                    orderItems.appendChild(orderItemElement);
+
+                    total += item.price * item.quantity;
+                });
+            } else {
+                orderItems.innerHTML = '<p class="text-center">Your cart is empty.</p>';
+                cartItems.innerHTML = '<p class="text-center">Your cart is empty.</p>';
+            }
+
+            cartTotal.textContent = total.toFixed(2);
+            orderSubtotal.textContent = total.toFixed(2);
+            orderTotal.textContent = total.toFixed(2);
+
+            updateShippingAddress();
+        },
+        error: function(xhr) {
+            console.error("Error fetching cart:", xhr.status, xhr.statusText, xhr.responseText);
+            // Display error message in the UI
+            const alertContainer = document.createElement('div');
+            alertContainer.className = 'alert alert-danger alert-dismissible fade show';
+            alertContainer.role = 'alert';
+            alertContainer.innerHTML = `
+                An error occurred while fetching the cart.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.querySelector('.container').prepend(alertContainer);
+        }
+    });
+}
+
+// Update quantity in cart
+cartItems.addEventListener("click", function(e) {
+    if (e.target.closest(".minus-btn") || e.target.closest(".plus-btn")) {
+        const button = e.target.closest("button");
+        const itemId = button.dataset.itemId;
+        const change = button.classList.contains("minus-btn") ? -1 : 1;
+        updateCartItemQuantity(itemId, change);
+    }
+    if (e.target.closest(".delete-item")) {
+        const itemId = e.target.closest(".delete-item").dataset.itemId;
+        removeCartItem(itemId);
+    }
+});
+
+function updateCartItemQuantity(itemId, change) {
+    $.ajax({
+        url: "{% url 'update_cart' %}",
+        type: "POST",
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        data: {
+            item_id: itemId,
+            change: change
+        },
+        success: function(response) {
+            if (response.success) {
+                fetchCartItems();
+            } else {
+                console.error("Error updating item:", response.message);
+                // Display error message in the UI
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                    ${response.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.querySelector('.container').prepend(alertContainer);
+            }
+        },
+        error: function(xhr) {
+            console.error("Error updating cart:", xhr.status, xhr.statusText);
+            // Display error message in the UI
+            const alertContainer = document.createElement('div');
+            alertContainer.className = 'alert alert-danger alert-dismissible fade show';
+            alertContainer.role = 'alert';
+            alertContainer.innerHTML = `
+                An error occurred while updating the cart.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.querySelector('.container').prepend(alertContainer);
+        }
+    });
+}
+
+function removeCartItem(itemId) {
+    $.ajax({
+        url: "{% url 'remove_from_cart' %}",
+        type: "POST",
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        data: {
+            item_id: itemId
+        },
+        success: function(response) {
+            if (response.success) {
+                fetchCartItems();
+            } else {
+                console.error("Error removing item:", response.message);
+                // Display error message in the UI
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                    ${response.message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.querySelector('.container').prepend(alertContainer);
+            }
+        },
+        error: function(xhr) {
+            console.error("Error removing item:", xhr.status, xhr.statusText);
+            // Display error message in the UI
+            const alertContainer = document.createElement('div');
+            alertContainer.className = 'alert alert-danger alert-dismissible fade show';
+            alertContainer.role = 'alert';
+            alertContainer.innerHTML = `
+                An error occurred while removing the item.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            document.querySelector('.container').prepend(alertContainer);
+        }
+    });
+}
+
+// Update cart count
+function updateCartCount() {
+    fetch("{% url 'cart_count' %}")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            document.querySelectorAll('.cartCount').forEach(el => {
+                el.textContent = data.count || 0;
+            });
+        })
+        .catch(err => console.error('Error fetching cart count:', err));
+}
+
+// Toggle payment and delivery details
+const onlinePaymentRadio = document.getElementById("onlinePaymentRadio");
+const codRadio = document.getElementById("codRadio");
+const onlinePaymentDetails = document.getElementById("onlinePaymentDetails");
+const deliveryDetails = document.getElementById("deliveryDetails");
+
+function togglePaymentDetails() {
+    const isOnlinePayment = onlinePaymentRadio.checked;
+    onlinePaymentDetails.classList.toggle("active", isOnlinePayment);
+    deliveryDetails.classList.toggle("active", true); // Delivery required for both methods
+    // Update required attributes
+    document.querySelectorAll('#onlinePaymentDetails input').forEach(input => {
+        input.required = isOnlinePayment;
+    });
+    document.querySelectorAll('#deliveryDetails input, #deliveryDetails select').forEach(input => {
+        input.required = true; // Delivery fields always required
+    });
+}
+
+onlinePaymentRadio.addEventListener("change", togglePaymentDetails);
+codRadio.addEventListener("change", togglePaymentDetails);
+
+// Preview payment slip
+document.getElementById("paymentSlip").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    const preview = document.getElementById("paymentSlipPreview");
+    preview.innerHTML = "";
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            if (file.type.startsWith("image/")) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Payment Slip Preview">`;
+            } else if (file.type === "application/pdf") {
+                preview.innerHTML = `<p>PDF uploaded: ${file.name}</p>`;
+            }
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Handle checkout form submission
+document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    
+    // Validate form
+    const form = this;
+    let isValid = true;
+    
+    // Simple validation
+    const requiredFields = form.querySelectorAll('[required]');
+    requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+            field.classList.add('is-invalid');
+            isValid = false;
+        } else {
+            field.classList.remove('is-invalid');
+        }
+    });
+    
+    if (!isValid) {
+        alert('Please fill in all required fields.');
+        return;
+    }
+    
+    // Show loading animation
+    showLoadingAnimation();
+    
+    // Submit form after a small delay to ensure animation is visible
+    setTimeout(() => {
+        const formData = new FormData(form);
+        $.ajax({
+            url: "{% url 'place_order' %}",
+            type: "POST",
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                // Hide loading animation
+                hideLoadingAnimation();
+                
+                // Reset submit button
+                const submitBtn = document.getElementById('submitOrderBtn');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>Complete Order';
+                
+                // Redirect to the URL provided in the response
+                if (response.redirect_url) {
+                    // Show success message before redirect
+                    setTimeout(() => {
+                        window.location.href = response.redirect_url;
+                    }, 500);
+                } else {
+                    window.location.href = "{% url 'home' %}";
+                }
+            },
+            error: function(xhr) {
+                // Hide loading animation
+                hideLoadingAnimation();
+                
+                // Reset submit button
+                const submitBtn = document.getElementById('submitOrderBtn');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-shopping-cart me-2"></i>Complete Order';
+                
+                console.error("Error placing order:", xhr.status, xhr.statusText, xhr.responseText);
+                // Display error message in the UI
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'alert alert-danger alert-dismissible fade show';
+                alertContainer.role = 'alert';
+                alertContainer.innerHTML = `
+                    An error occurred while placing the order. Please try again.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.querySelector('.container').prepend(alertContainer);
+            }
+        });
+    }, 500);
+});
+
+// Live update shipping address on input/change
+document.querySelector('input[name="city"]').addEventListener("input", updateShippingAddress);
+document.querySelector('select[name="state"]').addEventListener("change", updateShippingAddress);
+
+// Form field validation styling
+document.querySelectorAll('#checkoutForm input, #checkoutForm select').forEach(field => {
+    field.addEventListener('blur', function() {
+        if (this.hasAttribute('required') && !this.value.trim()) {
+            this.classList.add('is-invalid');
+        } else {
+            this.classList.remove('is-invalid');
+        }
+    });
+});
+
+// Initial calls
+document.addEventListener("DOMContentLoaded", function () {
+    fetchCartItems();
+    updateCartCount();
+    togglePaymentDetails();
+    updateShippingAddress(); // Initial call
+});
+
+// Optionally refresh cart count every 10 seconds
+setInterval(updateCartCount, 10000);
+</script>
+</body>
+</html>
