@@ -6,6 +6,9 @@
     <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ category.name }} - Products</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <meta name="description" content="Explore {{ category.name }} projects including software, hardware, AI, robotics, and electronics solutions. Browse all related products and innovations.">
     <meta name="keywords" content="{{ category.name }}, projects, products, software, hardware, AI, robotics, electronics, student projects, final year projects">
@@ -149,7 +152,7 @@
                          data-stock="{% if product.stock > 0 %}in{% else %}out{% endif %}"
                          data-category="{{ product.category.name }}">
                         <div class="card">
-                            <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.name }}">
+                            <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.get_alt_text }}">
                             <div class="card-body text-start">
                                 <h5>{{ product.name }}</h5>
                                 <p>{{ product.short_description | truncatechars:30 }}</p>

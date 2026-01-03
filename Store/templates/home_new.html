@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Project Store | The Maker's Hub: DIY Kits, Components & Code Snippets</title>
+  
+  <meta name="description" content="Pakistan's ultimate store for Students & Hobbyists. Shop ESP32 modules, sensors, ready-to-use DIY Project Kits, and professional Software Projects/Code Snippets. Fast shipping from Hall Road to your doorstep.">
+  <meta name="keywords" content="Project Store, DIY Kits Pakistan, ESP32 price Lahore, Arduino Sensors, Software Projects for Students, Python Code Snippets, 3D Printing Pakistan, Electronic Components Online">
+  <meta name="author" content="Project Store">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <style>
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #3b82f6;
+      --secondary-blue: #2563eb;
+      --accent-yellow: #fbbf24;
+      --text-dark: #1e293b;
+      --text-gray: #64748b;
+      --bg-light: #f8fafc;
+      --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --gradient-card: linear-gradient(145deg, #ffffff, #f1f5f9);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Navbar Override if needed */
+    .navbar {
+        box-shadow: var(--shadow-sm);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: var(--gradient-hero);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .hero-bg-accent {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(15, 23, 42, 0) 70%);
+        border-radius: 50%;
+        top: -50px;
+        right: -50px;
+        z-index: 1;
+    }
+
+    .hero-h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+    
+    .hero-h1 span {
+        color: var(--accent-yellow);
+        position: relative;
+        display: inline-block;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: #e2e8f0;
+        margin-bottom: 2rem;
+        font-weight: 300;
+        max-width: 90%;
+    }
+
+    .hero-btn {
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+    }
+    
+    .btn-warning-custom {
+        background-color: var(--accent-yellow);
+        color: #0f172a;
+        border: 2px solid var(--accent-yellow);
+    }
+    
+    .btn-warning-custom:hover {
+        background-color: transparent;
+        color: var(--accent-yellow);
+        box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+    }
+    
+    .btn-outline-light-custom {
+        border: 2px solid rgba(255,255,255,0.3);
+        color: white;
+        margin-left: 10px;
+    }
+    
+    .btn-outline-light-custom:hover {
+        background-color: white;
+        color: var(--primary-dark);
+        border-color: white;
+    }
+
+    .hero-img-container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-img {
+      border-radius: 20px;
+      box-shadow: var(--shadow-lg);
+      transform: perspective(1000px) rotateY(-5deg);
+      transition: transform 0.5s ease;
+      border: 5px solid rgba(255,255,255,0.1);
+    }
+    
+    .hero-img:hover {
+        transform: perspective(1000px) rotateY(0deg);
+    }
+
+    /* Carousel Customization */
+    .carousel-indicators {
+        bottom: -40px;
+    }
+    
+    .carousel-indicators button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: var(--accent-yellow);
+        opacity: 0.5;
+    }
+    
+    .carousel-indicators .active {
+        opacity: 1;
+        width: 30px;
+        border-radius: 5px;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        width: 5%;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .hero-section:hover .carousel-control-prev,
+    .hero-section:hover .carousel-control-next {
+        opacity: 1;
+    }
+
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+        background-color: rgba(255,255,255,0.1);
+        padding: 20px;
+        border-radius: 50%;
+        backdrop-filter: blur(5px);
+    }
+
+    /* Scrolling Marquee */
+    .scrolling-wrapper {
+        background: var(--text-dark);
+        overflow: hidden;
+        padding: 12px 0;
+        position: relative;
+    }
+    
+    .scrolling-text {
+        color: white;
+        font-weight: 500;
+        font-size: 0.95rem;
+        letter-spacing: 1px;
+    }
+
+    /* Category Cards */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .section-title {
+      font-weight: 700;
+      font-size: 2.5rem;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+    }
+    
+    .section-subtitle {
+        color: var(--secondary-blue);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+    }
+
+    .cat-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        height: 100%;
+    }
+
+    .cat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: var(--shadow-sm);
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .cat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0%;
+        background: rgba(59, 130, 246, 0.03);
+        z-index: -1;
+        transition: height 0.3s ease;
+    }
+
+    .cat-card:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+    
+    .cat-card:hover::before {
+        height: 100%;
+    }
+
+    .cat-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .cat-card:hover .cat-icon-wrapper {
+        transform: scale(1.1) rotate(5deg);
+        background: #e0f2fe;
+    }
+
+    .cat-icon-wrapper img {
+      width: 45px; 
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .cat-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .cat-desc {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      margin: 0;
+    }
+
+    /* Joint Trust & FAQ Section */
+    .combined-support-section {
+        background: white;
+        padding: 5rem 0;
+        border-top: 1px solid #eee;
+    }
+    
+    .trust-item {
+        padding: 1.5rem;
+    }
+    
+    .trust-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .trust-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    /* FAQ Section */
+    .faq-column {
+        padding-left: 2rem;
+    }
+    
+    @media (max-width: 991px) {
+        .faq-column {
+            padding-left: 0.75rem;
+            margin-top: 4rem;
+        }
+    }
+    
+    .accordion-item {
+        border: none;
+        margin-bottom: 1rem;
+        border-radius: 12px !important;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .accordion-button {
+        font-weight: 600;
+        padding: 1.25rem;
+        background-color: white;
+        color: var(--text-dark);
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: #eff6ff;
+        color: var(--primary-blue);
+        box-shadow: none;
+    }
+    
+    .accordion-button:focus {
+        box-shadow: none;
+        border-color: rgba(0,0,0,0.1);
+    }
+    
+    .accordion-body {
+        background-color: white;
+        padding: 1.5rem;
+        line-height: 1.6;
+        color: var(--text-gray);
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background-color: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      color: white;
+      text-decoration: none;
+      font-size: 30px;
+    }
+    
+    .whatsapp-float:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        color: white;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 991px) {
+        .hero-h1 { font-size: 2.5rem; }
+        .hero-section { padding: 60px 0; text-align: center; }
+        .hero-img { margin-top: 40px; transform: none; }
+        .hero-img:hover { transform: none; }
+        .hero-subtitle { margin-left: auto; margin-right: auto; }
+        .btn-outline-light-custom { margin-top: 10px; margin-left: 0; }
+    }
+    
+    @media (max-width: 576px) {
+        .cat-card { padding: 1.5rem 1rem; }
+        .hero-h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  {% include 'Includes/navbar.html' %}
+  {% include 'Includes/messages.html' %}
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg-accent"></div>
+    <div class="container position-relative z-2">
+      <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <!-- Indicators -->
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+          <!-- Slide 1 -->
+          <div class="carousel-item active">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <h1 class="hero-h1">Verified <br><span>Software Projects/Code</span></h1>
+                <p class="hero-subtitle">Don't risk your grades. Get professionally developed & tested Python, Django, and Arduino scripts for your FYP and hobby projects.</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
+                  <a href="{% url 'project' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-download me-2"></i>Download Scripts</a>
+                  <a href="#faq" class="btn hero-btn btn-outline-light-custom">How Not to Fail?</a>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="hero-img-container text-center">
+                  <img src="{% static 'Images/collage.jpg' %}" class="img-fluid hero-img" alt="Software Projects Code">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <h1 class="hero-h1">Ready-to-Build <br><span>Project Kits</span></h1>
+                <p class="hero-subtitle">Everything you need in one box. Wires, sensors, microcontrollers, and the code. Start building your future today.</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
+                  <a href="{% url 'product' %}?category=kits" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-box-open me-2"></i>Shop Kits</a>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="hero-img-container text-center">
+                  <img src="{% static 'Images/collages.jpg' %}" class="img-fluid hero-img" alt="Hardware Project Kits">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <h1 class="hero-h1">3D Printing <br><span>Custom Services</span></h1>
+                <p class="hero-subtitle">Need a custom casing for your project? We design and print high-quality 3D models tailored to your specific requirements.</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
+                  <a href="/3d-printing/" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-print me-2"></i>Order 3D Print</a>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="hero-img-container text-center">
+                  <img src="{% static 'Images/collage1.jpg' %}" class="img-fluid hero-img" alt="3D Printing Services">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scrolling Marquee -->
+  <div class="scrolling-wrapper">
+    <marquee behavior="scroll" direction="left" scrollamount="10">
+      <span class="scrolling-text mx-4">🚀 3D Printing Service Available</span>
+      <span class="scrolling-text mx-4">⚡ Same Day Shipping in Lahore</span>
+      <span class="scrolling-text mx-4">💻 New Python Snippets Uploaded</span>
+      <span class="scrolling-text mx-4">🛠️ Need a Custom Project? Chat with us on WhatsApp!</span>
+      <span class="scrolling-text mx-4">📦 Free Delivery on Orders above Rs. 5000</span>
+    </marquee>
+  </div>
+
+  <!-- Browse Categories -->
+  <section class="container py-5 my-4">
+    <div class="section-header">
+      <span class="section-subtitle">Explore</span>
+      <h2 class="section-title">What are you looking for?</h2>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <a href="{% url 'project' %}" class="cat-card-link">
+          <div class="cat-card">
+            <div class="cat-icon-wrapper">
+              <img src="{% static 'Images/software.png' %}" alt="Code">
+            </div>
+            <h5 class="cat-title">Software & Scripts</h5>
+            <p class="cat-desc">Verified tested code for your applications.</p>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <a href="{% url 'product' %}?category=kits" class="cat-card-link">
+          <div class="cat-card">
+            <div class="cat-icon-wrapper">
+              <img src="{% static 'Images/settings.png' %}" alt="Kits">
+            </div>
+            <h5 class="cat-title">Project Kits</h5>
+            <p class="cat-desc">Complete DIY solutions with components.</p>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <a href="{% url 'product' %}?category=components" class="cat-card-link">
+          <div class="cat-card">
+            <div class="cat-icon-wrapper">
+              <img src="{% static 'Images/computer.png' %}" alt="Components">
+            </div>
+            <h5 class="cat-title">Components</h5>
+            <p class="cat-desc">Sensors, Modules, ESP32 & more.</p>
+          </div>
+        </a>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <a href="/3d-printing/" class="cat-card-link">
+          <div class="cat-card">
+            <div class="cat-icon-wrapper">
+              <img src="{% static 'Images/robot.png' %}" alt="3D">
+            </div>
+            <h5 class="cat-title">3D Printing</h5>
+            <p class="cat-desc">Custom casings designed & printed.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Combined Trust & FAQ Section -->
+  <section class="combined-support-section" id="faq">
+    <div class="container">
+      <div class="row g-5">
+        
+        <!-- Left Column: Trust Indicators -->
+        <div class="col-lg-5">
+          <div class="mb-5">
+            <span class="section-subtitle">Why Choose Us</span>
+            <h2 class="section-title text-start">Our Promise to You</h2>
+            <p class="text-muted">We bridge the gap between complex electronics and successful projects with quality parts and verified code.</p>
+          </div>
+          
+          <div class="row g-4">
+            <div class="col-6">
+              <div class="trust-item p-0">
+                <i class="fa-solid fa-microchip trust-icon"></i>
+                <h5 class="trust-title">Tested Hardware</h5>
+                <small class="text-muted">Every module is quality-checked before shipping.</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="trust-item p-0">
+                <i class="fa-solid fa-code trust-icon"></i>
+                <h5 class="trust-title">Verified Scripts</h5>
+                <small class="text-muted">Download bug-free Python, Arduino & Django code.</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="trust-item p-0">
+                <i class="fa-solid fa-truck-fast trust-icon"></i>
+                <h5 class="trust-title">Fast Delivery</h5>
+                <small class="text-muted">2-3 working days across Pakistan via top couriers.</small>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="trust-item p-0">
+                <i class="fa-solid fa-headset trust-icon"></i>
+                <h5 class="trust-title">Student Support</h5>
+                <small class="text-muted">Free basic guidance for your DIY & Final Year Projects.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: FAQ -->
+        <div class="col-lg-7 faq-column">
+          <div class="mb-4">
+            <span class="section-subtitle">FAQ</span>
+            <h2 class="section-title text-start">Common Maker Questions</h2>
+          </div>
+          
+          <div class="accordion" id="makerFaq">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q1">
+                  <i class="bi bi-question-circle me-3 text-primary"></i> How do I receive the software projects?
+                </button>
+              </h2>
+              <div id="q1" class="accordion-collapse collapse" data-bs-parent="#makerFaq">
+                <div class="accordion-body">
+                  Once your payment is verified, you will receive an <strong>instant secure download link</strong> via email for the source code, documentation, and setup guide. You can also access it from your dashboard.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q2">
+                  <i class="bi bi-diagram-3 me-3 text-primary"></i> Do your kits include circuit diagrams?
+                </button>
+              </h2>
+              <div id="q2" class="accordion-collapse collapse" data-bs-parent="#makerFaq">
+                <div class="accordion-body">
+                  Yes! Every project kit from Project Store comes with a <strong>comprehensive guide</strong> that includes clear connection diagrams, pinout details, and sample code to get you started immediately.
+                </div>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q3">
+                  <i class="bi bi-box-seam me-3 text-primary"></i> Can I return components if they don't work?
+                </button>
+              </h2>
+              <div id="q3" class="accordion-collapse collapse" data-bs-parent="#makerFaq">
+                <div class="accordion-body">
+                  We test all modules before shipping. However, if you receive a damaged item, we have a <strong>3-day replacement policy</strong>. Please record an unboxing video to claim a replacement.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q4">
+                  <i class="bi bi-box-seam me-3 text-primary"></i> Will any one guide me how to make it or run the project?
+                </button>
+              </h2>
+              <div id="q4" class="accordion-collapse collapse" data-bs-parent="#makerFaq">
+                <div class="accordion-body">
+                  Yes, we will guide you how to make it or run the project.
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#q5">
+                  <i class="bi bi-box-seam me-3 text-primary"></i> Can I request for custom projects?
+                </button>
+              </h2>
+              <div id="q5" class="accordion-collapse collapse" data-bs-parent="#makerFaq">
+                <div class="accordion-body">
+                  Yes, we can make custom projects for you.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-float tooltip-custom" title="Chat with us!">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+
+  {% include 'Includes/footer.html' %}
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+      // Add a simple reveal on scroll effect
+      $(window).scroll(function() {
+          $('.cat-card').each(function() {
+              var top_of_element = $(this).offset().top;
+              var bottom_of_window = $(window).scrollTop() + $(window).height();
+              if (bottom_of_window > top_of_element + 50) {
+                  $(this).animate({'opacity':'1', 'margin-top':'0px'}, 500);
+              }
+          });
+      });
+  </script>
+</body>
+</html>

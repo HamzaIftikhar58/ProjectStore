@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from django.utils import timezone
+from django.urls import reverse
 
 
 class UserProfile(models.Model):
@@ -38,6 +39,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('category_products', args=[self.slug])
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -54,7 +58,13 @@ class Product(models.Model):
     short_description = models.CharField(max_length=255)
     description = models.TextField()
     main_image = models.ImageField(upload_to='products/main/')
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for the main image.")
     youtube_video_url = models.URLField(max_length=500, blank=True, null=True)
+
+    def get_alt_text(self):
+        if self.alt_text:
+            return self.alt_text
+        return f"{self.name} - Professional Engineering Grade Hardware"
 
     liked_by = models.ManyToManyField(User, related_name='liked_products', blank=True)
 
@@ -117,6 +127,9 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[self.slug])
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -132,6 +145,13 @@ class ProductVariant(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variants')
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to='products/variants/')
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for the variant image.")
+
+    def get_alt_text(self):
+        if self.alt_text:
+            return self.alt_text
+        return f"{self.product.name} - {self.title} - Professional Engineering Grade Hardware"
+
     price = models.DecimalField(
         max_digits=10,
         decimal_places=2,
@@ -158,6 +178,13 @@ class ProductImage(models.Model):
     """
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image = models.ImageField(upload_to='products/gallery/')
+    alt_text = models.CharField(max_length=255, blank=True, null=True, help_text="Alt text for the gallery image.")
+
+    def get_alt_text(self):
+        if self.alt_text:
+            return self.alt_text
+        return f"{self.product.name} - Professional Engineering Grade Hardware"
+
     created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:

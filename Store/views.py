@@ -237,7 +237,7 @@ def reset_verify_otp(request):
 
 
 def home(request):
-         return render(request, 'home.html')
+         return render(request, 'home_new.html')
 
 
 @require_http_methods(["GET", "POST"])

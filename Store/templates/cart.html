@@ -18,7 +18,10 @@
     referrerpolicy="no-referrer"
   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.2/easyzoom.min.css">
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
     rel="stylesheet"
@@ -415,12 +418,12 @@
         <div class="border p-3">
           <div class="swiper gallery-thumbs">
             <div class="swiper-wrapper">
-              <div class="swiper-slide border"><img src="{{ product.main_image.url }}" alt="Slide 1" class="img-fluid" style='object-fit:contain;'></div>
+              <div class="swiper-slide border"><img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}" class="img-fluid" style='object-fit:contain;'></div>
               {% for image in product.images.all %}
-              <div class="swiper-slide border"><img src="{{ image.image.url }}" alt="Slide {{ forloop.counter0|add:2 }}" class="img-fluid" style='object-fit:contain;'></div>
+              <div class="swiper-slide border"><img src="{{ image.image.url }}" alt="{{ image.get_alt_text }}" class="img-fluid" style='object-fit:contain;'></div>
               {% endfor %}
               {% for variant in product.variants.all %}
-              <div class="swiper-slide border"><img src="{{ variant.image.url }}" alt="Variant_Slide {{ forloop.counter }}" class="img-fluid" style='object-fit:contain;'></div>
+              <div class="swiper-slide border"><img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}" class="img-fluid" style='object-fit:contain;'></div>
               {% endfor %}
               {% if product.youtube_video_url %}
               <div class="swiper-slide border">
@@ -437,12 +440,12 @@
         <div class="border mt-3 mt-md-4 p-3">
           <div class="swiper gallery-top">
             <div class="swiper-wrapper">
-              <div class="swiper-slide"><img src="{{ product.main_image.url }}" alt="Slide 1" class="img-fluid" style='object-fit:contain;' data-price="{{ product.price }}"></div>
+              <div class="swiper-slide"><img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}" class="img-fluid" style='object-fit:contain;' data-price="{{ product.price }}"></div>
                 {% for image in product.images.all %}
-              <div class="swiper-slide border"><img src="{{ image.image.url }}" alt="Slide {{ forloop.counter0|add:2 }}" class="img-fluid" style='object-fit:contain;'></div>
+              <div class="swiper-slide border"><img src="{{ image.image.url }}" alt="{{ image.get_alt_text }}" class="img-fluid" style='object-fit:contain;'></div>
               {% endfor %}
               {% for variant in product.variants.all %}
-              <div class="swiper-slide"><img src="{{ variant.image.url }}" alt="Variant_Slide {{ forloop.counter }}" class="img-fluid" style='object-fit:contain;' data-price="{{ variant.price }}"></div>
+              <div class="swiper-slide"><img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}" class="img-fluid" style='object-fit:contain;' data-price="{{ variant.price }}"></div>
               {% endfor %}
               {% if product.youtube_video_url %}
               <div class="swiper-slide">
@@ -491,7 +494,7 @@
             <label for="myColor" class="form-label mt-4 mx-2 fs-5 fw-bold">Choose Variant:</label>
             <div class="d-flex">
               {% for variant in product.variants.all %}
-              <img src="{{ variant.image.url }}" alt="Variant Option {{ forloop.counter0 }}" class="img-thumbnail mx-1 color-option" width="60" data-slide-index="{{ forloop.counter0 }}" data-price="{{ variant.price }}" data-variant-id="{{ variant.id }}">
+              <img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}" class="img-thumbnail mx-1 color-option" width="60" data-slide-index="{{ forloop.counter0 }}" data-price="{{ variant.price }}" data-variant-id="{{ variant.id }}">
               {% endfor %}
             </div>
           </form>

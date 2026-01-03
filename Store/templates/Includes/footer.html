@@ -1,82 +1,140 @@
 {% load static %}
- <!-- Footer -->
-  <footer>
-    <div class="container-fluid py-1 bg-dark mt-1 mt-md-4  " >
-          <div class="container">
-            <div class="row ">
-              <div class="col-md-3 col-6 ">
-                <h2 class="text-white">Categories</h2>
-                <ul class="list-unstyled text-white py-2 ">
-                  <li> <a class="py-2 text-decoration-none text-white " href="{% url 'hardwarepage' %}">Hardware Projects</a></li> 
-                
-                  <li class="mt-2"><a class="py-2 text-decoration-none text-white " href="{%  url 'softwarepage' %}">Software Projects</a></li>  
-                  <li class="mt-2"> <a class="py-2 text-decoration-none text-white " href="{% url 'AIpage' %}">AI Projects</a></li> 
-                  <li class="mt-2"> <a class="py-2 text-decoration-none text-white " href="{% url 'Electronicspage' %}">Electronics Projects</a></li> 
-                  <li class="mt-2"> <a class="py-2 text-decoration-none text-white " href="{% url 'Robotspage' %}">DIY Robotics</a>
-                  </li> 
-                   
-                  </ul>
-  
-               
-              </div>
-  
-             
-  
-  
-              <div class="col-md-3 col-6 text-white">
-                <h2 class="text-white">Main Menu</h2>
-                <ul class="list-unstyled text-white py-2">
-                  <li  ><a class="py-2 text-decoration-none text-white" href="{% url 'home' %}">home</a></li>  
-                  <li class="mt-2" > <a class="py-2 text-decoration-none text-white " href="{% url 'product' %}">Products</a></li> 
-                   <li class="mt-2" > <a class="py-2 text-decoration-none text-white " href="{% url 'project' %}">Projects</a></li> 
-                 <li  class="mt-2"> <a class="py-2 text-decoration-none text-white" href="">Categories</a></li>  
-                  <li class="mt-2" > <a class="py-2 text-decoration-none text-white" href="{% url 'home' %}#faq">FAQS</a></li> 
-                  </ul>
-               
-              </div>
-  
-              <div class="col-md-3 col-6">
-                <h2 class="text-white">Links</h2>
-                <ul class="list-unstyled text-white py-2">
-                  <li class="py-2"><i class="fa-solid fa-phone mx-2 fs-4"></i>0310-4505008</li>
-                  {% comment %} <li class="py-2"><i class="fa-brands fa-facebook mx-2"></i>Facebook</li> {% endcomment %}
-                  <li class="py-2"><i class="fa-brands fa-whatsapp mx-2 fs-4"></i>0310-4505008</li>
-                  <li class="py-2">
-                    <a href="https://www.youtube.com/@Isol_pk" class='text-decoration-none text-white'><i class="fa-brands fa-youtube mx-2 fs-4"></i>Youtube</li></a>
-  
-                </ul>
-              </div>
-
-              <div class="col-md-3 col-6">
-                <h2 class="text-white">About Us</h2>
-                <p class="fs-6" style=" color:white">ProjectStore is your go-to eCommerce store for hardware projects, software projects, electronics kits, AI, and robotics projects. We provide high-quality, ready-made and DIY tech solutions for students, developers, and enthusiasts. Explore our collection and bring your ideas to life!</p>
-              </div>
-          
-            
+<footer class="footer mt-auto" style="background-color: #0f172a;">
+    <!-- Main Footer Section -->
+    <div class="container py-5 px-4 px-lg-0">
+        <div class="row g-5">
+            <!-- Brand & About -->
+            <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                <div class="footer-logo mb-4">
+                    <img src="{% static 'Images/renamebg.png' %}" alt="Logo" style="height: 60px; filter: brightness(0) invert(1);">
+                </div>
+                <p class="text-white-50 lh-lg mb-4" style="font-size: 0.95rem;">
+                    ProjectStore is Pakistan's premier hub for Makers, Students, and Hobbyists. 
+                    From verified software projects to DIY hardware kits, we provide the tools to bring your ideas to life.
+                </p>
+                <div class="social-links d-flex gap-3">
+                    <a href="https://www.facebook.com/IsolPaki" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@Isol_pk" class="social-btn" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="https://wa.me/923104505008" class="social-btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
             </div>
-          </div>
-          </div>
+
+            <!-- Categories -->
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                <h5 class="text-white fw-bold mb-4 position-relative footer-heading">Categories</h5>
+                <ul class="list-unstyled footer-links">
+                    {% for category in categories|slice:":6" %}
+                    <li class="mb-2"><a href="{% url 'category_products' category.slug %}" class="text-white-50 text-decoration-none hover-text-primary">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Quick Menu -->
+            <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
+                <h5 class="text-white fw-bold mb-4 position-relative footer-heading">Main Menu</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-2"><a href="{% url 'home' %}" class="text-white-50 text-decoration-none hover-text-primary">Home</a></li>
+                    <li class="mb-2"><a href="{% url 'product' %}" class="text-white-50 text-decoration-none hover-text-primary">All Products</a></li>
+                    <li class="mb-2"><a href="{% url 'project' %}" class="text-white-50 text-decoration-none hover-text-primary">Projects</a></li>
+                    <li class="mb-2"><a href="{% url 'home' %}#faq" class="text-white-50 text-decoration-none hover-text-primary">FAQs</a></li>
+                    <li class="mb-2"><a href="{% url 'contact' %}" class="text-white-50 text-decoration-none hover-text-primary">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact & Trust -->
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white fw-bold mb-4 position-relative footer-heading">Contact Us</h5>
+                <div class="d-flex align-items-start mb-3">
+                    <div class="contact-icon me-3"><i class="bi bi-geo-alt text-primary fs-5"></i></div>
+                    <p class="text-white-50 mb-0 small">Industrial State, Kacha Jail Road, Lahore, Pakistan</p>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="contact-icon me-3"><i class="bi bi-telephone text-primary fs-5"></i></div>
+                    <p class="text-white-50 mb-0 small">+92 310 4505008</p>
+                </div>
+                <div class="mt-4 p-3 rounded-4 bg-white bg-opacity-10 border border-white border-opacity-10">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-shield-check text-warning fs-3 me-2"></i>
+                        <div>
+                            <span class="text-white d-block fw-bold small">Secure Shopping</span>
+                            <span class="text-white-50 d-block" style="font-size: 0.75rem;">Verified Hardware & Code</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-  </footer>
-  
-  <section id="bottomfooter " class="p-0 m-0">
-    <div class="container-fluid  py-0  " style="overflow-y: hidden; " id="bt">
-      <div class="row">
-        <div class="d-flex justify-content-center align-items-center">
-          <img
-            id="img1"
-             src="{% static 'Images/renamebg.png' %}"
-              alt="Logo"
-            style="width: 200px; height: 80px; object-fit: cover;margin-top: 0px; "
-          /> 
-                
-     
-        <p class="fs-2 mt-2" >|</p>
-          <a href="https://www.isol.pk/" class="text-decoration-none text-dark">
-            
-        <h6 class='fw-bold mt-1 '  style="margin-left:0px" id="h56"><a href="https://www.isol.pk/" class="text-decoration-none text-dark px-2">Powered by <img src="{% static 'Images/wlogo.png' %}"  id='isol' alt="" ></a> </h6>
-        
     </div>
+
+    <!-- Bottom Copyright -->
+    <div class="footer-bottom py-4" style="background-color: #0c1221; border-top: 1px solid rgba(255,255,255,0.05);">
+        <div class="container text-center">
+            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2 gap-md-4">
+                <p class="text-white-50 mb-0 small">&copy; 2026 ProjectStore. All rights reserved.</p>
+                <div class="d-flex align-items-center">
+                    <span class="text-white-50 small me-2">Powered by</span>
+                    <a href="https://www.isol.pk/" target="_blank">
+                        <img src="{% static 'Images/wlogo.png' %}" alt="ISOL" style="height: 30px; transition: transform 0.3s ease;" class="hover-scale-sm">
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-  </section>
+</footer>
+
+<style>
+    .footer-heading::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background-color: #3b82f6;
+    }
+
+    .footer-links a {
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+    .footer-links a:hover {
+        color: #3b82f6 !important;
+        transform: translateX(8px);
+    }
+
+    .social-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .social-btn:hover {
+        background-color: #3b82f6;
+        color: white;
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .hover-text-primary:hover {
+        color: #3b82f6 !important;
+    }
+
+    .hover-scale-sm:hover {
+        transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+        .footer { text-align: center; }
+        .footer-heading::after { left: 50%; transform: translateX(-50%); }
+        .social-links { justify-content: center; }
+        .footer-links a:hover { transform: translateY(-3px); }
+    }
+</style>
