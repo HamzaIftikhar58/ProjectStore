@@ -5,611 +5,577 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <title>Project Store | Software, Hardware, AI & Robotics Projects</title>
+  
   <meta name="description" content="Explore our Project Store featuring software, hardware, AI, and robotics projects. From face recognition systems to automation tools, we deliver innovative solutions.">
   <meta name="keywords" content="project store, software projects, hardware projects, AI projects, robotics projects, automation systems, face recognition, IoT projects, machine learning, student projects, final year projects">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Bootstrap & Fonts -->
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-   
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 
   <style>
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #3b82f6;
+      --secondary-blue: #2563eb;
+      --accent-yellow: #fbbf24;
+      --text-dark: #1e293b;
+      --text-gray: #64748b;
+      --bg-light: #f8fafc;
+      --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
       overflow-x: hidden;
     }
 
-    .container {
-      width: 80%;
-      margin: 0 auto;
-      padding: 40px 0;
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
     }
 
-    h1 {
-      font-size: 2rem;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 20px;
+    /* Premium Balanced Hero */
+    .page-hero {
+        background: var(--gradient-hero);
+        padding: 50px 0;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 0;
     }
 
-    /* Swiper Styles */
+    .hero-accent {
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(15, 23, 42, 0) 70%);
+        border-radius: 50%;
+    }
+
+    .page-title {
+        color: white;
+        font-weight: 800;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        color: rgba(255,255,255,0.7);
+        font-size: 1.05rem;
+        max-width: 550px;
+        font-weight: 300;
+    }
+
+    /* Categories Grid Spacing */
+    .category-section {
+        padding: 4rem 0;
+    }
+
+    .category-header {
+        margin-bottom: 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #eef2f6;
+        padding-bottom: 1rem;
+    }
+
+    .category-title {
+        font-weight: 700;
+        font-size: 1.85rem;
+        color: var(--primary-dark);
+        margin: 0;
+    }
+
+    .btn-view-all {
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        background: white;
+        color: var(--primary-dark);
+        border: 2px solid #eef2f6;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .btn-view-all:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
+
+    /* Premium Compact Project Cards */
     .swiper {
-      width: 100%;
-      padding: 20px 0;
+        padding: 20px 0 60px !important;
+        position: relative;
     }
 
-    .swiper-wrapper {
-      display: flex;
-      align-items: center;
-    }
-     .card-title {
-    font-size: 0.7rem;
-    font-weight: bold;
-    color: #007bff;
-    text-align: start;
-    height: 50px;              /* FIXED HEIGHT */
-    overflow: hidden;          /* HIDE EXTRA TEXT */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;     /* LIMIT TO 2 LINES */
-    -webkit-box-orient: vertical;
-}
-
-.card-text {
-    height: 45px;              /* FIXED HEIGHT */
-    overflow: hidden;          /* HIDE EXTRA CONTENT */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-    .card {
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      padding: 5px;
-      background-color: #fff;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      width: 100%;
+    .product-card {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid rgba(0,0,0,0.03);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
     }
 
- .card img {
-  width: 100%;
-  height: 200px;      /* fixed height */
-  object-fit: contain;  /* fills box, may crop edges */
-  border-radius: 8px;
-}
-
- .swiper-button-next::after, .swiper-button-prev::after { content: ''; display: none; }
-    .swiper-button-next, .swiper-button-prev { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background-color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center;font-size: 20px; justify-content: center; cursor: pointer;  }
-    .swiper-button-next:hover, .swiper-button-prev:hover { background-color: rgba(0, 0, 0, 0.8); }
-    .swiper-button-next i, .swiper-button-prev i { font-size: 24px; color: white; display: block; line-height: 1; padding: 5px; }
-
-           .card-body {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-    .card-title {
-      font-size: 1.25rem;
-      font-weight: bold;
-      color: #007bff;
-      text-align: start;
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border-color: rgba(59, 130, 246, 0.1);
     }
 
-    .card-text {
-      font-size: 1rem;
-      color: #555;
-      text-align: start;
+    .img-container {
+        width: 100%;
+        height: 200px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+    
+    .product-card img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        z-index: 2;
     }
 
-    .card-price {
-      font-size: 1.25rem;
-      color: #dc3545;
-      font-weight: bold;
+    .img-bg-accent {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+        z-index: 1;
     }
 
-    .btn-add-to-cart {
-      background-color: #28a745;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
+    .product-card:hover img {
+        transform: scale(1.1) rotate(2deg);
     }
 
-    .btn-add-to-cart:hover {
-      background-color: #218838;
+    .product-info {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
     }
 
-    .swiper-button-next::after,
-    .swiper-button-prev::after {
-      content: '';
-      display: none;
+    .product-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
     }
 
-   
+    .product-desc {
+        color: var(--text-gray);
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+        flex-grow: 1;
+    }
 
-  
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 1rem;
+    }
 
-    /* Cart Sidebar Styles */
+    .product-price {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+    }
+
+    .btn-details {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-dark);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        text-decoration: none;
+    }
+
+    .product-card:hover .btn-details {
+        background: var(--primary-blue);
+        color: white;
+        transform: rotate(45deg);
+        border-radius: 50%;
+    }
+    
+    .btn-details i {
+        transition: transform 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .product-card:hover .btn-details i {
+        transform: rotate(-45deg);
+    }
+
+    /* Swiper Styling - Modern Geometric Neon Arrows */
+    .swiper-button-next, .swiper-button-prev {
+        background: #0f172a;
+        width: 42px;
+        height: 70px;
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        color: white !important;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        border: 2px solid rgba(59, 130, 246, 0.3);
+        z-index: 100 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .swiper-button-next {
+        right: -15px !important;
+    }
+
+    .swiper-button-prev {
+        left: -15px !important;
+    }
+
+    .swiper-button-next:after, .swiper-button-prev:after {
+        display: none;
+    }
+
+    .swiper-button-next i, .swiper-button-prev i {
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+        background: var(--primary-blue);
+        color: white !important;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        transform: scale(1.05) translateY(-2px);
+    }
+
+    .swiper-button-next:hover i { transform: translateX(3px); }
+    .swiper-button-prev:hover i { transform: translateX(-3px); }
+    
+    @media (max-width: 1400px) {
+        .swiper-button-next { right: 0 !important; border-radius: 14px 0 0 14px; }
+        .swiper-button-prev { left: 0 !important; border-radius: 0 14px 14px 0; }
+    }
+
+    .swiper-pagination-bullet-active {
+        background: var(--primary-blue) !important;
+        width: 20px !important;
+        border-radius: 4px !important;
+    }
+
+    /* Cart Sidebar */
     .cart-sidebar {
-      width: 100%;
-      max-width: 390px;
-      height: 100%;
-      position: fixed;
-      top: 0;
-      right: -100%;
-      background: #fff;
-      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-      transition: right 0.3s ease;
-      z-index: 10000;
+        width: 100%;
+        max-width: 380px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        background: white;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10000;
     }
 
     .cart-sidebar.open {
-      right: 0;
+        right: 0;
     }
 
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 15px;
-    }
-          .card-body {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-    /* Alert Container Styles */
-    .alert-container {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 1100;
-      width: 350px;
+    /* WhatsApp Float */
+    .whatsapp-float {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 1000;
     }
 
-    @media (max-width: 576px) {
-      .swiper-button-next,
-      .swiper-button-prev {
-        width: 40px;
-        height: 40px;
-      }
-      .card img {
-        max-height: 150px; /* smaller height on mobile */
-      }
+    .whatsapp-btn {
+        background: #25d366;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .page-title { font-size: 2rem; }
+        .category-title { font-size: 1.5rem; }
+        .img-container { height: 180px; }
+        .whatsapp-btn span { display: none; }
+        .whatsapp-btn { padding: 15px; }
+        .swiper-button-next, .swiper-button-prev {
+            width: 35px;
+            height: 60px;
+        }
     }
   </style>
 </head>
 <body>
   {% include 'Includes/navbar.html' %}
+  {% include 'Includes/messages.html' %}
 
   <!-- Alert Container -->
-  <div class="alert-container">
-    <!-- Alerts will be inserted here -->
-  </div>
+  <div class="alert-container"></div>
 
-  <div class="container-fluid bg-light">
-    <div class="container px-2 px-md-3">
-      <div class="row py-4 py-md-1">
-        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="{% url 'home' %}" class="text-decoration-none fs-4">Home</a>
-            </li>
-            <li class="breadcrumb-item active fs-4" aria-current="page">Projects</li>
-          </ol>
-        </nav>
-      </div>
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="hero-accent"></div>
+    <div class="container position-relative z-2">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-3">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white text-decoration-none opacity-75">Home</a></li>
+          <li class="breadcrumb-item text-white opacity-50 active" aria-current="page">Projects</li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Innovation Projects</h1>
+      <p class="page-subtitle">Fully developed software, hardware, and AI systems ready for implementation and learning.</p>
     </div>
-  </div>
+  </section>
 
-{% for category in categories %}
-  {% if category.only_projects %}
-    <section id="{{ category.slug }}">
-      <div class="container px-0 px-md-3">
-        <div class="d-flex justify-content-between align-items-center">
-          <h1 class="fw-bold text-start mt-3">{{ category.name }}</h1>
-          <a href="{% url 'category_products' category.slug %}" class="btn btn-success">View All</a>
-        </div>
-        <div class="swiper" id="swiper-{{ category.slug }}">
-          <div class="swiper-wrapper">
-            {% for product in category.only_projects %}
-              <div class="swiper-slide">
-                <div class="card product-card" data-price="{{ product.price }}">
-                  <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
-                  <div class="card-body">
-                    <h2 class="card-title text-dark">{{ product.name }}</h2>
-                    <p class="card-text">{{ product.short_description|truncatechars:35 }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                      <a href="{% url 'product_detail' product.slug %}" class="btn btn-success">Show More</a>
-                      <h4 class="card-price">{{ product.price }}</h4>
+  <div class="main-content">
+    {% for category in categories %}
+      {% if category.only_projects %}
+        <section id="{{ category.slug }}" class="category-section {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
+          <div class="container">
+            <div class="category-header">
+              <h2 class="category-title">{{ category.name }}</h2>
+              <a href="{% url 'category_products' category.slug %}" class="btn-view-all">View All <i class="fa-solid fa-arrow-right-long ms-2"></i></a>
+            </div>
+
+            <div class="swiper" id="swiper-{{ category.slug }}">
+              <div class="swiper-wrapper">
+                {% for product in category.only_projects %}
+                  <div class="swiper-slide h-auto">
+                    <div class="product-card">
+                      <div class="img-container">
+                        <div class="img-bg-accent"></div>
+                        <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
+                      </div>
+                      <div class="product-info">
+                        <h3 class="product-title">{{ product.name }}</h3>
+                        <p class="product-desc">{{ product.short_description|truncatechars:100 }}</p>
+                        <div class="product-footer">
+                          <span class="product-price">Rs {{ product.price }}</span>
+                          <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details">
+                            <i class="fa-solid fa-arrow-right"></i>
+                          </a>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                {% empty %}
+                   <p class="text-muted">No projects available.</p>
+                {% endfor %}
               </div>
-            {% empty %}
-              <div class="swiper-slide">
-                <div class="card product-card text-center p-4">
-                  <p class="text-muted">No projects available in this category.</p>
-                </div>
-              </div>
-            {% endfor %}
+              <!-- Swiper Navigation -->
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-next d-none d-md-flex"><i class="fa-solid fa-chevron-right"></i></div>
+              <div class="swiper-button-prev d-none d-md-flex"><i class="fa-solid fa-chevron-left"></i></div>
+            </div>
           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </div>
-      </div>
-    </section>
-  {% endif %}
-{% endfor %}
-
-
+        </section>
+      {% endif %}
+    {% endfor %}
+  </div>
 
   <!-- Cart Sidebar -->
   <div class="cart-sidebar" id="cartSidebar">
-    <button class="btn-close float-end mt-3 me-3" id="closeCart"></button>
-    <div class="p-3">
-      <h5>Shopping Cart</h5>
+    <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-bold">My Cart</h5>
+      <button class="btn-close" id="closeCart"></button>
     </div>
-    <div id="cartItems" class="px-3"></div>
-    <div class="p-3">
-      <p><strong>Subtotal:</strong> Rs <span id="cartTotal">0</span> PKR</p>
-      <a class="btn btn-success w-100" href="{% url 'checkout' %}">Checkout</a>
+    <div class="p-4 overflow-auto" id="cartItems" style="height: calc(100% - 150px);">
+      <!-- Cart items -->
+    </div>
+    <div class="p-4 bg-light border-top position-absolute bottom-0 w-100">
+      <div class="d-flex justify-content-between mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span class="fw-bold text-primary">Rs <span id="cartTotal">0</span></span>
+      </div>
+      <a class="btn btn-primary w-100 py-2 fw-bold rounded-pill" href="{% url 'checkout' %}">CHECKOUT NOW</a>
     </div>
   </div>
 
- <div class="position-fixed bottom-0 end-0 m-4" style="z-index:1000;">
-  <!-- Small screens (icon only) -->
-  <a href="https://wa.me/923104505008" target="_blank"
-     class="btn btn-success rounded-circle shadow-lg d-flex align-items-center justify-content-center d-md-none"
-     style="width:60px; height:60px;">
-    <i class="bi bi-whatsapp fs-3 text-white"></i>
-  </a>
+  <!-- WhatsApp Float -->
+  <div class="whatsapp-float">
+    <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-btn">
+      <i class="bi bi-whatsapp fs-4"></i>
+      <span>Support Chat</span>
+    </a>
+  </div>
 
-  <!-- Medium & Large screens (icon + text) -->
-  <a href="https://wa.me/923104505008" target="_blank"
-     class="btn btn-success  shadow-lg d-none d-md-flex align-items-center px-3 py-2" >
-    <i class="bi bi-whatsapp fs-3 text-white me-2"></i>
-    <span class="fs-5 text-white fw-bold">Chat</span>
-  </a>
-</div>
-
+  {% include 'Includes/footer.html' %}
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
-    // Get CSRF token for AJAX requests
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === (name + '=')) {
-            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-            break;
-          }
-        }
-      }
-      return cookieValue;
-    }
-    const csrftoken = getCookie('csrftoken');
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.swiper').forEach(swiperElement => {
+          new Swiper(swiperElement, {
+            slidesPerView: 1,
+            spaceBetween: 25,
+            pagination: {
+                el: swiperElement.querySelector('.swiper-pagination'),
+                clickable: true,
+            },
+            navigation: {
+              nextEl: swiperElement.querySelector('.swiper-button-next'),
+              prevEl: swiperElement.querySelector('.swiper-button-prev'),
+            },
+            breakpoints: {
+              576: { slidesPerView: 1.5, spaceBetween: 25 },
+              768: { slidesPerView: 2, spaceBetween: 25 },
+              992: { slidesPerView: 3, spaceBetween: 30 },
+              1200: { slidesPerView: 4, spaceBetween: 30 },
+            },
+          });
+        });
+        
+        // Reveal animation setup
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)';
+        });
+        
+        const revealOnScroll = () => {
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < window.innerHeight * 0.9) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
 
-    // Back to Top Button
-    {% comment %} const backToTopButton = document.getElementById("backToTop");
-    window.onscroll = function () {
-      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        backToTopButton.style.display = "block";
-      } else {
-        backToTopButton.style.display = "none";
-      }
-    };
-    backToTopButton.onclick = function () {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }; {% endcomment %}
-
-    // Cart Functionality
-    const cartSidebar = document.getElementById("cartSidebar");
-    const cartItems = document.getElementById("cartItems");
-    const cartTotal = document.getElementById("cartTotal");
-
-    // Open Cart Sidebar when clicking the cart icons
-    document.querySelectorAll("[id^=cartIcon]").forEach(icon => {
-      icon.addEventListener("click", function (event) {
-        event.preventDefault();
-        openCart();
-        fetchCartItems();
-      });
-    });
-
-    // Close Sidebar
-    document.getElementById("closeCart").addEventListener("click", function () {
-      closeCart();
-    });
-
-    // Open Cart Sidebar
-    function openCart() {
-      cartSidebar.classList.add("open");
-      document.body.style.overflow = 'hidden';
-    }
-
-    // Close Cart Sidebar
-    function closeCart() {
-      cartSidebar.classList.remove("open");
-      document.body.style.overflow = '';
-    }
-
-    // Show alert message
-    function showAlert(message, type) {
-      const alertContainer = document.querySelector('.alert-container');
-      const alertId = 'alert-' + Date.now();
-      const alert = document.createElement('div');
-      alert.className = `alert alert-${type} alert-dismissible fade show shadow`;
-      alert.role = 'alert';
-      alert.id = alertId;
-      alert.innerHTML = `
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      `;
-      alertContainer.appendChild(alert);
-
-      // Auto dismiss after 5 seconds
-      setTimeout(() => {
-        const bsAlert = new bootstrap.Alert(alert);
-        bsAlert.close();
-      }, 5000);
-    }
-
-    // Add Item to Cart
-    document.querySelectorAll(".btn-add-to-cart").forEach(button => {
-      button.addEventListener("click", function () {
-        const productId = this.dataset.productId;
-        const name = this.dataset.name;
-        const price = parseFloat(this.dataset.price);
-        const image = this.dataset.image;
-        const quantity = 1;
-        addItemToCart(name, price, productId, quantity, null, image);
-        openCart();
-      });
-    });
-
-    function addItemToCart(name, price, productId, quantity, variantId, image) {
-      $.ajax({
-        url: "{% url 'add_to_cart' %}",
-        type: "POST",
-        headers: {
-          'X-CSRFToken': csrftoken
-        },
-        data: {
-          product_id: productId,
-          quantity: quantity,
-          variant_id: variantId
-        },
-        success: function(response) {
-          if (response.success) {
-            fetchCartItems();
-            showAlert("Item added to cart!", "success");
-          } else {
-            console.error("Error adding item:", response.message);
-            showAlert("Error: " + response.message, "danger");
-          }
-        },
-        error: function(xhr) {
-          console.error("Error adding item to cart:", xhr.status, xhr.statusText);
-          showAlert("An error occurred while adding the item to the cart.", "danger");
-        }
-      });
-    }
-
-    // Fetch and display cart items
-    function fetchCartItems() {
-      $.ajax({
-        url: "{% url 'get_cart' %}",
-        type: "GET",
-        success: function(response) {
-          cartItems.innerHTML = "";
-          let total = 0;
-          if (response.items && Array.isArray(response.items)) {
-            if (response.items.length === 0) {
-              cartItems.innerHTML = '<div class="text-center py-4"><p>Your cart is empty</p></div>';
-            } else {
-              response.items.forEach(item => {
-                const itemElement = document.createElement("div");
-                itemElement.classList.add("cart-item", "d-flex", "justify-content-between", "align-items-center", "mb-3", "p-2", "bg-light", "rounded");
-                itemElement.innerHTML = `
-                  <div class="d-flex align-items-center">
-                    <img src="${item.image || "{% static 'Images/download.jpeg' %}"}" alt="${item.name}" width="60" height="60" class="me-3 rounded">
-                    <div>
-                      <h6 class="mb-0">${item.name}</h6>
-                      <p class="mb-0">Rs ${item.price.toFixed(2)}</p>
-                    </div>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <button class="btn btn-sm btn-outline-secondary minus-btn" data-item-id="${item.id}">
-                      <i class="bi bi-dash"></i>
-                    </button>
-                    <span class="mx-2 quantity">${item.quantity}</span>
-                    <button class="btn btn-sm btn-outline-secondary plus-btn" data-item-id="${item.id}">
-                      <i class="bi bi-plus"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm delete-item ms-2" data-item-id="${item.id}">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </div>
-                `;
-                cartItems.appendChild(itemElement);
-                total += item.price * item.quantity;
-              });
+        // AJAX Cart Helpers
+        function getCookie(name) {
+          let cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+              }
             }
           }
-          cartTotal.textContent = total.toFixed(2);
-          updateCartCount();
-        },
-        error: function(xhr) {
-          console.error("Error fetching cart:", xhr.status, xhr.statusText);
-          showAlert("An error occurred while fetching the cart.", "danger");
+          return cookieValue;
         }
-      });
-    }
+        const csrftoken = getCookie('csrftoken');
 
-    // Update quantity in cart
-    cartItems.addEventListener("click", function(e) {
-      if (e.target.closest(".minus-btn") || e.target.closest(".plus-btn")) {
-        const button = e.target.closest("button");
-        const itemId = button.dataset.itemId;
-        const change = button.classList.contains("minus-btn") ? -1 : 1;
-        updateCartItemQuantity(itemId, change);
-      }
-      if (e.target.closest(".delete-item")) {
-        const itemId = e.target.closest(".delete-item").dataset.itemId;
-        removeCartItem(itemId);
-      }
-    });
+        const cartSidebar = document.getElementById("cartSidebar");
+        const cartItems = document.getElementById("cartItems");
+        const cartTotal = document.getElementById("cartTotal");
 
-    function updateCartItemQuantity(itemId, change) {
-      $.ajax({
-        url: "{% url 'update_cart' %}",
-        type: "POST",
-        headers: {
-          'X-CSRFToken': csrftoken
-        },
-        data: {
-          item_id: itemId,
-          change: change
-        },
-        success: function(response) {
-          if (response.success) {
-            fetchCartItems();
-            showAlert("Cart updated successfully!", "success");
-          } else {
-            console.error("Error updating item:", response.message);
-            showAlert("Error: " + response.message, "danger");
-          }
-        },
-        error: function(xhr) {
-          console.error("Error updating cart:", xhr.status, xhr.statusText);
-          showAlert("An error occurred while updating the cart.", "danger");
+        window.openCart = function() {
+          cartSidebar.classList.add("open");
+          document.body.style.overflow = 'hidden';
+          fetchCartItems();
         }
-      });
-    }
 
-    function removeCartItem(itemId) {
-      $.ajax({
-        url: "{% url 'remove_from_cart' %}",
-        type: "POST",
-        headers: {
-          'X-CSRFToken': csrftoken
-        },
-        data: {
-          item_id: itemId
-        },
-        success: function(response) {
-          if (response.success) {
-            fetchCartItems();
-            showAlert("Item removed from cart!", "success");
-          } else {
-            console.error("Error removing item:", response.message);
-            showAlert("Error: " + response.message, "danger");
-          }
-        },
-        error: function(xhr) {
-          console.error("Error removing item:", xhr.status, xhr.statusText);
-          showAlert("An error occurred while removing the item.", "danger");
+        window.closeCart = function() {
+          cartSidebar.classList.remove("open");
+          document.body.style.overflow = '';
         }
-      });
-    }
 
-    // Update cart count
-    function updateCartCount() {
-      fetch("{% url 'cart_count' %}")
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          document.querySelectorAll('.cartCount').forEach(el => {
-            el.textContent = data.count || 0;
-            el.style.display = data.count > 0 ? 'inline-block' : 'none';
+        document.getElementById("closeCart").addEventListener("click", closeCart);
+
+        function fetchCartItems() {
+          $.ajax({
+            url: "{% url 'get_cart' %}",
+            type: "GET",
+            success: function(response) {
+              cartItems.innerHTML = "";
+              let total = 0;
+              if (response.items && response.items.length > 0) {
+                response.items.forEach(item => {
+                  total += item.price * item.quantity;
+                  const itemEl = `
+                    <div class="d-flex align-items-center mb-3 p-2 bg-light rounded">
+                      <img src="${item.image}" width="50" height="50" class="rounded me-3">
+                      <div class="flex-grow-1">
+                        <h6 class="mb-0" style="font-size:0.9rem;">${item.name}</h6>
+                        <small class="text-primary fw-bold">Rs ${item.price}</small>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <button onclick="updateQty(${item.id}, -1)" class="btn btn-sm"><i class="bi bi-dash"></i></button>
+                        <span class="mx-2">${item.quantity}</span>
+                        <button onclick="updateQty(${item.id}, 1)" class="btn btn-sm"><i class="bi bi-plus"></i></button>
+                      </div>
+                    </div>
+                  `;
+                  cartItems.insertAdjacentHTML('beforeend', itemEl);
+                });
+              } else {
+                cartItems.innerHTML = '<p class="text-center py-5 text-muted">Your cart is empty.</p>';
+              }
+              cartTotal.textContent = total.toFixed(2);
+            }
           });
-        })
-        .catch(err => console.error('Error fetching cart count:', err));
-    }
+        }
 
-    // Real-Time Filtering Logic
-    document.addEventListener("DOMContentLoaded", function () {
-      const productCards = document.querySelectorAll(".product-card");
-      const priceRange = document.getElementById("priceRange");
-      const priceValue = document.getElementById("priceValue");
-
-      // Update price range display
-      if (priceRange && priceValue) {
-        priceRange.addEventListener("input", function () {
-          const maxPrice = this.value;
-          priceValue.innerText = `Rs 0 - Rs ${maxPrice}`;
-          filterProducts();
-        });
-      }
-
-      // Filter function
-      function filterProducts() {
-        const maxPrice = parseInt(priceRange?.value || 999999);
-        productCards.forEach(card => {
-          const price = parseFloat(card.getAttribute("data-price"));
-          const showCard = price <= maxPrice;
-          card.classList.toggle("filtered-out", !showCard);
-        });
-      }
-
-      // Initial calls
-      filterProducts();
-      fetchCartItems();
-      updateCartCount();
-    });
-
-    // Optionally refresh cart count every 10 seconds
-    setInterval(updateCartCount, 10000);
-
-    // Initialize Swiper for each category
-    document.querySelectorAll('.swiper').forEach(swiperElement => {
-      new Swiper(swiperElement, {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        navigation: {
-          nextEl: swiperElement.querySelector('.swiper-button-next'),
-          prevEl: swiperElement.querySelector('.swiper-button-prev'),
-        },
-        breakpoints: {
-          768: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          992: {
-            slidesPerView: 3,
-            spaceBetween: 30,
-          },
-        },
-      });
+        window.updateQty = function(id, change) {
+          $.ajax({
+            url: "{% url 'update_cart' %}",
+            type: "POST",
+            headers: {'X-CSRFToken': csrftoken},
+            data: {item_id: id, change: change},
+            success: function() { fetchCartItems(); }
+          });
+        }
     });
   </script>
 </body>

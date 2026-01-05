@@ -309,7 +309,7 @@ def productDetail(request, slug):
         'page_title': "Project Detail" if product.is_project else "Product Detail",
     }
 
-    return render(request, 'cart.html', context)
+    return render(request, 'detail.html', context)
 
 
 

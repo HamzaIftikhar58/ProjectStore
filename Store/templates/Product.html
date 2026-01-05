@@ -5,158 +5,508 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Project Store | Software, Hardware, AI & Robotics Projects</title>
+  
+  <title>Project Store | Software, Hardware, AI & Robotics Products</title>
+  
   <meta name="description" content="Explore our Project Store featuring software, hardware, AI, and robotics projects. From face recognition systems to automation tools, we deliver innovative solutions.">
   <meta name="keywords" content="project store, software projects, hardware projects, AI projects, robotics projects, automation systems, face recognition, IoT projects, machine learning, student projects, final year projects">
 
-  <!-- Bootstrap & Fonts -->
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 
   <style>
-    body { font-family: Arial, sans-serif; overflow-x: hidden; }
-    .container { width: 80%; margin: 0 auto; padding: 40px 0; }
-    h1 { font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 20px; }
-    .swiper { width: 100%; padding: 20px 0; }
-    .swiper-wrapper { display: flex; align-items: center; }
-    .card { border: 2px solid #ddd; border-radius: 8px; padding: 5px; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); text-align: center; width: 100%; }
-    .card img { width: 100%; height: 200px; object-fit: contain; border-radius: 8px; }
-    .card-body { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-    .card-title { font-size: 1.25rem; font-weight: bold; color: #007bff; text-align: start; }
-    .card-text { font-size: 1rem; color: #555; text-align: start; }
-    .card-price { font-size: 1.25rem; color: #dc3545; font-weight: bold; }
-    .btn-add-to-cart { background-color: #28a745; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
-    .btn-add-to-cart:hover { background-color: #218838; }
-    .swiper-button-next::after, .swiper-button-prev::after { content: ''; display: none; }
-    .swiper-button-next, .swiper-button-prev { position: absolute; top: 50%; transform: translateY(-50%); z-index: 10; background-color: white; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer;  }
-    .swiper-button-next:hover, .swiper-button-prev:hover { background-color: rgba(0, 0, 0, 0.8); }
-    .swiper-button-next i, .swiper-button-prev i { font-size: 24px; color: white; display: block; line-height: 1; padding: 5px; }
-    .cart-sidebar { width: 100%; max-width: 390px; height: 100%; position: fixed; top: 0; right: -100%; background: #fff; box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5); transition: right 0.3s ease; z-index: 10000; }
-    .cart-sidebar.open { right: 0; }
-    .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-    .alert-container { position: fixed; top: 20px; right: 20px; z-index: 1100; width: 350px; }
-    @media (max-width: 576px) {
-      .swiper-button-next, .swiper-button-prev { width: 40px; height: 40px; }
-      .card img { max-height: 150px; }
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #3b82f6;
+      --secondary-blue: #2563eb;
+      --accent-yellow: #fbbf24;
+      --text-dark: #1e293b;
+      --text-gray: #64748b;
+      --bg-light: #f8fafc;
+      --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Premium Balanced Hero */
+    .page-hero {
+        background: var(--gradient-hero);
+        padding: 50px 0;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 0;
+    }
+
+    .hero-accent {
+        position: absolute;
+        top: -30px;
+        right: -30px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(15, 23, 42, 0) 70%);
+        border-radius: 50%;
+    }
+
+    .page-title {
+        color: white;
+        font-weight: 800;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        color: rgba(255,255,255,0.7);
+        font-size: 1.05rem;
+        max-width: 550px;
+        font-weight: 300;
+    }
+
+    /* Categories Grid Spacing */
+    .category-section {
+        padding: 4rem 0;
+    }
+
+    .category-header {
+        margin-bottom: 2.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 2px solid #eef2f6;
+        padding-bottom: 1rem;
+    }
+
+    .category-title {
+        font-weight: 700;
+        font-size: 1.85rem;
+        color: var(--primary-dark);
+        margin: 0;
+    }
+
+    .btn-view-all {
+        padding: 10px 25px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        background: white;
+        color: var(--primary-dark);
+        border: 2px solid #eef2f6;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .btn-view-all:hover {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: translateY(-3px);
+    }
+
+    /* Premium Compact Product Cards */
+    .swiper {
+        padding: 10px 10px 50px !important;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 20px;
+        border: 1px solid rgba(0,0,0,0.03);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        position: relative;
+    }
+
+    .product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        border-color: rgba(59, 130, 246, 0.1);
+    }
+
+    .img-container {
+        width: 100%;
+        height: 200px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+    
+    .product-card img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        z-index: 2;
+    }
+
+    .img-bg-accent {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .product-card:hover img {
+        transform: scale(1.1) rotate(2deg);
+    }
+
+    .product-info {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+    }
+
+    .product-desc {
+        color: var(--text-gray);
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+        flex-grow: 1;
+    }
+
+    .product-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 1rem;
+    }
+
+    .product-price {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+    }
+
+    .btn-details {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: #f1f5f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-dark);
+        transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        text-decoration: none;
+    }
+
+    .product-card:hover .btn-details {
+        background: var(--primary-blue);
+        color: white;
+        transform: rotate(45deg);
+        border-radius: 50%;
+    }
+    
+    .btn-details i {
+        transition: transform 0.3s ease;
+        font-size: 0.9rem;
+    }
+    
+    .product-card:hover .btn-details i {
+        transform: rotate(-45deg);
+    }
+
+    /* Swiper Styling */
+    /* Swiper Styling - Modern Geometric Neon Arrows */
+    .swiper {
+        padding: 20px 0 60px !important; /* Reduced side padding to let cards breathe */
+        position: relative;
+    }
+
+    .swiper-button-next, .swiper-button-prev {
+        background: #0f172a;
+        width: 42px;
+        height: 70px; /* Vertical pill/rectangle shape */
+        border-radius: 14px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        color: white !important;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        border: 2px solid rgba(59, 130, 246, 0.3); /* Soft blue border */
+        z-index: 100 !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .swiper-button-next {
+        right: -15px !important;
+    }
+
+    .swiper-button-prev {
+        left: -15px !important;
+    }
+
+    /* Hide default Swiper icons */
+    .swiper-button-next:after, .swiper-button-prev:after {
+        display: none;
+    }
+
+    .swiper-button-next i, .swiper-button-prev i {
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+        background: var(--primary-blue);
+        color: white !important;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        transform: scale(1.05) translateY(-2px);
+    }
+
+    .swiper-button-next:hover i { transform: translateX(3px); }
+    .swiper-button-prev:hover i { transform: translateX(-3px); }
+    
+    @media (max-width: 1400px) {
+        .swiper-button-next { right: 0 !important; border-radius: 14px 0 0 14px; } /* Stick to edge on smaller screens */
+        .swiper-button-prev { left: 0 !important; border-radius: 0 14px 14px 0; }
+    }
+
+    @media (max-width: 768px) {
+        .swiper-button-next, .swiper-button-prev {
+            width: 35px;
+            height: 60px;
+        }
+    }
+
+    .swiper-pagination-bullet-active {
+        background: var(--primary-blue) !important;
+        width: 20px !important;
+        border-radius: 4px !important;
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar {
+        width: 100%;
+        max-width: 380px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        background: white;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 10000;
+    }
+
+    .cart-sidebar.open {
+        right: 0;
+    }
+
+    /* WhatsApp Float */
+    .whatsapp-float {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 1000;
+    }
+
+    .whatsapp-btn {
+        background: #25d366;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 50px;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+    }
+
+    @media (max-width: 768px) {
+        .page-title { font-size: 2rem; }
+        .category-title { font-size: 1.5rem; }
+        .img-container { height: 180px; }
+        .whatsapp-btn span { display: none; }
+        .whatsapp-btn { padding: 15px; }
     }
   </style>
 </head>
 <body>
   {% include 'Includes/navbar.html' %}
+  {% include 'Includes/messages.html' %}
 
   <!-- Alert Container -->
   <div class="alert-container"></div>
 
-  <div class="container-fluid bg-light">
-    <div class="container px-2 px-md-3">
-      <div class="row py-4 py-md-1">
-        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a href="{% url 'home' %}" class="text-decoration-none fs-4">Home</a>
-            </li>
-            <li class="breadcrumb-item active fs-4" aria-current="page">Products</li>
-          </ol>
-        </nav>
-      </div>
+  <!-- Hero Section -->
+  <section class="page-hero">
+    <div class="hero-accent"></div>
+    <div class="container position-relative z-2">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-3">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white text-decoration-none opacity-75">Home</a></li>
+          <li class="breadcrumb-item text-white opacity-50 active" aria-current="page">Products</li>
+        </ol>
+      </nav>
+      <h1 class="page-title">Hardware & DIY Kits</h1>
+      <p class="page-subtitle">Premium electronic components and ready-to-use kits for your next big innovation.</p>
     </div>
-  </div>
+  </section>
 
-{% for category in categories %}
-  {% if category.only_products %}
-    <section id="{{ category.slug }}">
-      <div class="container px-0 px-md-3">
-        <div class="d-flex justify-content-between align-items-center">
-          <h1 class="fw-bold text-start mt-3">{{ category.name }}</h1>
-          <a href="{% url 'category_products' category.slug %}" class="btn btn-success">View All</a>
-        </div>
-        <div class="swiper" id="swiper-{{ category.slug }}">
-          <div class="swiper-wrapper">
-            {% for product in category.products.all %}
-              {% if not product.is_project %}
-                <div class="swiper-slide">
-                  <div class="card product-card" data-price="{{ product.price }}">
-                    <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
-                    <div class="card-body">
-                      <h2 class="card-title text-dark">{{ product.name }}</h2>
-                      <p class="card-text">{{ product.short_description|truncatechars:35 }}</p>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <a href="{% url 'product_detail' product.slug %}" class="btn btn-success">Show More</a>
-                        <h4 class="card-price">{{ product.price }}</h4>
+  <div class="main-content">
+    {% for category in categories %}
+      {% if category.only_products %}
+        <section id="{{ category.slug }}" class="category-section {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
+          <div class="container">
+            <div class="category-header">
+              <h2 class="category-title">{{ category.name }}</h2>
+              <a href="{% url 'category_products' category.slug %}" class="btn-view-all">View All <i class="fa-solid fa-arrow-right-long ms-2"></i></a>
+            </div>
+
+            <div class="swiper" id="swiper-{{ category.slug }}">
+              <div class="swiper-wrapper">
+                {% for product in category.only_products %}
+                  <div class="swiper-slide h-auto">
+                    <div class="product-card">
+                      <div class="img-container">
+                        <div class="img-bg-accent"></div>
+                        <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
+                      </div>
+                      <div class="product-info">
+                        <h3 class="product-title">{{ product.name }}</h3>
+                        <p class="product-desc">{{ product.short_description|truncatechars:100 }}</p>
+                        <div class="product-footer">
+                          <span class="product-price">Rs {{ product.price }}</span>
+                          <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details">
+                            <i class="fa-solid fa-arrow-right"></i>
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              {% endif %}
-            {% empty %}
-              <p class="text-muted mt-3">No products available in this category.</p>
-            {% endfor %}
+                {% empty %}
+                   <p class="text-muted">No products available.</p>
+                {% endfor %}
+              </div>
+              <!-- Swiper Navigation -->
+              <div class="swiper-pagination"></div>
+              <div class="swiper-button-next d-none d-md-flex"><i class="fa-solid fa-chevron-right"></i></div>
+              <div class="swiper-button-prev d-none d-md-flex"><i class="fa-solid fa-chevron-left"></i></div>
+            </div>
           </div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-        </div>
-      </div>
-    </section>
-  {% endif %}
-{% endfor %}
-
+        </section>
+      {% endif %}
+    {% endfor %}
+  </div>
 
   <!-- Cart Sidebar -->
   <div class="cart-sidebar" id="cartSidebar">
-    <button class="btn-close float-end mt-3 me-3" id="closeCart"></button>
-    <div class="p-3">
-      <h5>Shopping Cart</h5>
+    <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
+      <h5 class="mb-0 fw-bold">My Cart</h5>
+      <button class="btn-close" id="closeCart"></button>
     </div>
-    <div id="cartItems" class="px-3"></div>
-    <div class="p-3">
-      <p><strong>Subtotal:</strong> Rs <span id="cartTotal">0</span> PKR</p>
-      <a class="btn btn-success w-100" href="{% url 'checkout' %}">Checkout</a>
+    <div class="p-4 overflow-auto" id="cartItems" style="height: calc(100% - 150px);">
+      <!-- Cart items -->
+    </div>
+    <div class="p-4 bg-light border-top position-absolute bottom-0 w-100">
+      <div class="d-flex justify-content-between mb-3">
+        <span class="fw-bold">Subtotal:</span>
+        <span class="fw-bold text-primary">Rs <span id="cartTotal">0</span></span>
+      </div>
+      <a class="btn btn-primary w-100 py-2 fw-bold rounded-pill" href="{% url 'checkout' %}">CHECKOUT NOW</a>
     </div>
   </div>
 
-  <div class="position-fixed bottom-0 end-0 m-4" style="z-index:1000;">
-    <!-- Small screens (icon only) -->
-    <a href="https://wa.me/923104505008" target="_blank"
-       class="btn btn-success rounded-circle shadow-lg d-flex align-items-center justify-content-center d-md-none"
-       style="width:60px; height:60px;">
-      <i class="bi bi-whatsapp fs-3 text-white"></i>
-    </a>
-
-    <!-- Medium & Large screens (icon + text) -->
-    <a href="https://wa.me/923104505008" target="_blank"
-       class="btn btn-success shadow-lg d-none d-md-flex align-items-center px-3 py-2">
-      <i class="bi bi-whatsapp fs-3 text-white me-2"></i>
-      <span class="fs-5 text-white fw-bold">Chat</span>
+  <!-- WhatsApp Float -->
+  <div class="whatsapp-float">
+    <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-btn">
+      <i class="bi bi-whatsapp fs-4"></i>
+      <span>Order via WhatsApp</span>
     </a>
   </div>
+
+  {% include 'Includes/footer.html' %}
 
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
-    // Initialize Swiper for each category
-    document.querySelectorAll('.swiper').forEach(swiperElement => {
-      new Swiper(swiperElement, {
-        slidesPerView: 1,
-        spaceBetween: 10,
-        navigation: {
-          nextEl: swiperElement.querySelector('.swiper-button-next'),
-          prevEl: swiperElement.querySelector('.swiper-button-prev'),
-        },
-        breakpoints: {
-          768: { slidesPerView: 2, spaceBetween: 20 },
-          992: { slidesPerView: 3, spaceBetween: 30 },
-        },
-      });
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.swiper').forEach(swiperElement => {
+          new Swiper(swiperElement, {
+            slidesPerView: 1,
+            spaceBetween: 25,
+            pagination: {
+                el: swiperElement.querySelector('.swiper-pagination'),
+                clickable: true,
+            },
+            navigation: {
+              nextEl: swiperElement.querySelector('.swiper-button-next'),
+              prevEl: swiperElement.querySelector('.swiper-button-prev'),
+            },
+            breakpoints: {
+              576: { slidesPerView: 1.5, spaceBetween: 25 },
+              768: { slidesPerView: 2, spaceBetween: 25 },
+              992: { slidesPerView: 3, spaceBetween: 30 },
+              1200: { slidesPerView: 4, spaceBetween: 30 },
+            },
+          });
+        });
+        
+        // Reveal animation setup
+        const cards = document.querySelectorAll('.product-card');
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)';
+        });
+        
+        const revealOnScroll = () => {
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < window.innerHeight * 0.9) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // trigger once on load
     });
   </script>
 </body>
