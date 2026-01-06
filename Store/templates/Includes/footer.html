@@ -81,6 +81,14 @@
     </div>
 </footer>
 
+<!-- Floating Chat Button Integration -->
+<div class="chat-widget-container">
+    <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-bubble">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with Support <span class="whatsapp-badge">Online</span></span>
+    </a>
+</div>
+
 <style>
     .footer-heading::after {
         content: '';
@@ -136,5 +144,47 @@
         .footer-heading::after { left: 50%; transform: translateX(-50%); }
         .social-links { justify-content: center; }
         .footer-links a:hover { transform: translateY(-3px); }
+    }
+
+    /* WhatsApp & Notifications */
+    .chat-widget-container {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .whatsapp-bubble {
+        background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.3);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        font-weight: 700;
+        border: 2px solid rgba(255,255,255,0.2);
+        animation: pulseHeart 2s infinite;
+    }
+
+    .whatsapp-bubble span { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .whatsapp-bubble i { font-size: 1.5rem; }
+    .whatsapp-badge { background: white; color: #128c7e; font-size: 0.65rem; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 800; }
+
+    @keyframes pulseHeart {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    
+    @media (max-width: 768px) {
+        .whatsapp-bubble span { display: none; }
+        .whatsapp-bubble { padding: 15px; border-radius: 50%; }
+        .whatsapp-bubble i { font-size: 1.2rem; }
     }
 </style>

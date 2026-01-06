@@ -15,27 +15,67 @@
 </section>
 
 <!-- Main Navbar -->
-<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-glass py-2 shadow-sm">
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-glass py-2">
     <div class="container-fluid px-lg-5">
         <!-- Logo -->
-        <a class="navbar-brand d-flex align-items-center m-0" href="{% url 'home' %}">
+        <a class="navbar-brand d-flex align-items-center m-0 me-lg-4" href="{% url 'home' %}">
             <img src="{% static 'Images/rename.png' %}" alt="Logo" class="logo-img">
         </a>
 
+        <!-- Universal Search (Desktop) -->
+        <form class="d-none d-lg-flex mx-auto search-form position-relative" action="{% url 'product' %}" method="GET" style="max-width: 500px; width: 100%;">
+            <div class="input-group dashboard-search border rounded-pill overflow-hidden bg-glass-input">
+                <span class="input-group-text bg-transparent border-0 ps-3"><i class="bi bi-search text-muted"></i></span>
+                <input type="text" name="q" class="form-control border-0 bg-transparent shadow-none" placeholder="Search projects, kits, components..." aria-label="Search" value="{{ request.GET.q }}">
+                <button class="btn btn-glass-search px-4 rounded-pill m-1" type="submit">Search</button>
+            </div>
+        </form>
+
         <!-- Right Side Icons & Toggle -->
-        <div class="d-flex align-items-center order-lg-2">
-            <!-- Cart Icon -->
-            <div class="me-2 me-lg-3 position-relative">
-                <a class="nav-link cart-icon-btn d-flex align-items-center p-2" href="{% url 'cart' %}">
-                    <i class="bi bi-cart2 fs-4"></i>
-                    <span class="cartCount badge rounded-pill bg-primary position-absolute top-0 start-100 translate-middle shadow-sm" style="display: none; font-size: 0.6rem;">0</span>
+        <div class="d-flex align-items-center order-lg-2 ms-lg-3">
+            
+            <!-- Mobile Search Toggle -->
+            <button class="btn btn-link text-dark d-lg-none me-2 p-1" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-expanded="false">
+                <i class="bi bi-search fs-4"></i>
+            </button>
+
+            <!-- Cart Dropdown Container -->
+            <div class="me-2 me-lg-3 position-relative dropdown">
+                <a class="nav-icon-glass dropdown-toggle no-caret" href="#" id="cartIconMain" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                    {% if request.user.is_authenticated %}
+                        <i class="bi bi-cart"></i>
+                    {% else %}
+                        <i class="bi bi-cart2"></i>
+                    {% endif %}
+                    <span class="cartCount badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle shadow-sm" style="display: none; font-size: 0.6rem; border: 2px solid white;">0</span>
                 </a>
+                
+                <!-- Mini Cart Content -->
+                <div class="dropdown-menu dropdown-menu-end shadow-lg border-0 mini-cart-dropdown p-0 mt-3 animate slideIn" aria-labelledby="cartIconMain">
+                    <div class="p-3 border-bottom d-flex justify-content-between align-items-center bg-light">
+                        <h6 class="mb-0 fw-bold">My Cart</h6>
+                        <span class="badge bg-primary rounded-pill small"><span class="cartCount">0</span> Items</span>
+                    </div>
+                    <div id="cartItemsDropdown" class="p-2 overflow-auto" style="max-height: 350px; min-width: 320px;">
+                        <!-- Cart Items dynamically injected here -->
+                    </div>
+                    <div id="cartFooterDropdown" class="p-3 bg-light border-top">
+                        <div class="d-flex justify-content-between mb-3">
+                            <span class="text-muted fw-bold">Subtotal:</span>
+                            <span class="fw-bold text-primary">Rs <span id="cartTotalDropdown">0</span></span>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'cart' %}" class="btn btn-outline-primary btn-sm rounded-pill py-2 fw-bold">VIEW FULL CART</a>
+                            <a href="{% url 'checkout' %}" class="btn btn-primary btn-sm rounded-pill py-2 fw-bold">CHECKOUT NOW</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Profile Dropdown -->
             <div class="dropdown me-2 me-lg-0">
-                <a class="nav-link dropdown-toggle profile-toggle d-flex align-items-center p-2" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle fs-4"></i>
+                <a class="nav-icon-glass dropdown-toggle profile-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3 animate slideIn p-2" aria-labelledby="profileDropdown" style="border-radius: 12px; min-width: 200px;">
                     {% if request.user.is_authenticated %}
@@ -54,14 +94,26 @@
             </div>
 
             <!-- Mobile Toggle -->
-            <button class="navbar-toggler border-0 shadow-none ms-2 p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-                <span class="navbar-toggler-icon" style="width: 1.25rem; height: 1.25rem;"></span>
+            <button class="navbar-toggler border-0 shadow-none ms-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+                <div class="nav-icon-glass">
+                    <span class="navbar-toggler-icon" style="width: 1.25rem; height: 1.25rem; background-size: 80%;"></span>
+                </div>
             </button>
         </div>
 
+        <!-- Mobile Search Bar (Collapsible) -->
+        <div class="collapse w-100 mt-2 d-lg-none" id="mobileSearch">
+            <form class="d-flex search-form" action="{% url 'product' %}" method="GET">
+                <div class="input-group border rounded-pill overflow-hidden bg-white">
+                    <input type="text" name="q" class="form-control border-0 shadow-none" placeholder="Search..." aria-label="Search">
+                    <button class="btn btn-primary px-3" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+        </div>
+
         <!-- Links -->
-        <div class="collapse navbar-collapse" id="navbarMain">
-            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 py-3 py-lg-0">
+        <div class="collapse navbar-collapse flex-grow-0" id="navbarMain">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 py-3 py-lg-0">
                 <li class="nav-item">
                     <a class="nav-link px-lg-3 py-2 fw-medium nav-hover-effect" href="{% url 'home' %}">Home</a>
                 </li>
@@ -96,9 +148,37 @@
     }
 
     .bg-glass {
-        background: rgba(255, 255, 255, 0.95) !important;
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.8) !important;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    }
+    
+    .bg-glass-input {
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: all 0.3s ease;
+    }
+    
+    .bg-glass-input:focus-within {
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .btn-glass-search {
+        background: linear-gradient(135deg, var(--nav-accent), #2563eb);
+        color: white;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+    }
+    
+    .btn-glass-search:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 15px rgba(59, 130, 246, 0.4);
+        color: white;
     }
 
     .logo-img {
@@ -112,9 +192,69 @@
         transform: scale(1.05);
     }
 
+    /* Glassmorphic Nav Icons */
+    .nav-icon-glass {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--nav-text);
+        font-size: 1.25rem;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-decoration: none;
+        position: relative;
+    }
+
+    .nav-icon-glass:hover, .nav-icon-glass[aria-expanded="true"] {
+        background: white;
+        color: var(--nav-accent);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .nav-icon-glass i {
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-icon-glass:hover i {
+        transform: scale(1.1);
+    }
+
     @media (max-width: 991px) {
         .logo-img { height: 45px; }
-        .navbar-nav { background: white; border-radius: 15px; margin-top: 1rem; padding: 1rem !important; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        
+        .navbar-collapse {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(15px);
+            margin-top: 15px;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        
+        .nav-link {
+            padding: 12px 20px !important;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            font-weight: 600 !important;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background: #eff6ff;
+            color: var(--nav-accent) !important;
+        }
+        
+        #mobileSearch .input-group {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05) !important;
+        }
     }
 
     .nav-hover-effect {
@@ -124,32 +264,21 @@
         display: inline-block;
     }
 
-    .nav-hover-effect::before {
-        content: '';
-        position: absolute;
-        width: 0;
-        height: 2px;
-        bottom: 0;
-        left: 50%;
-        background-color: var(--nav-accent);
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-    }
-
     @media (min-width: 992px) {
-        .nav-hover-effect:hover::before { width: 60%; }
+        .nav-hover-effect::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 6px;
+            left: 50%;
+            background-color: var(--nav-accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            opacity: 0;
+        }
+        .nav-hover-effect:hover::before { width: 60%; opacity: 1; }
         .nav-hover-effect:hover { color: var(--nav-accent) !important; }
-    }
-
-    .cart-icon-btn, .profile-toggle {
-        color: var(--nav-text);
-        transition: all 0.2s ease;
-        border-radius: 50%;
-    }
-
-    .cart-icon-btn:hover, .profile-toggle:hover {
-        background-color: #f1f5f9;
-        color: var(--nav-accent);
     }
 
     .focus-none:focus { box-shadow: none; }
@@ -168,4 +297,163 @@
     /* Dropdown Hover State */
     .dropdown-item:active { background-color: var(--nav-accent); }
     .dropdown-item:hover { background-color: #f1f5f9; color: var(--nav-accent); transform: translateX(5px); transition: all 0.2s ease; }
+
+    /* Mini Cart UI */
+    .mini-cart-dropdown {
+        border-radius: 20px !important;
+        overflow: hidden;
+        border: 1px solid rgba(0,0,0,0.04);
+        margin-top: 15px !important;
+    }
+    .no-caret::after { display: none !important; }
+    
+    .mini-cart-item {
+        transition: all 0.2s ease;
+        border-radius: 12px;
+    }
+    .mini-cart-item:hover {
+        background-color: #f8fafc;
+    }
+    .qty-btn-mini {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        background: white;
+        border: 1px solid #e2e8f0;
+        font-size: 0.75rem;
+        transition: all 0.2s;
+    }
+    .qty-btn-mini:hover {
+        border-color: var(--nav-accent);
+        color: var(--nav-accent);
+    }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    updateCartCount();
+
+    // Fetch and populate mini-cart whenever its dropdown is shown
+    const cartIcon = document.getElementById('cartIconMain');
+    if (cartIcon) {
+        cartIcon.addEventListener('shown.bs.dropdown', function () {
+            fetchMiniCart();
+        });
+    }
+
+    // Global helper to open the cart dropdown from other scripts
+    window.openCart = function() {
+        const cartIcon = document.getElementById('cartIconMain');
+        if (cartIcon) {
+            const dropdown = bootstrap.Dropdown.getOrCreateInstance(cartIcon);
+            dropdown.show();
+            fetchMiniCart();
+        }
+    };
+});
+
+/**
+ * Updates all .cartCount badges on the page
+ */
+window.updateCartCount = function() {
+    fetch("{% url 'cart_count' %}")
+        .then(response => response.json())
+        .then(data => {
+            const badges = document.querySelectorAll('.cartCount');
+            badges.forEach(badge => {
+                badge.textContent = data.count || 0;
+                badge.style.display = data.count > 0 ? 'block' : 'none';
+            });
+        })
+        .catch(err => console.error('Error syncing cart:', err));
+};
+
+/**
+ * Fetches cart information and renders the mini-dropdown content
+ */
+window.fetchMiniCart = function() {
+    const itemsList = document.getElementById('cartItemsDropdown');
+    const totalDisplay = document.getElementById('cartTotalDropdown');
+    if (!itemsList) return;
+
+    itemsList.innerHTML = '<div class="text-center py-4"><div class="spinner-border spinner-border-sm text-primary" role="status"></div></div>';
+
+    fetch("{% url 'get_cart' %}")
+        .then(response => response.json())
+        .then(data => {
+            itemsList.innerHTML = '';
+            let total = 0;
+            
+            if (data.items && data.items.length > 0) {
+                data.items.forEach(item => {
+                    total += item.price * item.quantity;
+                    const itemHtml = `
+                        <div class="mini-cart-item d-flex align-items-center p-2 mb-2 border-bottom border-light">
+                            <img src="${item.image}" width="50" height="50" class="rounded border bg-white me-3" style="object-fit: contain;">
+                            <div class="flex-grow-1 overflow-hidden">
+                                <h6 class="mb-0 small fw-bold text-truncate">${item.name}</h6>
+                                <div class="d-flex justify-content-between align-items-center mt-1">
+                                    <span class="text-primary fw-bold extra-small">Rs ${item.price}</span>
+                                    <div class="d-flex align-items-center">
+                                        <button onclick="updateMiniQty(${item.id}, -1)" class="qty-btn-mini"><i class="bi bi-dash"></i></button>
+                                        <span class="mx-2 small fw-bold">${item.quantity}</span>
+                                        <button onclick="updateMiniQty(${item.id}, 1)" class="qty-btn-mini"><i class="bi bi-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    itemsList.insertAdjacentHTML('beforeend', itemHtml);
+                });
+                totalDisplay.textContent = total.toFixed(2);
+                document.getElementById('cartFooterDropdown').style.display = 'block';
+            } else {
+                itemsList.innerHTML = '<div class="text-center py-5"><i class="bi bi-cart-x fs-2 text-muted opacity-25"></i><p class="small text-muted mb-0 mt-2">Your cart is empty</p></div>';
+                document.getElementById('cartFooterDropdown').style.display = 'none';
+            }
+            updateCartCount();
+        })
+        .catch(err => {
+            console.error('Error fetching mini cart:', err);
+            itemsList.innerHTML = '<div class="text-center py-3 text-danger small">Error loading cart</div>';
+        });
+};
+
+/**
+ * Handles quantity changes from within the mini-dropdown
+ */
+window.updateMiniQty = function(id, change) {
+    const formData = new FormData();
+    formData.append('item_id', id);
+    formData.append('change', change);
+    
+    fetch("{% url 'update_cart' %}", {
+        method: 'POST',
+        headers: { 'X-CSRFToken': getCookie('csrftoken') },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) fetchMiniCart();
+    });
+};
+
+// Helper for CSRF
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>

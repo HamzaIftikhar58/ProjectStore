@@ -16,163 +16,552 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            overflow-x: hidden;
-        }
-        .filtered-out {
-            display: none !important;
-        }
-        .cart-sidebar {
-            width: 100%;
-            max-width: 390px;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            right: -100%;
-            background: #fff;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-            transition: right 0.3s ease;
-            z-index: 10000;
-        }
-        .cart-sidebar.open {
-            right: 0;
-        }
-/* Images: fixed height with crop */
-.card-img-top {
-  width: 100%;
-  height: 200px;       /* fixed height */
-  object-fit: contain;   /* crops but keeps uniform look */
-}
-/* Force swiper/grid cards to align evenly */
-.product-card {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.card {
-  height: 100%; /* all cards same height */
-  display: flex;
-  flex-direction: column;
-}
-       .card-body {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.card-body h5 {
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-        .btn-add-to-cart {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .btn-add-to-cart:hover {
-            background-color: #218838;
-        }
-        @media (max-width: 767px) {
-            .card-img-top {
-        max-height: 150px; /* shrink on smaller devices */
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #3b82f6;
+      --secondary-blue: #2563eb;
+      --accent-yellow: #fbbf24;
+      --text-dark: #1e293b;
+      --text-gray: #64748b;
+      --bg-light: #f8fafc;
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.4);
+      --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
-        }
-    </style>
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f1f5f9;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+
+    .category-hero {
+        background: var(--gradient-hero);
+        padding: 60px 0;
+        color: white;
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .category-hero::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+        animation: floatOrb 10s ease-in-out infinite;
+    }
+
+    @keyframes floatOrb {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(-30px, 40px); }
+    }
+
+    .breadcrumb-item a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .breadcrumb-item a:hover { color: white; }
+    .breadcrumb-item.active { color: white; font-weight: 600; }
+    .breadcrumb-divider { color: rgba(255,255,255,0.4); margin: 0 10px; }
+
+    /* Filter Sidebar */
+    .filter-card {
+        background: white;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: var(--shadow-md);
+        border: 1px solid rgba(0,0,0,0.05);
+        position: sticky;
+        top: 100px;
+    }
+
+    .filter-title {
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 25px;
+        color: var(--primary-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .range-label {
+        font-weight: 700;
+        font-size: 0.9rem;
+        color: var(--text-gray);
+        margin-bottom: 15px;
+        display: block;
+    }
+
+    /* Product Cards */
+    .product-grid-item {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: cardAppear 0.6s ease forwards;
+    }
+
+    @keyframes cardAppear {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .premium-product-card {
+        background: white;
+        border-radius: 24px;
+        border: 1px solid rgba(0,0,0,0.05);
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .premium-product-card:hover {
+        transform: translateY(-10px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .card-img-wrapper {
+        position: relative;
+        padding-top: 100%; /* 1:1 Aspect Ratio */
+        overflow: hidden;
+        background: #f8fafc;
+    }
+
+    .card-img-wrapper img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 20px;
+        transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .premium-product-card:hover .card-img-wrapper img {
+        transform: scale(1.1);
+    }
+
+    .card-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(10px);
+        padding: 5px 12px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+        z-index: 2;
+        box-shadow: var(--shadow-sm);
+    }
+
+    .badge-discount {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #ef4444;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        z-index: 2;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        animation: pulseDiscount 2s infinite;
+    }
+
+    @keyframes pulseDiscount {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .original-price {
+        font-size: 0.9rem;
+        text-decoration: line-through;
+        color: var(--text-gray);
+        margin-right: 8px;
+        font-weight: 500;
+    }
+
+    .premium-card-body {
+        padding: 24px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-cat {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--primary-blue);
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .product-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        color: var(--primary-dark);
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        height: 3.2em;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
+    }
+
+    .product-price-row {
+        margin-top: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+    }
+
+    .price-tag {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--primary-dark);
+    }
+
+    .btn-view-product {
+        width: 45px;
+        height: 45px;
+        border-radius: 12px;
+        background: var(--bg-light);
+        color: var(--primary-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        text-decoration: none;
+    }
+
+    .btn-view-product:hover {
+        background: var(--primary-dark);
+        color: white;
+        transform: rotate(90deg);
+    }
+
+    /* New Filter Option Styles */
+    .filter-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+        padding: 5px 0;
+    }
+
+    .filter-check {
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        border: 2px solid #e2e8f0;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .filter-check:checked {
+        background-color: var(--primary-blue);
+        border-color: var(--primary-blue);
+    }
+
+    .filter-label {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-dark);
+        cursor: pointer;
+        margin-bottom: 0;
+    }
+
+    .filter-check:checked + .filter-label {
+        color: var(--primary-blue);
+        font-weight: 700;
+    }
+
+    .filtered-out { display: none !important; }
+
+    .notification {
+        position: fixed;
+        bottom: 30px;
+        left: 30px;
+        background: white;
+        color: var(--primary-dark);
+        padding: 20px 30px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        box-shadow: var(--shadow-lg);
+        border: 1px solid rgba(0,0,0,0.05);
+        font-weight: 700;
+        transform: translateY(150%) scale(0.9);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 10001;
+    }
+
+    .notification.show { transform: translateY(0) scale(1); }
+
+    @media (max-width: 768px) {
+        .category-hero { padding: 40px 0; }
+        .category-hero h1 { font-size: 2rem; }
+        .filter-card { position: relative; top: 0; margin-bottom: 30px; }
+        .notification { left: 20px; right: 20px; bottom: 80px; }
+    }
+
+    /* Glassmorphic Pagination */
+    .glass-pagination .page-link {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: var(--primary-dark);
+        margin: 0 4px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        min-width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .glass-pagination .page-item.active .page-link {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: scale(1.1);
+        box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .glass-pagination .page-link:hover {
+        background: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        color: var(--primary-blue);
+    }
+
+    .glass-pagination .page-item.disabled .page-link {
+        opacity: 0.5; 
+        background: rgba(255, 255, 255, 0.3);
+        transform: none; 
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+    
+    .glass-pagination .page-nav-text {
+        width: auto;
+        padding: 0 20px;
+        border-radius: 50px;
+    }
+  </style>
 </head>
 <body>
     {% include 'Includes/navbar.html' %}
 
-    <div class="container-fluid bg-light">
-        <div class="container px-2 px-md-3">
-            <div class="row py-4">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="{% url 'home' %}" class="text-decoration-none fs-4">Home</a>
-                        </li>
-                        <li class="breadcrumb-item active fs-4">{{ category.name }}</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+    <!-- Notification div -->
+    <div id="notification" class="notification">
+      <i class="fas fa-check-circle"></i>
+      <span id="notification-message"></span>
     </div>
 
-    <div class="container px-2 px-md-2">
-        <div class="row">
-            <!-- Filters -->
-            <div class="col-md-2 mt-0">
-                <h3 class="fw-bold">Filters</h3>
-                <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#filterSection">
-                    <i class="bi bi-funnel"></i> Filter
-                </button>
+    <!-- Category Hero Header -->
+    <header class="category-hero">
+        <div class="container container-fluid">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-2">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'home' %}">Home</a>
+                    </li>
+                    <span class="breadcrumb-divider">/</span>
+                    <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+                </ol>
+            </nav>
+            <h1 class="fw-800 display-4 mb-0">{{ category.name }} <span class="text-primary-blue">Projects</span></h1>
+        </div>
+    </header>
 
-                <div class="collapse d-md-block mt-3" id="filterSection">
-                    <div class="filter-sidebar">
-                        <!-- Price -->
-                        <h6 class="mt-3 fw-bold">Price</h6>
-                        <input type="range" class="form-range" id="priceRange" min="0" max="100000" step="100" value="100000">
-                        <p>Price: <span id="priceValue">Rs 0 - Rs 100,000</span> PKR</p>
-
-                        <!-- Categories -->
-                        <!-- Uncomment if categories filter is needed -->
-                        <!--
-                        <h6 class="mt-3 fw-bold">Categories</h6>
-                        {% for category in categories %}
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" 
-                                   id="cat-{{ category.id }}" 
-                                   data-filter="category" 
-                                   value="{{ category.name }}">
-                            <label class="form-check-label" for="cat-{{ category.id }}">
-                                {{ category.name }}
-                            </label>
+    <div class="container mb-5">
+        <div class="row g-4">
+            <!-- Sidebar Filters -->
+            <aside class="col-lg-3">
+                <div class="filter-card">
+                    <h4 class="filter-title">
+                        <i class="bi bi-funnel-fill text-primary-blue"></i> Refine Results
+                    </h4>
+                    
+                    <div class="filter-section">
+                        <label class="range-label">Max Price: <span id="priceDisplay" class="text-primary-blue fw-800">Rs 100,000</span></label>
+                        <input type="range" class="form-range" id="priceRange" min="0" max="100000" step="500" value="100000">
+                        <div class="d-flex justify-content-between mt-1 opacity-50 small fw-bold">
+                            <span>Rs 0</span>
+                            <span>Rs 100k</span>
                         </div>
+                    </div>
+
+                    <div class="filter-section mt-5">
+                        <h6 class="range-label mb-3">Availability</h6>
+                        <div class="filter-option mb-2">
+                            <input type="checkbox" class="filter-check" id="inStock" data-filter="stock" value="in">
+                            <label for="inStock" class="filter-label">In Stock Only</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section mt-4">
+                        <h6 class="range-label mb-3">Project Type</h6>
+                        <div class="filter-option mb-2">
+                            <input type="checkbox" class="filter-check" id="typeProject" data-filter="type" value="project">
+                            <label for="typeProject" class="filter-label">Software Projects</label>
+                        </div>
+                        <div class="filter-option mb-2">
+                            <input type="checkbox" class="filter-check" id="typeProduct" data-filter="type" value="product">
+                            <label for="typeProduct" class="filter-label">Hardware Products</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-section mt-4">
+                        <h6 class="range-label mb-3">Special Offers</h6>
+                        <div class="filter-option mb-2">
+                            <input type="checkbox" class="filter-check" id="onSale" data-filter="discount" value="true">
+                            <label for="onSale" class="filter-label">On Sale Items</label>
+                        </div>
+                    </div>
+
+                    <!-- Category filter (Hidden but logic remains) -->
+                    <div class="d-none">
+                        {% for cat in categories %}
+                        <input type="checkbox" data-filter="category" value="{{ cat.name }}">
                         {% endfor %}
-                        -->
                     </div>
                 </div>
-            </div>
+            </aside>
 
-            <!-- Product List -->
-            <div class="col-md-10">
-                <h2 class="text-start mb-4">{{ category.name }} Products</h2>
-                <div class="row mt-3">
+            <!-- Product Grid -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4 px-2">
+                    <h5 class="fw-700 mb-0">Showing {{ products|length }} results for "{{ category.name }}"</h5>
+                    <div class="d-none d-md-block">
+                        <span class="text-gray small fw-600">Sort by: <span class="text-primary-dark">Newest First</span></span>
+                    </div>
+                </div>
+
+                <div class="row g-4" id="productGrid">
                     {% if products %}
                     {% for product in products %}
-                    <div class="col-md-4 mb-4 product-card"
+                    <div class="col-md-6 col-xl-4 product-grid-item"
                          data-price="{{ product.price }}"
+                         data-category="{{ product.category.name }}"
                          data-stock="{% if product.stock > 0 %}in{% else %}out{% endif %}"
-                         data-category="{{ product.category.name }}">
-                        <div class="card">
-                            <img src="{{ product.main_image.url }}" class="card-img-top" alt="{{ product.get_alt_text }}">
-                            <div class="card-body text-start">
-                                <h5>{{ product.name }}</h5>
-                                <p>{{ product.short_description | truncatechars:30 }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    {% comment %} <button class="btn btn-add-to-cart"
-                                            data-product-id="{{ product.id }}"
-                                            data-name="{{ product.name }}"
-                                            data-price="{{ product.price }}"
-                                            data-image="{{ product.main_image.url }}">Add to Cart</button> {% endcomment %}
-                                    <a href="{% url 'product_detail' product.slug %}" class="btn btn-success">Show More</a>
-                                    <h4 class="text-danger mt-1 fw-bold">{{ product.price }}</h4>
+                         data-type="{% if product.is_project %}project{% else %}product{% endif %}"
+                         data-discount="{% if product.discount_percentage > 0 %}true{% else %}false{% endif %}">
+                        <div class="premium-product-card">
+                            <div class="card-img-wrapper">
+                                <span class="card-badge">Verified Project</span>
+                                {% if product.discount_percentage > 0 %}
+                                <span class="badge-discount">-{{ product.discount_percentage }}% OFF</span>
+                                {% endif %}
+                                <a href="{% url 'product_detail' product.slug %}">
+                                    <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
+                                </a>
+                            </div>
+                            <div class="premium-card-body">
+                                <span class="product-cat">{{ product.category.name }}</span>
+                                <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none">
+                                    <h3 class="product-title">{{ product.name }}</h3>
+                                </a>
+                                <div class="product-price-row">
+                                    <div class="price-container">
+                                        {% if product.discount_percentage > 0 %}
+                                        <span class="original-price">Rs {{ product.price }}</span>
+                                        <span class="price-tag text-danger">Rs {{ product.final_price }}</span>
+                                        {% else %}
+                                        <span class="price-tag">Rs {{ product.price }}</span>
+                                        {% endif %}
+                                    </div>
+                                    <a href="{% url 'product_detail' product.slug %}" class="btn-view-product" title="View Project">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {% endfor %}
+                <!-- Pagination Controls -->
+                {% if products.has_other_pages %}
+                <div class="d-flex justify-content-center mt-5">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination glass-pagination">
+                            {% if products.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link page-nav-text" href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                                    <i class="fas fa-chevron-left small me-2"></i> Prev
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link page-nav-text"><i class="fas fa-chevron-left small me-2"></i> Prev</span>
+                            </li>
+                            {% endif %}
+
+                            {% for i in products.paginator.page_range %}
+                                {% if products.number == i %}
+                                <li class="page-item active" aria-current="page">
+                                    <span class="page-link">{{ i }}</span>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if products.has_next %}
+                            <li class="page-item">
+                                <a class="page-link page-nav-text" href="?page={{ products.next_page_number }}" aria-label="Next">
+                                    Next <i class="fas fa-chevron-right small ms-2"></i>
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link page-nav-text">Next <i class="fas fa-chevron-right small ms-2"></i></span>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
                     {% else %}
-                    <div class="col-12">
-                        <div class="alert alert-info text-center">
-                            No products found in this category.
+                    <div class="col-12 py-5 text-center">
+                        <div class="bg-white rounded-5 p-5 shadow-sm">
+                            <i class="bi bi-box-seam display-1 text-gray opacity-25 mb-4"></i>
+                            <h2 class="fw-800">No projects found</h2>
+                            <p class="text-gray">We couldn't find any products in this category at the moment.</p>
+                            <a href="{% url 'home' %}" class="btn btn-dark rounded-4 px-4 py-2 mt-3">Back to Store</a>
                         </div>
                     </div>
                     {% endif %}
@@ -181,35 +570,7 @@
         </div>
     </div>
 
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <button class="btn-close float-end mt-3" id="closeCart"></button>
-        <div class="p-3">
-            <h5>Shopping Cart</h5>
-        </div>
-        <div id="cartItems" class="px-3"></div>
-        <div class="p-3">
-            <p><strong>Subtotal:</strong> Rs <span id="cartTotal">0</span></p>
-            <a class="btn btn-success w-100" href="{% url 'checkout' %}">Checkout</a>
-        </div>
-    </div>
-
-  <div class="position-fixed bottom-0 end-0 m-4" style="z-index:1000;">
-  <!-- Small screens (icon only) -->
-  <a href="https://wa.me/923104505008" target="_blank"
-     class="btn btn-success rounded-circle shadow-lg d-flex align-items-center justify-content-center d-md-none"
-     style="width:60px; height:60px;">
-    <i class="bi bi-whatsapp fs-3 text-white"></i>
-  </a>
-
-  <!-- Medium & Large screens (icon + text) -->
-  <a href="https://wa.me/923104505008" target="_blank"
-     class="btn btn-success shadow-lg d-none d-md-flex align-items-center px-3 py-2">
-    <i class="bi bi-whatsapp fs-3 text-white me-2"></i>
-    <span class="fs-5 text-white fw-bold">Chat</span>
-  </a>
-</div>
-
+    {% include 'Includes/footer.html' %}
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -232,71 +593,45 @@
         }
         const csrftoken = getCookie('csrftoken');
 
-        // Back to Top Button
-        {% comment %} const backToTopButton = document.getElementById("backToTop");
-        window.onscroll = function () {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                backToTopButton.style.display = "block";
+        // Notification function
+        let notificationTimeout;
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            if (!notification) return;
+
+            clearTimeout(notificationTimeout);
+            
+            notification.className = 'notification';
+            if (isError) {
+                notification.classList.add('error');
+                notification.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>' + message + '</span>';
             } else {
-                backToTopButton.style.display = "none";
+                notification.innerHTML = '<i class="fas fa-check-circle"></i><span>' + message + '</span>';
             }
-        };
-        backToTopButton.onclick = function () {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
-        }; {% endcomment %}
+            
+            notification.offsetHeight; 
+            notification.classList.add('show');
+            
+            notificationTimeout = setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
 
-        // Cart Functionality
-        const cartSidebar = document.getElementById("cartSidebar");
-        const cartItems = document.getElementById("cartItems");
-        const cartTotal = document.getElementById("cartTotal");
-
-        // Open Cart Sidebar when clicking the cart icons
-        document.querySelectorAll("[id^=cartIcon]").forEach(icon => {
-            icon.addEventListener("click", function (event) {
-                event.preventDefault();
-                openCart();
-                fetchCartItems();
-            });
-        });
-
-        // Close Sidebar
-        document.getElementById("closeCart").addEventListener("click", function () {
-            closeCart();
-        });
-
-        // Open Cart Sidebar
         function openCart() {
-            cartSidebar.classList.add("open");
+          const cartIcon = document.getElementById('cartIconMain');
+          if (cartIcon) {
+            const dropdown = bootstrap.Dropdown.getOrCreateInstance(cartIcon);
+            dropdown.show();
+            if (window.fetchMiniCart) window.fetchMiniCart();
+          }
         }
 
-        // Close Cart Sidebar
-        function closeCart() {
-            cartSidebar.classList.remove("open");
-        }
-
-        // Add Item to Cart via AJAX
-        document.querySelectorAll(".btn-add-to-cart").forEach(button => {
-            button.addEventListener("click", function () {
-                const productId = this.dataset.productId;
-                const name = this.dataset.name;
-                const price = parseFloat(this.dataset.price);
-                const image = this.dataset.image;
-                const quantity = 1;
-                addItemToCart(name, price, productId, quantity, null, image);
-                openCart();
-            });
-        });
-
+        // Add Item to Cart (Premium Feedback)
         function addItemToCart(name, price, productId, quantity, variantId, image) {
             $.ajax({
                 url: "{% url 'add_to_cart' %}",
                 type: "POST",
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
+                headers: { 'X-CSRFToken': csrftoken },
                 data: {
                     product_id: productId,
                     quantity: quantity,
@@ -304,168 +639,62 @@
                 },
                 success: function(response) {
                     if (response.success) {
-                        fetchCartItems();
-                        updateCartCount();
-                        alert("Item added to cart!");
+                        if (window.fetchMiniCart) window.fetchMiniCart();
+                        if (window.updateCartCount) window.updateCartCount();
+                        showNotification(name + " added to your cart!");
+                        openCart();
                     } else {
-                        console.error("Error adding item:", response.message);
-                        alert("Error: " + response.message);
+                        showNotification(response.message || "Error adding item.", true);
                     }
                 },
-                error: function(xhr) {
-                    console.error("Error adding item to cart:", xhr.status, xhr.statusText);
-                    alert("An error occurred while adding the item to the cart.");
+                error: function() {
+                    showNotification("An error occurred. Please try again.", true);
                 }
             });
         }
 
-        // Fetch and display cart items
-        function fetchCartItems() {
-            $.ajax({
-                url: "{% url 'get_cart' %}",
-                type: "GET",
-                success: function(response) {
-                    cartItems.innerHTML = "";
-                    let total = 0;
-                    if (response.items && Array.isArray(response.items)) {
-                        response.items.forEach(item => {
-                            const itemElement = document.createElement("div");
-                            itemElement.classList.add("cart-item", "d-flex", "justify-content-between", "align-items-center", "mb-3");
-                            itemElement.innerHTML = `
-                                <div class="d-flex align-items-center">
-                                    <img src="${item.image || "{% static 'Images/download.jpeg' %}"}" alt="${item.name}" width="50" height="50" class="me-3">
-                                    <div>
-                                        <h6 class="mb-0">${item.name}</h6>
-                                        <p class="mb-0">Rs ${item.price.toFixed(2)} </p>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <button class="btn btn-sm btn-outline-secondary minus-btn" data-item-id="${item.id}">
-                                        <i class="bi bi-dash"></i>
-                                    </button>
-                                    <span class="mx-2 quantity">${item.quantity}</span>
-                                    <button class="btn btn-sm btn-outline-secondary plus-btn" data-item-id="${item.id}">
-                                        <i class="bi bi-plus"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm delete-item ms-3" data-item-id="${item.id}">
-                                        <i class="bi bi-trash fs-4"></i>
-                                    </button>
-                                </div>
-                            `;
-                            cartItems.appendChild(itemElement);
-                            total += item.price * item.quantity;
-                        });
-                    }
-                    cartTotal.textContent = total.toFixed(2);
-                    updateCartCount();
-                },
-                error: function(xhr) {
-                    console.error("Error fetching cart:", xhr.status, xhr.statusText);
-                    alert("An error occurred while fetching the cart.");
-                }
-            });
-        }
-
-        // Update quantity in cart
-        cartItems.addEventListener("click", function(e) {
-            if (e.target.closest(".minus-btn") || e.target.closest(".plus-btn")) {
-                const button = e.target.closest("button");
-                const itemId = button.dataset.itemId;
-                const change = button.classList.contains("minus-btn") ? -1 : 1;
-                updateCartItemQuantity(itemId, change);
-            }
-            if (e.target.closest(".delete-item")) {
-                const itemId = e.target.closest(".delete-item").dataset.itemId;
-                removeCartItem(itemId);
-            }
-        });
-
-        function updateCartItemQuantity(itemId, change) {
-            $.ajax({
-                url: "{% url 'update_cart' %}",
-                type: "POST",
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
-                data: {
-                    item_id: itemId,
-                    change: change
-                },
-                success: function(response) {
-                    if (response.success) {
-                        fetchCartItems();
-                    } else {
-                        console.error("Error updating item:", response.message);
-                        alert("Error: " + response.message);
-                    }
-                },
-                error: function(xhr) {
-                    console.error("Error updating cart:", xhr.status, xhr.statusText);
-                    alert("An error occurred while updating the cart.");
-                }
-            });
-        }
-
-        function removeCartItem(itemId) {
-            $.ajax({
-                url: "{% url 'remove_from_cart' %}",
-                type: "POST",
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
-                data: {
-                    item_id: itemId
-                },
-                success: function(response) {
-                    if (response.success) {
-                        fetchCartItems();
-                    } else {
-                        console.error("Error removing item:", response.message);
-                        alert("Error: " + response.message);
-                    }
-                },
-                error: function(xhr) {
-                    console.error("Error removing item:", xhr.status, xhr.statusText);
-                    alert("An error occurred while removing the item.");
-                }
-            });
-        }
-
-        // Update cart count
-        function updateCartCount() {
-            fetch("{% url 'cart_count' %}")
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    document.querySelectorAll('.cartCount').forEach(el => {
-                        el.textContent = data.count || 0;
-                    });
-                })
-                .catch(err => console.error('Error fetching cart count:', err));
-        }
-
-        // Filtering Products
+        // Filtering Logic for Premium Grid
         document.addEventListener("DOMContentLoaded", function () {
-            const productCards = document.querySelectorAll(".product-card");
+            const productCards = document.querySelectorAll(".product-grid-item");
             const priceRange = document.getElementById("priceRange");
-            const priceValue = document.getElementById("priceValue");
+            const priceDisplay = document.getElementById("priceDisplay");
+
+            // Apply staggered animation delay to cards
+            productCards.forEach((card, index) => {
+                card.style.animationDelay = (index * 0.05) + "s";
+            });
 
             function filterProducts() {
                 const maxPrice = parseInt(priceRange.value);
-                const categoryFilters = Array.from(
-                    document.querySelectorAll('[data-filter="category"]:checked')
-                ).map(cb => cb.value);
+                
+                // Active filter arrays
+                const stockFilters = Array.from(document.querySelectorAll('[data-filter="stock"]:checked')).map(cb => cb.value);
+                const typeFilters = Array.from(document.querySelectorAll('[data-filter="type"]:checked')).map(cb => cb.value);
+                const discountFilters = Array.from(document.querySelectorAll('[data-filter="discount"]:checked')).map(cb => cb.value);
+                const categoryFilters = Array.from(document.querySelectorAll('[data-filter="category"]:checked')).map(cb => cb.value);
 
                 productCards.forEach(card => {
                     const price = parseFloat(card.dataset.price);
+                    const stock = card.dataset.stock;
+                    const type = card.dataset.type;
+                    const discount = card.dataset.discount;
                     const category = card.dataset.category;
 
                     let show = true;
+
+                    // 1. Price Filter
                     if (price > maxPrice) show = false;
+
+                    // 2. Stock Filter (if any selected)
+                    if (stockFilters.length > 0 && !stockFilters.includes(stock)) show = false;
+
+                    // 3. Type Filter (if any selected)
+                    if (typeFilters.length > 0 && !typeFilters.includes(type)) show = false;
+
+                    // 4. Discount Filter (if any selected)
+                    if (discountFilters.length > 0 && !discountFilters.includes(discount)) show = false;
+
+                    // 5. Category Filter (Hidden but functional)
                     if (categoryFilters.length > 0 && !categoryFilters.includes(category)) show = false;
 
                     card.classList.toggle("filtered-out", !show);
@@ -473,21 +702,19 @@
             }
 
             priceRange.addEventListener("input", () => {
-                priceValue.innerText = `Rs 0 - Rs ${priceRange.value}`;
+                priceDisplay.innerText = `Rs ${parseInt(priceRange.value).toLocaleString()}`;
                 filterProducts();
             });
-            document.querySelectorAll('[data-filter]').forEach(cb => 
-                cb.addEventListener("change", filterProducts)
-            );
+
+            // Listen to all filter checkboxes
+            document.querySelectorAll('.filter-check').forEach(cb => {
+                cb.addEventListener('change', filterProducts);
+            });
 
             // Initial calls
             filterProducts();
-            fetchCartItems();
-            updateCartCount();
+            if (window.updateCartCount) window.updateCartCount();
         });
-
-        // Optionally refresh cart count every 10 seconds
-        setInterval(updateCartCount, 10000);
     </script>
 </body>
 </html>

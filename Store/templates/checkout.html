@@ -17,56 +17,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-dark: #0f172a;
+            --primary-blue: #3b82f6;
+            --secondary-blue: #2563eb;
+            --accent-yellow: #fbbf24;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --bg-light: #f8fafc;
+            --gradient-hero: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
             overflow-x: hidden;
         }
-        .cart-sidebar {
-            width: 100%;
-            max-width: 390px;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            right: -100%;
-            background: #fff;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.5);
-            transition: right 0.3s ease;
-            z-index: 10000;
-        }
-        .cart-sidebar.open {
-            right: 0;
-        }
-        .cart-item img {
-            object-fit: cover;
-        }
-        #backToTop {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-        }
-        #backToTop:hover {
-            background-color: #0056b3;
-        }
         .order-summary {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
+            border: none;
+            border-radius: 15px;
+            padding: 25px;
             background: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
         .order-summary img {
-            border-radius: 4px;
+            border-radius: 8px;
+            object-fit: cover;
         }
         .payment-details, .delivery-details {
             display: none;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
         }
         .payment-details.active, .delivery-details.active {
             display: block;
@@ -76,7 +60,33 @@
             max-height: 200px;
             margin-top: 10px;
             border: 1px solid #ddd;
-            border-radius: 4px;
+            border-radius: 8px;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
         }
         
         /* Loading Overlay Styles */
@@ -108,7 +118,7 @@
             width: 80px;
             height: 80px;
             border: 8px solid #f3f3f3;
-            border-top: 8px solid #28a745;
+            border-top: 8px solid #3b82f6;
             border-radius: 50%;
             animation: spin 1.5s linear infinite;
             margin-bottom: 20px;
@@ -166,7 +176,7 @@
         }
         
         .loading-step.active .step-icon {
-            background-color: #28a745;
+            background-color: #3b82f6;
             color: white;
             animation: pulse 1.5s infinite;
         }
@@ -184,7 +194,7 @@
         
         .step-check {
             display: none;
-            color: #28a745;
+            color: #10b981;
             font-size: 18px;
         }
         
@@ -236,7 +246,7 @@
         </div>
     </div>
 
-    {% include 'Includes/navbar2.html' %}
+    {% include 'Includes/navbar.html' %}
    
 
     <div class="container-fluid py-2">
@@ -359,18 +369,8 @@
         </div>
     </div>
 
-    <!-- Cart Sidebar -->
-    <div class="cart-sidebar" id="cartSidebar">
-        <button class="btn-close float-end mt-3" id="closeCart"></button>
-        <div class="p-3">
-            <h5>Shopping Cart</h5>
-        </div>
-        <div id="cartItems" class="px-3"></div>
-        <div class="p-3">
-            <p><strong>Subtotal:</strong> Rs <span id="cartTotal">0</span></p>
-            <a class="btn btn-success w-100" href="{% url 'checkout' %}">Checkout</a>
-        </div>
-    </div>
+    <!-- Footer -->
+    {% include 'Includes/footer.html' %}
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
@@ -391,6 +391,15 @@ function getCookie(name) {
     return cookieValue;
 }
 const csrftoken = getCookie('csrftoken');
+
+function openCart() {
+  const cartIcon = document.getElementById('cartIconMain');
+  if (cartIcon) {
+    const dropdown = bootstrap.Dropdown.getOrCreateInstance(cartIcon);
+    dropdown.show();
+    if (window.fetchMiniCart) window.fetchMiniCart();
+  }
+}
 
 // Loading animation functions
 function showLoadingAnimation() {
@@ -451,34 +460,10 @@ function animateSteps() {
 }
 
 // Cart Functionality
-const cartSidebar = document.getElementById("cartSidebar");
-const cartItems = document.getElementById("cartItems");
-const cartTotal = document.getElementById("cartTotal");
 const orderItems = document.getElementById("orderItems");
 const orderSubtotal = document.getElementById("orderSubtotal");
 const orderTotal = document.getElementById("orderTotal");
 const orderShipping = document.getElementById("orderShipping");
-
-// Open Cart Sidebar when clicking the cart icons
-document.querySelectorAll("[id^=cartIcon]").forEach(icon => {
-    icon.addEventListener("click", function (event) {
-        event.preventDefault();
-        openCart();
-        fetchCartItems();
-    });
-});
-
-// Close Sidebar
-document.getElementById("closeCart").addEventListener("click", function () {
-    closeCart();
-});
-
-function openCart() {
-    cartSidebar.classList.add("open");
-}
-function closeCart() {
-    cartSidebar.classList.remove("open");
-}
 
 // Helper to update shipping info
 function updateShippingAddress() {
@@ -497,38 +482,11 @@ function fetchCartItems() {
         url: "{% url 'get_cart' %}",
         type: "GET",
         success: function(response) {
-            cartItems.innerHTML = "";
             orderItems.innerHTML = "";
             let total = 0;
 
             if (response.items && Array.isArray(response.items)) {
                 response.items.forEach(item => {
-                    // Cart Sidebar
-                    const cartItemElement = document.createElement("div");
-                    cartItemElement.classList.add("cart-item", "d-flex", "justify-content-between", "align-items-center", "mb-3");
-                    cartItemElement.innerHTML = `
-                        <div class="d-flex align-items-center">
-                            <img src="${item.image || "{% static 'Images/download.jpeg' %}"}" alt="${item.name}" width="50" height="50" class="me-3">
-                            <div>
-                                <h6 class="mb-0">${item.name}</h6>
-                                <p class="mb-0">Rs ${item.price.toFixed(2)}</p>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-sm btn-outline-secondary minus-btn" data-item-id="${item.id}">
-                                <i class="bi bi-dash"></i>
-                            </button>
-                            <span class="mx-2 quantity">${item.quantity}</span>
-                            <button class="btn btn-sm btn-outline-secondary plus-btn" data-item-id="${item.id}">
-                                <i class="bi bi-plus"></i>
-                            </button>
-                            <button class="btn btn-danger btn-sm delete-item ms-3" data-item-id="${item.id}">
-                                <i class="bi bi-trash fs-4"></i>
-                            </button>
-                        </div>
-                    `;
-                    cartItems.appendChild(cartItemElement);
-
                     // Order Summary
                     const orderItemElement = document.createElement("div");
                     orderItemElement.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-2");
@@ -548,10 +506,8 @@ function fetchCartItems() {
                 });
             } else {
                 orderItems.innerHTML = '<p class="text-center">Your cart is empty.</p>';
-                cartItems.innerHTML = '<p class="text-center">Your cart is empty.</p>';
             }
 
-            cartTotal.textContent = total.toFixed(2);
             orderSubtotal.textContent = total.toFixed(2);
             orderTotal.textContent = total.toFixed(2);
 
@@ -565,103 +521,6 @@ function fetchCartItems() {
             alertContainer.role = 'alert';
             alertContainer.innerHTML = `
                 An error occurred while fetching the cart.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            document.querySelector('.container').prepend(alertContainer);
-        }
-    });
-}
-
-// Update quantity in cart
-cartItems.addEventListener("click", function(e) {
-    if (e.target.closest(".minus-btn") || e.target.closest(".plus-btn")) {
-        const button = e.target.closest("button");
-        const itemId = button.dataset.itemId;
-        const change = button.classList.contains("minus-btn") ? -1 : 1;
-        updateCartItemQuantity(itemId, change);
-    }
-    if (e.target.closest(".delete-item")) {
-        const itemId = e.target.closest(".delete-item").dataset.itemId;
-        removeCartItem(itemId);
-    }
-});
-
-function updateCartItemQuantity(itemId, change) {
-    $.ajax({
-        url: "{% url 'update_cart' %}",
-        type: "POST",
-        headers: {
-            'X-CSRFToken': csrftoken
-        },
-        data: {
-            item_id: itemId,
-            change: change
-        },
-        success: function(response) {
-            if (response.success) {
-                fetchCartItems();
-            } else {
-                console.error("Error updating item:", response.message);
-                // Display error message in the UI
-                const alertContainer = document.createElement('div');
-                alertContainer.className = 'alert alert-danger alert-dismissible fade show';
-                alertContainer.role = 'alert';
-                alertContainer.innerHTML = `
-                    ${response.message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                document.querySelector('.container').prepend(alertContainer);
-            }
-        },
-        error: function(xhr) {
-            console.error("Error updating cart:", xhr.status, xhr.statusText);
-            // Display error message in the UI
-            const alertContainer = document.createElement('div');
-            alertContainer.className = 'alert alert-danger alert-dismissible fade show';
-            alertContainer.role = 'alert';
-            alertContainer.innerHTML = `
-                An error occurred while updating the cart.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            document.querySelector('.container').prepend(alertContainer);
-        }
-    });
-}
-
-function removeCartItem(itemId) {
-    $.ajax({
-        url: "{% url 'remove_from_cart' %}",
-        type: "POST",
-        headers: {
-            'X-CSRFToken': csrftoken
-        },
-        data: {
-            item_id: itemId
-        },
-        success: function(response) {
-            if (response.success) {
-                fetchCartItems();
-            } else {
-                console.error("Error removing item:", response.message);
-                // Display error message in the UI
-                const alertContainer = document.createElement('div');
-                alertContainer.className = 'alert alert-danger alert-dismissible fade show';
-                alertContainer.role = 'alert';
-                alertContainer.innerHTML = `
-                    ${response.message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                document.querySelector('.container').prepend(alertContainer);
-            }
-        },
-        error: function(xhr) {
-            console.error("Error removing item:", xhr.status, xhr.statusText);
-            // Display error message in the UI
-            const alertContainer = document.createElement('div');
-            alertContainer.className = 'alert alert-danger alert-dismissible fade show';
-            alertContainer.role = 'alert';
-            alertContainer.innerHTML = `
-                An error occurred while removing the item.
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             `;
             document.querySelector('.container').prepend(alertContainer);
@@ -833,6 +692,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Optionally refresh cart count every 10 seconds
 setInterval(updateCartCount, 10000);
+// Initial calls
+document.addEventListener("DOMContentLoaded", function () {
+    fetchCartItems();
+    updateCartCount();
+});
 </script>
 </body>
 </html>

@@ -10,7 +10,9 @@ from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmVie
 from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
-from django.db.models import Avg, Prefetch
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Avg, Prefetch, Q
+
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
@@ -58,37 +60,43 @@ class CustomPasswordResetView(PasswordResetView):
         email = form.cleaned_data['email'].strip().lower()
         user = User.objects.filter(email__iexact=email).first()
         if user:
-            uid = urlsafe_base64_encode(force_bytes(user.pk))
-            token = default_token_generator.make_token(user)
-            reset_link = self.request.build_absolute_uri(
-                reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
-            )
+            try:
+                uid = urlsafe_base64_encode(force_bytes(user.pk))
+                token = default_token_generator.make_token(user)
+                reset_link = self.request.build_absolute_uri(
+                    reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+                )
 
-            # render email template (you can create registration/password_reset_email.html)
-            subject = "Password Reset Request"
-            message = render_to_string('registration/password_reset_email.html', {
-                'user': user,
-                'reset_link': reset_link,
-            })
+                # render email template
+                subject = "Password Reset Request"
+                message = render_to_string('registration/password_reset_email.html', {
+                    'user': user,
+                    'reset_link': reset_link,
+                })
 
-            # send email
-            send_mail(
-                subject,
-                message,
-                settings.EMAIL_HOST_USER,  # sender
-                [email],                   # recipient
-                fail_silently=False,
-            )
+                # send email
+                send_mail(
+                    subject,
+                    message,
+                    settings.EMAIL_HOST_USER,  # sender
+                    [email],                   # recipient
+                    fail_silently=False,
+                )
+                
+                messages.success(self.request, "Mail is sent. Check your mail.")
+                return render(self.request, self.template_name, {
+                    'form': form,
+                    'email_sent': True  # Context variable to disable the field
+                })
 
-            # Optionally, show success page
-            return render(self.request, 'registration/password_reset_done.html', {
-                'email': email
-            })
+            except Exception as e:
+                logger.error(f"Failed to send password reset email: {str(e)}")
+                messages.error(self.request, "Mail cannot be sent. Please try again later.")
+                return render(self.request, self.template_name, {'form': form})
 
-        return render(self.request, self.template_name, {
-            'form': form,
-            'error': 'No user found with this email.'
-        })
+        # User not found
+        messages.error(self.request, "Mail cannot be sent. No user found with this email.")
+        return render(self.request, self.template_name, {'form': form})
 
     
 
@@ -109,11 +117,12 @@ def Register(request):
                  Rform = RegisterForm(PostData)
                  if Rform.is_valid():
                      # Store form data in session and send OTP
-                     request.session['temp_user_data'] = PostData
+                     # Convert QueryDict to standard dict for safe session serialization
+                     request.session['temp_user_data'] = PostData.dict()
                      verification_code = create_verification_code()
                      request.session['verification_code'] = verification_code
                      request.session.modified = True  # Ensure session is saved
-                     logger.info(f"Session data stored: temp_user_data={PostData}, verification_code={verification_code}")
+                     logger.info(f"Session data stored: temp_user_data={PostData.dict()}, verification_code={verification_code}")
                      try:
                          send_verification_code(request, PostData['username'], PostData['email'], verification_code)
                          logger.info(f"Verification code sent to {PostData['email']}: {verification_code}")
@@ -147,7 +156,8 @@ def verify_otp(request):
                  logger.error("Session expired: temp_user_data not found")
                  return redirect('register')
 
-             if entered_otp == stored_otp:
+             # Compare as strings to avoid Type Errors (int vs str)
+             if str(entered_otp).strip() == str(stored_otp).strip():
                  # OTP is correct, proceed to save user
                  Rform = RegisterForm(temp_user_data)
                  if Rform.is_valid():
@@ -181,8 +191,10 @@ def verify_otp(request):
                          messages.error(request, 'Authentication failed. Please try again.', extra_tags='danger')
                          logger.error(f"Authentication failed for {temp_user_data['username']}")
                  else:
-                     messages.error(request, 'Invalid form data. Please try again.', extra_tags='danger')
-                     logger.error(f"Form errors: {Rform.errors}")
+                     # If valid during register but invalid now (e.g. username taken), inform user
+                     messages.error(request, 'Registration failed (Username/Email may have been taken). Please register again.', extra_tags='danger')
+                     logger.error(f"Form errors during saving: {Rform.errors}")
+                     return redirect('register')
              else:
                  messages.error(request, 'Invalid OTP. Please try again.', extra_tags='danger')
                  logger.error(f"Invalid OTP: Entered={entered_otp}, Stored={stored_otp}")
@@ -275,7 +287,16 @@ def checkout(request):
 
 def category_products(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    products = category.products.all()  # related_name="products"
+    products_list = category.products.all()  # related_name="products"
+    paginator = Paginator(products_list, 12)  # Show 12 products per page
+    page = request.GET.get('page')
+    try:
+        products = paginator.page(page)
+    except PageNotAnInteger:
+        products = paginator.page(1)
+    except EmptyPage:
+        products = paginator.page(paginator.num_pages)
+
     return render(request, 'category_products.html', {
         'category': category,
         'products': products
@@ -307,6 +328,7 @@ def productDetail(request, slug):
         # 👇 Extra context for breadcrumb / dynamic UI
         'is_project': product.is_project,
         'page_title': "Project Detail" if product.is_project else "Product Detail",
+        'is_liked': product.liked_by.filter(id=request.user.id).exists() if request.user.is_authenticated else False,
     }
 
     return render(request, 'detail.html', context)
@@ -316,22 +338,75 @@ def productDetail(request, slug):
 from django.db.models import Prefetch
 
 def product(request):
-    categories = Category.objects.filter(products__is_project=False).distinct()
+    from django.db.models import Q
+    import operator
+    from functools import reduce
 
-    # Prefetch only products (not projects)
-    categories = categories.prefetch_related(
-        Prefetch(
-            'products',
-            queryset=Product.objects.filter(is_project=False, is_active=True),
-            to_attr='only_products'
+    query = request.GET.get('q')
+
+    if query:
+        # Split query into terms to handle "Ambulance Detection" finding "AI Ambulance Detection"
+        terms = query.split()
+        
+        # Create a Q object for each term (search in name OR descriptions)
+        search_rules = []
+        for term in terms:
+            search_rules.append(
+                Q(name__icontains=term) | 
+                Q(short_description__icontains=term) | 
+                Q(description__icontains=term)
+            )
+        
+        # Combine all rules with AND (product must contain ALL terms)
+        if search_rules:
+            combined_filter = reduce(operator.and_, search_rules)
+            products = Product.objects.filter(is_active=True).filter(combined_filter)
+        else:
+            products = Product.objects.none()
+
+        # Pagination for Search Results
+        paginator = Paginator(products, 12)  # Show 12 items per page
+        page = request.GET.get('page')
+        try:
+            products_paginated = paginator.page(page)
+        except PageNotAnInteger:
+            products_paginated = paginator.page(1)
+        except EmptyPage:
+            products_paginated = paginator.page(paginator.num_pages)
+
+        class MockCategory:
+            def __init__(self, name, products):
+                self.name = name
+                self.slug = 'search-results'
+                self.only_products = products
+        
+        # If no products found, we still pass the empty list so the template handles "No products available"
+        categories = [MockCategory(f"Search Results for '{query}'", products_paginated)]
+        
+        context = {
+            'categories': categories,
+            'is_project': False,
+            'page_title': f"Search: {query}",
+            'products_paginated': products_paginated, # Pass directly for accessing pagination info
+            'search_query': query 
+        }
+    else:
+        categories = Category.objects.filter(products__is_project=False).distinct()
+
+        # Prefetch only products (not projects)
+        categories = categories.prefetch_related(
+            Prefetch(
+                'products',
+                queryset=Product.objects.filter(is_project=False, is_active=True),
+                to_attr='only_products'
+            )
         )
-    )
 
-    context = {
-        'categories': categories,
-        'is_project': False,        # 👈 breadcrumb helper
-        'page_title': 'Products'    # 👈 optional (for breadcrumb active text)
-    }
+        context = {
+            'categories': categories,
+            'is_project': False,        # 👈 breadcrumb helper
+            'page_title': 'Products'    # 👈 optional (for breadcrumb active text)
+        }
     return render(request, 'product.html', context)
 
 
@@ -372,14 +447,28 @@ def hardwarepage(request):
     }
     return render(request, 'hardwarepage.html', context)
 
-def cart(request, slug):
-    product = get_object_or_404(Product, slug=slug)
-    is_liked = product.liked_by.filter(id=request.user.id).exists() if request.user.is_authenticated else False
-    
+def cart(request):
+    """
+    View to display the full shopping cart page.
+    """
+    # Get or create cart for user/session
+    if request.user.is_authenticated:
+        cart_obj, created = Cart.objects.get_or_create(user=request.user)
+    else:
+        session_key = request.session.session_key
+        if not session_key:
+            request.session.create()
+            session_key = request.session.session_key
+        cart_obj, created = Cart.objects.get_or_create(session_key=session_key)
+
+    items = cart_obj.items.all().select_related('product', 'variant')
+    total = sum(item.price * item.quantity for item in items)
+
     context = {
-        'product': product,
-        'is_liked': is_liked,
-        # your other context variables
+        'cart': cart_obj,
+        'items': items,
+        'total': total,
+        'page_title': 'Your Shopping Cart'
     }
     return render(request, 'cart.html', context)
 
@@ -537,6 +626,10 @@ def cart_count(request):
     count = 0
     if request.user.is_authenticated:
         count = CartItem.objects.filter(cart__user=request.user).count()
+    else:
+        session_key = request.session.session_key
+        if session_key:
+            count = CartItem.objects.filter(cart__session_key=session_key).count()
     return JsonResponse({'count': count})
 
 
@@ -818,6 +911,7 @@ def ajax_register(request):
         if phone and len(phone) > 15:
             errors['phone'] = 'Phone number too long (max 15 characters)'
         
+        # If errors
         if errors:
             return JsonResponse({
                 'success': False,

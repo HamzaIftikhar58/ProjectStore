@@ -49,13 +49,14 @@
       font-family: 'Outfit', sans-serif;
     }
 
-    /* Premium Balanced Hero */
+    /* Premium Balanced Hero - 3D Overlap Effect */
     .page-hero {
         background: var(--gradient-hero);
-        padding: 50px 0;
+        padding: 50px 0 100px;
         position: relative;
         overflow: hidden;
-        margin-bottom: 0;
+        margin-bottom: -50px;
+        clip-path: ellipse(150% 100% at 50% 0%);
     }
 
     .hero-accent {
@@ -66,6 +67,7 @@
         height: 200px;
         background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(15, 23, 42, 0) 70%);
         border-radius: 50%;
+        z-index: 0;
     }
 
     .page-title {
@@ -159,6 +161,35 @@
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
     }
+
+    .badge-discount {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #ef4444;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        z-index: 5;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        animation: pulseDiscount 2s infinite;
+    }
+
+    @keyframes pulseDiscount {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .original-price {
+        font-size: 0.85rem;
+        text-decoration: line-through;
+        color: var(--text-gray);
+        margin-right: 8px;
+        display: block;
+        font-weight: 500;
+    }
     
     .product-card img {
         max-width: 100%;
@@ -248,7 +279,6 @@
     }
 
     /* Swiper Styling */
-    /* Swiper Styling - Modern Geometric Neon Arrows */
     .swiper {
         padding: 20px 0 60px !important; /* Reduced side padding to let cards breathe */
         position: relative;
@@ -334,33 +364,67 @@
         right: 0;
     }
 
-    /* WhatsApp Float */
-    .whatsapp-float {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        z-index: 1000;
-    }
-
-    .whatsapp-btn {
-        background: #25d366;
-        color: white;
-        padding: 12px 25px;
-        border-radius: 50px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-    }
-
     @media (max-width: 768px) {
         .page-title { font-size: 2rem; }
         .category-title { font-size: 1.5rem; }
         .img-container { height: 180px; }
-        .whatsapp-btn span { display: none; }
-        .whatsapp-btn { padding: 15px; }
+    }
+
+    /* Glassmorphic Pagination */
+    .glass-pagination .page-link {
+        background: rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: var(--primary-dark);
+        margin: 0 4px;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        min-width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .glass-pagination .page-item.active .page-link {
+        background: var(--primary-blue);
+        color: white;
+        border-color: var(--primary-blue);
+        transform: scale(1.1);
+        box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .glass-pagination .page-link:hover {
+        background: white;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        color: var(--primary-blue);
+    }
+
+    .glass-pagination .page-item.disabled .page-link {
+        opacity: 0.5; 
+        background: rgba(255, 255, 255, 0.3);
+        transform: none; 
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+    
+    .glass-pagination .page-nav-text {
+        width: auto;
+        padding: 0 20px;
+        border-radius: 50px;
+    }
+
+    .main-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .main-content > section:first-child {
+        background: transparent !important;
     }
   </style>
 </head>
@@ -388,14 +452,99 @@
 
   <div class="main-content">
     {% for category in categories %}
-      {% if category.only_products %}
+      {% if category.only_products or category.slug == 'search-results' %}
         <section id="{{ category.slug }}" class="category-section {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
           <div class="container">
             <div class="category-header">
               <h2 class="category-title">{{ category.name }}</h2>
+              {% if category.slug != 'search-results' %}
               <a href="{% url 'category_products' category.slug %}" class="btn-view-all">View All <i class="fa-solid fa-arrow-right-long ms-2"></i></a>
+              {% endif %}
             </div>
 
+            {% if category.only_products %}
+            {% if category.slug == 'search-results' %}
+            <!-- Grid View for Search Results -->
+            <div class="row g-4">
+              {% for product in category.only_products %}
+                <div class="col-sm-6 col-md-4 col-xl-3">
+                  <div class="product-card h-100">
+                    <div class="img-container">
+                      <div class="img-bg-accent"></div>
+                      {% if product.discount_percentage > 0 %}
+                      <span class="badge-discount">-{{ product.discount_percentage }}%</span>
+                      {% endif %}
+                      <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
+                    </div>
+                    <div class="product-info">
+                      <h3 class="product-title">{{ product.name }}</h3>
+                      <p class="product-desc">{{ product.short_description|truncatechars:100 }}</p>
+                      <div class="product-footer">
+                        <div class="price-wrapper">
+                          {% if product.discount_percentage > 0 %}
+                          <span class="original-price">Rs {{ product.price }}</span>
+                          <span class="product-price text-danger">Rs {{ product.final_price }}</span>
+                          {% else %}
+                          <span class="product-price">Rs {{ product.price }}</span>
+                          {% endif %}
+                        </div>
+                        <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details">
+                          <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- Pagination Controls for Search Results -->
+            {% if products_paginated.has_other_pages %}
+            <div class="d-flex justify-content-center mt-5">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination glass-pagination">
+                        {% if products_paginated.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link page-nav-text" href="?q={{ search_query }}&page={{ products_paginated.previous_page_number }}" aria-label="Previous">
+                                <i class="fas fa-chevron-left small me-2"></i> Prev
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link page-nav-text"><i class="fas fa-chevron-left small me-2"></i> Prev</span>
+                        </li>
+                        {% endif %}
+
+                        {% for i in products_paginated.paginator.page_range %}
+                            {% if products_paginated.number == i %}
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{ i }}</span>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ search_query }}&page={{ i }}">{{ i }}</a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if products_paginated.has_next %}
+                        <li class="page-item">
+                            <a class="page-link page-nav-text" href="?q={{ search_query }}&page={{ products_paginated.next_page_number }}" aria-label="Next">
+                                Next <i class="fas fa-chevron-right small ms-2"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link page-nav-text">Next <i class="fas fa-chevron-right small ms-2"></i></span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+            {% endif %}
+            
+            {% else %}
+            <!-- Swiper View for Categories -->
             <div class="swiper" id="swiper-{{ category.slug }}">
               <div class="swiper-wrapper">
                 {% for product in category.only_products %}
@@ -403,13 +552,23 @@
                     <div class="product-card">
                       <div class="img-container">
                         <div class="img-bg-accent"></div>
+                        {% if product.discount_percentage > 0 %}
+                        <span class="badge-discount">-{{ product.discount_percentage }}%</span>
+                        {% endif %}
                         <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
                       </div>
                       <div class="product-info">
                         <h3 class="product-title">{{ product.name }}</h3>
                         <p class="product-desc">{{ product.short_description|truncatechars:100 }}</p>
                         <div class="product-footer">
-                          <span class="product-price">Rs {{ product.price }}</span>
+                          <div class="price-wrapper">
+                            {% if product.discount_percentage > 0 %}
+                            <span class="original-price">Rs {{ product.price }}</span>
+                            <span class="product-price text-danger">Rs {{ product.final_price }}</span>
+                            {% else %}
+                            <span class="product-price">Rs {{ product.price }}</span>
+                            {% endif %}
+                          </div>
                           <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details">
                             <i class="fa-solid fa-arrow-right"></i>
                           </a>
@@ -417,8 +576,6 @@
                       </div>
                     </div>
                   </div>
-                {% empty %}
-                   <p class="text-muted">No products available.</p>
                 {% endfor %}
               </div>
               <!-- Swiper Navigation -->
@@ -426,36 +583,21 @@
               <div class="swiper-button-next d-none d-md-flex"><i class="fa-solid fa-chevron-right"></i></div>
               <div class="swiper-button-prev d-none d-md-flex"><i class="fa-solid fa-chevron-left"></i></div>
             </div>
+            {% endif %}
+            {% else %}
+            <div class="text-center py-5">
+                <i class="bi bi-search fs-1 text-muted opacity-50 mb-3 d-block"></i>
+                <h4 class="text-muted fw-bold">No results found</h4>
+                <p class="text-muted">We couldn't find any products matching your search.</p>
+                <a href="{% url 'product' %}" class="btn btn-primary rounded-pill mt-3 px-4">View All Products</a>
+            </div>
+            {% endif %}
           </div>
         </section>
       {% endif %}
     {% endfor %}
   </div>
 
-  <!-- Cart Sidebar -->
-  <div class="cart-sidebar" id="cartSidebar">
-    <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
-      <h5 class="mb-0 fw-bold">My Cart</h5>
-      <button class="btn-close" id="closeCart"></button>
-    </div>
-    <div class="p-4 overflow-auto" id="cartItems" style="height: calc(100% - 150px);">
-      <!-- Cart items -->
-    </div>
-    <div class="p-4 bg-light border-top position-absolute bottom-0 w-100">
-      <div class="d-flex justify-content-between mb-3">
-        <span class="fw-bold">Subtotal:</span>
-        <span class="fw-bold text-primary">Rs <span id="cartTotal">0</span></span>
-      </div>
-      <a class="btn btn-primary w-100 py-2 fw-bold rounded-pill" href="{% url 'checkout' %}">CHECKOUT NOW</a>
-    </div>
-  </div>
-
-  <!-- WhatsApp Float -->
-  <div class="whatsapp-float">
-    <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-btn">
-      <i class="bi bi-whatsapp fs-4"></i>
-      <span>Order via WhatsApp</span>
-    </a>
   </div>
 
   {% include 'Includes/footer.html' %}
@@ -508,6 +650,6 @@
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll(); // trigger once on load
     });
-  </script>
+</script>
 </body>
 </html>

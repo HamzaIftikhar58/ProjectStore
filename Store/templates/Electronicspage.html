@@ -114,6 +114,24 @@
                 max-height: 150px;
             }
         }
+        .badge-discount {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ef4444;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            z-index: 5;
+            box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+            animation: pulseDiscount 2s infinite;
+        }
+        @keyframes pulseDiscount {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
     </style>
 </head>
 <body>
@@ -166,7 +184,10 @@
                          data-price="{{ product.price }}"
                          data-stock="{% if product.stock > 0 %}in{% else %}out{% endif %}"
                          data-category="{{ product.category.name }}">
-                        <div class="card">
+                        <div class="card position-relative">
+                            {% if product.discount_percentage > 0 %}
+                            <span class="badge-discount">-{{ product.discount_percentage }}%</span>
+                            {% endif %}
                             <img src="{{ product.main_image.url }}"
                                  class="card-img-top img-fluid img-thumbnail"
                                  alt="Product Image">
@@ -180,7 +201,14 @@
                                             data-name="{{ product.name }}"
                                             data-price="{{ product.price }}"
                                             data-image="{{ product.main_image.url }}">Add to Cart</button> {% endcomment %}
-                                    <h4 class="text-danger mt-1 fw-bold">{{ product.price }}</h4>
+                                    <div class="price-box">
+                                        {% if product.discount_percentage > 0 %}
+                                        <div class="text-muted text-decoration-line-through small">Rs {{ product.price }}</div>
+                                        <h4 class="text-danger mt-0 fw-bold">Rs {{ product.final_price }}</h4>
+                                        {% else %}
+                                        <h4 class="text-danger mt-1 fw-bold">Rs {{ product.price }}</h4>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>

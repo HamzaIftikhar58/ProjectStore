@@ -373,32 +373,6 @@
         color: var(--text-gray);
     }
 
-    /* WhatsApp Button */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
-      background-color: #25d366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-      z-index: 1000;
-      transition: all 0.3s ease;
-      color: white;
-      text-decoration: none;
-      font-size: 30px;
-    }
-    
-    .whatsapp-float:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
-        color: white;
-    }
-
     /* Responsive adjustments */
     @media (max-width: 991px) {
         .hero-h1 { font-size: 2.5rem; }
@@ -691,11 +665,6 @@
       </div>
     </div>
   </section>
-
-  <!-- WhatsApp Float -->
-  <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-float tooltip-custom" title="Chat with us!">
-    <i class="bi bi-whatsapp"></i>
-  </a>
 
   {% include 'Includes/footer.html' %}
 

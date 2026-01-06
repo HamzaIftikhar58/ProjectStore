@@ -2,135 +2,340 @@
 <html lang="en">
 {% load static %}
 <head>
-  <meta charset="UTF-8">
- <link rel="icon" type="image/png"  href="{% static 'Images/circle.png' %}">
-    <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-        />
-        <title>Order History | Project Store</title>
-        <meta name="description" content="View all your past orders on Project Store. Track your purchases, review order details, and stay updated on your project deliveries.">
-        <meta name="keywords" content="order history, past orders, purchase history, Project Store, track orders, project orders, order details">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/easyzoom/2.5.2/easyzoom.min.css">
-        <meta name="description" content="" />
-        <!-- Fonts -->
-            <link rel="preconnect" href="https://fonts.googleapis.com">
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History | Project Store</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="View all your past orders on Project Store. Track your purchases, review order details, and stay updated on your project deliveries.">
+    <meta name="keywords" content="order history, past orders, purchase history, Project Store, track orders">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-        
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-        <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-        rel="stylesheet"
-   
-        />
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    
+    <style>
+        :root {
+            --primary-dark: #0f172a;
+            --primary-blue: #3b82f6;
+            --secondary-blue: #2563eb;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+        }
 
-     
-        <link rel="stylesheet" href="{% static 'assets/vendor/libs/swiper/swiper.css' %}" />
-    
-        <!-- Page CSS -->
-        <link rel="stylesheet" href="{% static 'assets/vendor/css/pages/ui-carousel.css' %}" />
-        <link
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-          integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer"
-        />
-        <link
-    rel="stylesheet"
-    href="https://unpkg.com/swiper/swiper-bundle.min.css"
-  />
-      </head>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top right, #f1f5f9, #e2e8f0);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+
+        /* Hero Section */
+        .page-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 100px 0 60px;
+            color: white;
+            margin-bottom: -40px;
+            position: relative;
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+
+        .breadcrumb-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 8px 20px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breadcrumb-item a { color: rgba(255, 255, 255, 0.7); text-decoration: none; }
+        .breadcrumb-item.active { color: white; }
+        .breadcrumb-item + .breadcrumb-item::before { color: rgba(255, 255, 255, 0.5); }
+
+        /* Order Cards */
+        .order-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .order-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -10px rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .card-header-custom {
+            background: rgba(255, 255, 255, 0.5);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-id {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .card-body-custom {
+            padding: 30px;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--primary-dark);
+            font-size: 1rem;
+        }
+
+        .total-price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+        }
+
+        .item-list {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .order-item:last-child { border-bottom: none; }
+
+        .btn-slip {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary-blue);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-slip:hover {
+            background: var(--primary-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 0;
+            opacity: 0.7;
+        }
+
+        .btn-shop-now {
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s;
+        }
+
+        .btn-shop-now:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -5px rgba(59, 130, 246, 0.5);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .card-header-custom { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .status-badge { align-self: flex-start; }
+            .order-item { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .order-item-price { align-self: flex-end; }
+        }
+    </style>
+</head>
 <body>
-    {% include 'Includes/navbar2.html' %}
 
-    <div class="container-fluid py-5">
-        <div class="container ">
-            <h2 class="mb-4 text-center mt-3 d-flex justify-content-center">Your Order History</h2>
-            {% if orders %}
-                {% for order in orders %}
-                    <div class="card order-card">
-                        <div class="card-body">
-                            <h5>Order #{{ order.id }}</h5>
-                            <p><strong>Date:</strong> {{ order.created_at|date:"F d, Y H:i A" }}</p>
-                            <p><strong>Total:</strong> Rs {{ order.total|floatformat:2 }}</p>
-                            <p><strong>Payment Method:</strong> 
-                                {% if order.payment_method == 'online_payment' %}
-                                    Online Payment (NayPay)
-                                    {% if order.payment_slip %}
-                                        <a href="{{ order.payment_slip.url }}" target="_blank" class="ms-2">View Payment Slip</a>
-                                    {% endif %}
-                                {% else %}
-                                    Cash on Delivery
-                                {% endif %}
-                            </p>
-                            <p><strong>Delivery Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }} {{ order.zip_code }}</p>
-                            <h6 class='text-start'>Items:</h6>
-                            {% for item in order.items.all %}
-                                <div class="d-flex justify-content-between align-items-center mb-2 text-start">
-                                    <div>
-                                        <p class="fw-bold mb-0">{{ item.product.name }}</p>
-                                        <p class="mb-0">Quantity: {{ item.quantity }}</p>
-                                    </div>
-                                    <p class="mb-0">Rs {{ item.total_price|floatformat:2 }}</p>
+    {% include 'Includes/navbar.html' %}
+
+    <!-- Header Section -->
+    <header class="page-header">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white text-decoration-none opacity-75">Home</a></li>
+                <li class="breadcrumb-item text-white opacity-50 active" aria-current="page">My Oders</li>
+                </ol>
+            </nav>
+            <h1 class="page-title">Order History</h1>
+            <p class="page-subtitle">Track your past purchases and project kits.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container order-container pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                {% if orders %}
+                    {% for order in orders %}
+                        <div class="order-card">
+                            <div class="card-header-custom">
+                                <div class="order-id">
+                                    <i class="bi bi-box-seam text-primary fs-4"></i>
+                                    Order #{{ order.id }}
                                 </div>
-                            {% endfor %}
+                                <span class="status-badge">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Completed
+                                </span>
+                            </div>
+                            
+                            <div class="card-body-custom">
+                                <div class="row g-4">
+                                    <!-- Order Info -->
+                                    <div class="col-md-5 border-end-md">
+                                        <div class="mb-4">
+                                            <p class="info-label">Date Placed</p>
+                                            <p class="info-value">{{ order.created_at|date:"F d, Y" }} <small class="text-muted ms-1">{{ order.created_at|date:"h:i A" }}</small></p>
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <p class="info-label">Total Amount</p>
+                                            <p class="total-price">Rs {{ order.total|floatformat:2 }}</p>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <p class="info-label">Payment Method</p>
+                                            <p class="info-value d-flex align-items-center flex-wrap gap-2">
+                                                {% if order.payment_method == 'online_payment' %}
+                                                    <i class="bi bi-credit-card text-primary me-2"></i> Online Payment (NayPay)
+                                                    {% if order.payment_slip %}
+                                                        <a href="{{ order.payment_slip.url }}" target="_blank" class="btn-slip">
+                                                            <i class="bi bi-file-earmark-text"></i> View Slip
+                                                        </a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    <i class="bi bi-cash-stack text-success me-2"></i> Cash on Delivery
+                                                {% endif %}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <p class="info-label">Shipping Address</p>
+                                            <p class="info-value mb-0 text-muted small lh-sm">
+                                                {{ order.address }}, {{ order.city }}, {{ order.state }} {{ order.zip_code }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Item List -->
+                                    <div class="col-md-7">
+                                        <h6 class="fw-bold mb-3 d-flex align-items-center">
+                                            <i class="bi bi-basket me-2 text-primary"></i> Order Items
+                                        </h6>
+                                        <div class="item-list">
+                                            {% for item in order.items.all %}
+                                                <div class="order-item">
+                                                    <div>
+                                                        <p class="mb-0 fw-600 text-dark">{{ item.product.name }}</p>
+                                                        <small class="text-muted">{{ item.quantity }} x Rs {{ item.price|floatformat:2 }}</small>
+                                                    </div>
+                                                    <div class="order-item-price fw-bold text-primary">
+                                                        Rs {{ item.total_price|floatformat:2 }}
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <div class="mb-4">
+                            <i class="bi bi-cart-x text-muted opacity-25" style="font-size: 5rem;"></i>
+                        </div>
+                        <h3 class="fw-bold text-muted">No orders found</h3>
+                        <p class="text-muted mb-4">Looks like you haven't started your project journey yet.</p>
+                        <a href="{% url 'product' %}" class="btn-shop-now">
+                            Start Shopping <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
                     </div>
-                {% endfor %}
-            {% else %}
-                <p class="text-center">You have no orders yet.</p>
-            {% endif %}
-            <div class="text-center mt-3 ">
-                <a href="{% url 'home' %}" class="btn btn-primary">Continue</a>
+                {% endif %}
+
+                <div class="text-center mt-5">
+                    <a href="{% url 'home' %}" class="text-muted text-decoration-none fw-600 hover-primary transition">
+                        <i class="bi bi-arrow-left me-1"></i> Back to Dashboard
+                    </a>
+                </div>
+
             </div>
         </div>
     </div>
 
-  
-
-   {% comment %} {% include 'Includes/footer.html' %} {% endcomment %}
- <div class="position-fixed bottom-0 end-0 m-4" style="z-index:1000;">
-  <!-- Small screens (icon only) -->
-  <a href="https://wa.me/923104505008" target="_blank"
-     class="btn btn-success rounded-circle shadow-lg d-flex align-items-center justify-content-center d-md-none"
-     style="width:60px; height:60px;">
-    <i class="bi bi-whatsapp fs-3 text-white"></i>
-  </a>
-
-  <!-- Medium & Large screens (icon + text) -->
-  <a href="https://wa.me/923104505008" target="_blank"
-     class="btn btn-success shadow-lg d-none d-md-flex align-items-center px-3 py-2">
-    <i class="bi bi-whatsapp fs-3 text-white me-2"></i>
-    <span class="fs-5 text-white fw-bold">Chat</span>
-  </a>
-</div>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-     <script>
-        // Back to Top Button
-        {% comment %} const backToTopButton = document.getElementById("backToTop");
-        window.onscroll = function () {
-            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-                backToTopButton.style.display = "block";
-            } else {
-                backToTopButton.style.display = "none";
-            }
-        };
-        backToTopButton.onclick = function () {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth",
-            });
-        }; {% endcomment %}
-    </script>
+    {% include 'Includes/footer.html' %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

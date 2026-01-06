@@ -49,13 +49,23 @@
       font-family: 'Outfit', sans-serif;
     }
 
-    /* Premium Balanced Hero */
+    .main-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .main-content > section:first-child {
+        background: transparent !important;
+    }
+
+    /* Premium Balanced Hero - 3D Overlap Effect */
     .page-hero {
         background: var(--gradient-hero);
-        padding: 50px 0;
+        padding: 50px 0 100px;
         position: relative;
         overflow: hidden;
-        margin-bottom: 0;
+        margin-bottom: -50px;
+        clip-path: ellipse(150% 100% at 50% 0%);
     }
 
     .hero-accent {
@@ -66,6 +76,7 @@
         height: 200px;
         background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(15, 23, 42, 0) 70%);
         border-radius: 50%;
+        z-index: 0;
     }
 
     .page-title {
@@ -159,6 +170,35 @@
         overflow: hidden;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+    }
+
+    .badge-discount {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #ef4444;
+        color: white;
+        padding: 5px 12px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        z-index: 5;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        animation: pulseDiscount 2s infinite;
+    }
+
+    @keyframes pulseDiscount {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .original-price {
+        font-size: 0.85rem;
+        text-decoration: line-through;
+        color: var(--text-gray);
+        margin-right: 8px;
+        display: block;
+        font-weight: 500;
     }
     
     .product-card img {
@@ -321,33 +361,10 @@
         right: 0;
     }
 
-    /* WhatsApp Float */
-    .whatsapp-float {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        z-index: 1000;
-    }
-
-    .whatsapp-btn {
-        background: #25d366;
-        color: white;
-        padding: 12px 25px;
-        border-radius: 50px;
-        font-weight: 700;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        text-decoration: none;
-        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-    }
-
     @media (max-width: 768px) {
         .page-title { font-size: 2rem; }
         .category-title { font-size: 1.5rem; }
         .img-container { height: 180px; }
-        .whatsapp-btn span { display: none; }
-        .whatsapp-btn { padding: 15px; }
         .swiper-button-next, .swiper-button-prev {
             width: 35px;
             height: 60px;
@@ -394,13 +411,23 @@
                     <div class="product-card">
                       <div class="img-container">
                         <div class="img-bg-accent"></div>
+                        {% if product.discount_percentage > 0 %}
+                        <span class="badge-discount">-{{ product.discount_percentage }}%</span>
+                        {% endif %}
                         <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
                       </div>
                       <div class="product-info">
                         <h3 class="product-title">{{ product.name }}</h3>
                         <p class="product-desc">{{ product.short_description|truncatechars:100 }}</p>
                         <div class="product-footer">
-                          <span class="product-price">Rs {{ product.price }}</span>
+                          <div class="price-wrapper">
+                            {% if product.discount_percentage > 0 %}
+                            <span class="original-price">Rs {{ product.price }}</span>
+                            <span class="product-price text-danger">Rs {{ product.final_price }}</span>
+                            {% else %}
+                            <span class="product-price">Rs {{ product.price }}</span>
+                            {% endif %}
+                          </div>
                           <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details">
                             <i class="fa-solid fa-arrow-right"></i>
                           </a>
@@ -423,30 +450,6 @@
     {% endfor %}
   </div>
 
-  <!-- Cart Sidebar -->
-  <div class="cart-sidebar" id="cartSidebar">
-    <div class="p-4 border-bottom d-flex justify-content-between align-items-center">
-      <h5 class="mb-0 fw-bold">My Cart</h5>
-      <button class="btn-close" id="closeCart"></button>
-    </div>
-    <div class="p-4 overflow-auto" id="cartItems" style="height: calc(100% - 150px);">
-      <!-- Cart items -->
-    </div>
-    <div class="p-4 bg-light border-top position-absolute bottom-0 w-100">
-      <div class="d-flex justify-content-between mb-3">
-        <span class="fw-bold">Subtotal:</span>
-        <span class="fw-bold text-primary">Rs <span id="cartTotal">0</span></span>
-      </div>
-      <a class="btn btn-primary w-100 py-2 fw-bold rounded-pill" href="{% url 'checkout' %}">CHECKOUT NOW</a>
-    </div>
-  </div>
-
-  <!-- WhatsApp Float -->
-  <div class="whatsapp-float">
-    <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-btn">
-      <i class="bi bi-whatsapp fs-4"></i>
-      <span>Support Chat</span>
-    </a>
   </div>
 
   {% include 'Includes/footer.html' %}
@@ -498,7 +501,7 @@
         
         window.addEventListener('scroll', revealOnScroll);
         revealOnScroll();
-
+        
         // AJAX Cart Helpers
         function getCookie(name) {
           let cookieValue = null;
@@ -515,68 +518,7 @@
           return cookieValue;
         }
         const csrftoken = getCookie('csrftoken');
-
-        const cartSidebar = document.getElementById("cartSidebar");
-        const cartItems = document.getElementById("cartItems");
-        const cartTotal = document.getElementById("cartTotal");
-
-        window.openCart = function() {
-          cartSidebar.classList.add("open");
-          document.body.style.overflow = 'hidden';
-          fetchCartItems();
-        }
-
-        window.closeCart = function() {
-          cartSidebar.classList.remove("open");
-          document.body.style.overflow = '';
-        }
-
-        document.getElementById("closeCart").addEventListener("click", closeCart);
-
-        function fetchCartItems() {
-          $.ajax({
-            url: "{% url 'get_cart' %}",
-            type: "GET",
-            success: function(response) {
-              cartItems.innerHTML = "";
-              let total = 0;
-              if (response.items && response.items.length > 0) {
-                response.items.forEach(item => {
-                  total += item.price * item.quantity;
-                  const itemEl = `
-                    <div class="d-flex align-items-center mb-3 p-2 bg-light rounded">
-                      <img src="${item.image}" width="50" height="50" class="rounded me-3">
-                      <div class="flex-grow-1">
-                        <h6 class="mb-0" style="font-size:0.9rem;">${item.name}</h6>
-                        <small class="text-primary fw-bold">Rs ${item.price}</small>
-                      </div>
-                      <div class="d-flex align-items-center">
-                        <button onclick="updateQty(${item.id}, -1)" class="btn btn-sm"><i class="bi bi-dash"></i></button>
-                        <span class="mx-2">${item.quantity}</span>
-                        <button onclick="updateQty(${item.id}, 1)" class="btn btn-sm"><i class="bi bi-plus"></i></button>
-                      </div>
-                    </div>
-                  `;
-                  cartItems.insertAdjacentHTML('beforeend', itemEl);
-                });
-              } else {
-                cartItems.innerHTML = '<p class="text-center py-5 text-muted">Your cart is empty.</p>';
-              }
-              cartTotal.textContent = total.toFixed(2);
-            }
-          });
-        }
-
-        window.updateQty = function(id, change) {
-          $.ajax({
-            url: "{% url 'update_cart' %}",
-            type: "POST",
-            headers: {'X-CSRFToken': csrftoken},
-            data: {item_id: id, change: change},
-            success: function() { fetchCartItems(); }
-          });
-        }
     });
-  </script>
+</script>
 </body>
 </html>

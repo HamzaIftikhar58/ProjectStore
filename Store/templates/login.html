@@ -1,149 +1,307 @@
 <!DOCTYPE html>
-     <html lang="en">
-     {% load static %}
-     <head>
-         <meta charset="UTF-8">
-         <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
-         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <title>ProjectStore - Login</title>
-         <meta name="description" content="Log in to your ProjectStore account to access your projects, track orders, and manage your software, hardware, AI, robotics, and electronics projects.">
-         <meta name="keywords" content="ProjectStore login, user login, sign in, access account, software projects, hardware projects, AI projects, robotics projects, electronics projects">
-
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-             <link rel="preconnect" href="https://fonts.googleapis.com">
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Project Store</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-     
-      <style>
-        .card {
-            max-width: 1700px;
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #3b82f6;
+            --secondary-blue: #2563eb;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: var(--text-main);
+        }
+
+        h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
+
+        .auth-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
             width: 100%;
-            margin: 0 auto;
+            max-width: 1000px;
+            display: flex;
+            min-height: 600px;
+            animation: slideUp 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        #project {
-            height: 100px;
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-         .password-container {
-        position: relative;
-      }
-      .toggle-password {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-         color: #6c757d; 
-        z-index: 5;
-        {% comment %} background: white; {% endcomment %}
-        padding: 5px;
-        border-radius: 4px;
-      }
-        #reg1 {
-            background-color: #3939cd;
+
+        /* Left Side - Visual */
+        .auth-visual {
+            background-color: #1e293b;
+            width: 50%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
             color: white;
+            overflow: hidden;
         }
-        @media screen and (max-width: 576px) {
-            .card {
-                margin-top: 80px;
-                margin-bottom: 60px;
-            }
-             .password-container {
-        position: relative;
-      }
-      .toggle-password {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-         color: #6c757d; 
-        z-index: 5;
-        {% comment %} background: white; {% endcomment %}
-        padding: 5px;
-        border-radius: 4px;
-      }
+
+        .auth-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .auth-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.9) 0%, rgba(59, 130, 246, 0.4) 100%);
+            z-index: 1;
+        }
+
+        .visual-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Right Side - Form */
+        .auth-form-container {
+            width: 50%;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-control {
+            border: 1px solid rgba(203, 213, 225, 0.6);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+        }
+        
+        .input-group-text {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(203, 213, 225, 0.6);
+            backdrop-filter: blur(5px);
+            color: var(--text-muted);
+        }
+        
+        .input-group:focus-within .input-group-text {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            margin-left: 4px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            margin-top: 15px;
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 15px 25px -5px rgba(37, 99, 235, 0.5);
+        }
+
+        .password-field { position: relative; }
+        
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+        
+        .toggle-password:hover { color: var(--primary-blue); }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 30px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .auth-divider::before, .auth-divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .auth-divider span { padding: 0 15px; }
+
+        .social-btn {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eef2f6;
+            border-radius: 12px;
+            background: white;
+            color: var(--text-main);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .auth-card { flex-direction: column; height: auto; }
+            .auth-visual { width: 100%; height: 200px; padding: 20px; }
+            .auth-form-container { width: 100%; padding: 30px 20px; }
+            .visual-content h2 { font-size: 1.5rem; }
         }
     </style>
-        </head>
+</head>
+<body>
 
-     <body style="">
-       <div class="container-fluid bg-light">
-  <div class="row">
-    
-    <!-- Left Image Section -->
-   <div class="d-none d-md-flex col-md-8 border vh-100 justify-content-center align-items-center">
-          <img
-            src="{% static 'assets/img/login43.png' %}"
-            alt="auth-register-cover"
-            class="img-fluid"
-            style="max-width: 50%; height: auto;"
-          />
+    <div class="auth-card">
+        <!-- Visual Side -->
+        <div class="auth-visual">
+            <video autoplay muted loop playsinline class="auth-video">
+                <source src="{% static 'videos/register_login_vid.mp4' %}" type="video/mp4">
+            </video>
+            <div class="auth-overlay"></div>
+            <div class="visual-content">
+                <h2 class="fw-800 display-6 mb-2">Welcome Back!</h2>
+                <p class="mb-0 opacity-75">Access your panel to manage your projects and explore new innovations.</p>
+            </div>
         </div>
 
-
-
-    <!-- Right Form Section -->
-    <div class="col-12 col-md-4 d-flex flex-column justify-content-center vh-100 px-3">
-     <h1 class="text-center mb-0 mt-4">Welcome Back</h1>
-       {% comment %} <div class='text-center'>
-                            <img src="{% static 'Images/rename.png' %}" class='img-thumbnail' id='project' alt="">
-                        </div> {% endcomment %}
-                         <p class="text-center mb-4 mt-1 fs-4">Login to your account</p>
-      {% include 'Includes/messages.html' %}
-      
-          <form action="" method="POST">
-                                {% csrf_token %}
-                                <div class="col-12 mb-3">
-                                    <label for="username" class="form-label fs-4 fw-bold">Username</label>
-                                    <input type="text" id="username" name="username" class="form-control py-2 fs-5 mx-auto" required>
-                                </div>
-                                 <div class="mb-3 text-start password-container">
-              <label for="password" class="form-label fw-bold fs-5">Password</label>
-              <input type="password" id="password" name="password" class="form-control py-2 fs-5" required />
-              <i class="toggle-password fas fa-eye mt-3"></i>
+        <!-- Form Side -->
+        <div class="auth-form-container">
+            <div class="mb-4">
+                <h3 class="fw-800 mb-1">Login to Account</h3>
+                <p class="text-muted small">Please enter your credentials to continue.</p>
             </div>
-                                    <div class="mb-3 text-end mt-0">
-                                        <a href="{% url 'password_reset' %}" class="text-decoration-none">Forgot Password</a>
-                                    </div>
-                               
-                                <div class="mb-3">
-                                    <button type="submit" name='submit' id='reg1' class="btn w-100 mt-3 fs-4 fw-bold">Login</button>
-                                </div>
-                            </form>
 
-      <div class="text-center mt-4 fs-5">
-        <p>
-          Dont have an Account?
-          <span class="text-primary">
-            <a href="{% url 'register' %}" style="text-decoration: none;" class="fw-bold">Register</a>
-          </span>
-        </p>
-      </div>
+            {% include 'Includes/messages.html' %}
+
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0 border-2" style="border-color: #eef2f6; border-radius: 12px 0 0 12px;">
+                            <i class="fas fa-user text-muted"></i>
+                        </span>
+                        <input type="text" id="username" name="username" class="form-control border-start-0 ps-0" style="border-radius: 0 12px 12px 0;" placeholder="Enter your username" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label for="password" class="form-label mb-0">Password</label>
+                        <a href="{% url 'password_reset' %}" class="text-decoration-none small text-primary fw-600">Forgot Password?</a>
+                    </div>
+                    <div class="password-field input-group">
+                        <span class="input-group-text bg-light border-end-0 border-2" style="border-color: #eef2f6; border-radius: 12px 0 0 12px;">
+                            <i class="fas fa-lock text-muted"></i>
+                        </span>
+                        <input type="password" id="password" name="password" class="form-control border-start-0 ps-0" style="border-radius: 0 12px 12px 0;" placeholder="Enter your password" required>
+                        <i class="toggle-password fas fa-eye" style="right: 15px; z-index: 10;"></i>
+                    </div>
+                </div>
+
+                <button type="submit" name="submit" class="btn btn-primary">
+                    Sign In <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+            </form>
+
+            <div class="auth-divider">
+                <span>OR</span>
+            </div>
+
+            <p class="text-center mt-2 mb-0 text-muted">
+                Don't have an account? 
+                <a href="{% url 'register' %}" class="text-primary fw-700 text-decoration-none ms-1">Create Account</a>
+            </p>
+        </div>
     </div>
-  </div>
-</div>  
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-      $(document).ready(function() {
-        // Toggle password visibility
-        $('.toggle-password').click(function() {
-          // Find the associated input field
-          const input = $(this).prev('input');
-          
-          // Toggle the input type
-          if (input.attr('type') === 'password') {
-            input.attr('type', 'text');
-            $(this).removeClass('fa-eye').addClass('fa-eye-slash');
-          } else {
-            input.attr('type', 'password');
-            $(this).removeClass('fa-eye-slash').addClass('fa-eye');
-          }
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.toggle-password').click(function() {
+                const input = $(this).siblings('input');
+                if (input.attr('type') === 'password') {
+                    input.attr('type', 'text');
+                    $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+                } else {
+                    input.attr('type', 'password');
+                    $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+                }
+            });
         });
-      });
     </script>
-  
-     </body>
-     </html>
+</body>
+</html>
