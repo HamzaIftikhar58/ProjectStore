@@ -3,7 +3,7 @@
 {% load static %}
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Project Store | The Maker's Hub: DIY Kits, Components & Code Snippets</title>
@@ -411,8 +411,8 @@
           <div class="carousel-item active">
             <div class="row align-items-center">
               <div class="col-lg-6">
-                <h1 class="hero-h1">Verified <br><span>Software Projects/Code</span></h1>
-                <p class="hero-subtitle">Don't risk your grades. Get professionally developed & tested Python, Django, and Arduino scripts for your FYP and hobby projects.</p>
+                <h1 class="hero-h1">Verified Code Modules <br><span>& Reference Projects</span></h1>
+                <p class="hero-subtitle">Get production-ready, verified Python, Django, and Arduino snippets to accelerate your FYP and hobby builds.Learn from the best to build the best.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
                   <a href="{% url 'project' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-download me-2"></i>Download Scripts</a>
                   <a href="#faq" class="btn hero-btn btn-outline-light-custom">How Not to Fail?</a>
@@ -456,22 +456,17 @@
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <img src="{% static 'Images/collage1.jpg' %}" class="img-fluid hero-img" alt="3D Printing Services">
+                  <video class="img-fluid hero-img" autoplay loop muted playsinline>
+                    <source src="{% static 'videos/3d_printing_video.mp4' %}" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
+
       </div>
     </div>
   </section>

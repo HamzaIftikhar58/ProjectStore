@@ -1,6 +1,6 @@
 from django.db.models.signals import pre_save, pre_delete
 from django.dispatch import receiver
-from .models import Product, ProductImage
+from .models import Product, ProductImage, ProductVariant
 from .image_utils import compress_image
 import os
 
@@ -76,5 +76,38 @@ def delete_product_image(sender, instance, **kwargs):
 @receiver(pre_delete, sender=ProductImage)
 def delete_product_extra_image(sender, instance, **kwargs):
     """Delete image files when a ProductImage is deleted."""
+    if instance.image and os.path.isfile(instance.image.path):
+        instance.image.delete(save=False)
+
+
+@receiver(pre_save, sender=ProductVariant)
+def compress_product_variant_image(sender, instance, **kwargs):
+    """
+    Compress and watermark ProductVariant images.
+    """
+    if not instance.image:
+        return
+
+    try:
+        if instance.pk:
+            try:
+                old_instance = ProductVariant.objects.get(pk=instance.pk)
+                if old_instance.image and old_instance.image != instance.image:
+                    old_instance.image.delete(save=False)
+            except ProductVariant.DoesNotExist:
+                pass
+
+        compressed_image = compress_image(instance.image)
+        if compressed_image:
+            original_name = os.path.basename(instance.image.name)
+            instance.image.save(original_name, compressed_image, save=False)
+
+    except Exception as e:
+        print(f"Error processing ProductVariant image: {e}")
+
+
+@receiver(pre_delete, sender=ProductVariant)
+def delete_product_variant_image(sender, instance, **kwargs):
+    """Delete image files when a ProductVariant is deleted."""
     if instance.image and os.path.isfile(instance.image.path):
         instance.image.delete(save=False)
