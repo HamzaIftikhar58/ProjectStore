@@ -69,7 +69,7 @@ def add_watermark(image):
         print(f"❌ Error adding watermark: {e}")
         return image
 
-def compress_image(image_field, quality=85, max_size=(1920, 1080), format='WEBP'):
+def compress_image(image_field, quality=90, max_size=(1920, 1080), format='WEBP'):
     """
     Compress, optimize, and watermark an image.
     """
