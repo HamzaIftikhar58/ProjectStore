@@ -1,5 +1,4 @@
 {% if messages %}
-<style>
     .toast-container {
         position: fixed;
         bottom: 30px;
@@ -12,35 +11,36 @@
     }
 
     .glass-toast {
-        background: rgba(255, 255, 255, 0.75);
+        background: var(--glass-bg, rgba(255, 255, 255, 0.65));
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        color: #0f172a;
-        padding: 18px 25px;
+        color: var(--primary-dark, #0f172a);
+        padding: 20px 30px;
         border-radius: 20px;
         display: flex;
         align-items: center;
         gap: 15px;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.6);
-        font-weight: 600;
+        box-shadow: var(--shadow-lg, 0 20px 25px -5px rgba(0, 0, 0, 0.1));
+        border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.4));
+        font-weight: 700;
         font-family: 'Poppins', sans-serif;
-        font-size: 0.95rem;
-        transform: translateX(120%);
+        font-size: 1rem;
+        transform: translateY(150%);
         transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         pointer-events: auto;
         min-width: 300px;
-        max-width: 400px;
+        max-width: 450px;
     }
 
     .glass-toast.show {
-        transform: translateX(0);
+        transform: translateY(0);
     }
 
     .glass-toast i {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
+    /* Message Type Specifics */
     .glass-toast.success i { color: #10b981; }
     .glass-toast.error i { color: #ef4444; }
     .glass-toast.warning i { color: #f59e0b; }
@@ -57,7 +57,9 @@
         .glass-toast {
             width: 100%;
             min-width: auto;
-            justify-content: center;
+            justify-content: flex-start;
+            padding: 15px 20px;
+            font-size: 0.95rem;
         }
     }
 </style>

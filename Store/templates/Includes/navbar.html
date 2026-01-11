@@ -331,6 +331,25 @@
         border-color: var(--nav-accent);
         color: var(--nav-accent);
     }
+    
+    /* Mobile Cart Dropdown Fix */
+    @media (max-width: 576px) {
+        .mini-cart-dropdown {
+            position: fixed !important;
+            top: 70px !important;
+            left: 5% !important;
+            width: 90% !important;
+            min-width: unset !important;
+            margin: 0 !important;
+            transform: none !important;
+            z-index: 1050;
+        }
+        
+        #cartItemsDropdown {
+            min-width: unset !important;
+            max-height: 50vh !important;
+        }
+    }
 </style>
 
 <script>

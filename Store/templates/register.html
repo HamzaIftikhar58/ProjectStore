@@ -212,7 +212,7 @@
     <div class="auth-card">
         <!-- Visual Side -->
         <div class="auth-visual">
-            <video autoplay muted loop playsinline class="auth-video">
+            <video autoplay muted loop playsinline class="auth-video" preload="metadata" poster="{% static 'Images/register_login_vid_poster.jpg' %}">
                 <source src="{% static 'videos/register_login_vid.mp4' %}" type="video/mp4">
             </video>
             <div class="auth-overlay"></div>

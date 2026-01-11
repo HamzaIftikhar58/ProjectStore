@@ -549,6 +549,10 @@
         .notification.show {
             transform: translateY(0) scale(1);
         }
+        /* Hide floating chat widget on mobile to prevent overlap with fixed bottom nav */
+        .chat-widget-container {
+            display: none !important;
+        }
     }
 
     /* Modal Styling */
