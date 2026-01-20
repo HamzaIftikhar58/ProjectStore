@@ -287,7 +287,8 @@ def checkout(request):
 
 def category_products(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    products_list = category.products.all()  # related_name="products"
+    # Optimized query to avoid N+1 problem in template
+    products_list = category.products.select_related('category').all()  # related_name="products"
     paginator = Paginator(products_list, 12)  # Show 12 products per page
     page = request.GET.get('page')
     try:
@@ -431,7 +432,7 @@ def project(request):
 
 def AIpage(request):
     category = get_object_or_404(Category, name='AI')
-    products = Product.objects.filter(category__name='AI')
+    products = Product.objects.filter(category__name='AI').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -440,7 +441,7 @@ def AIpage(request):
 
 def hardwarepage(request):
     category = get_object_or_404(Category, name='Hardware')
-    products = Product.objects.filter(category__name='Hardware')
+    products = Product.objects.filter(category__name='Hardware').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -501,7 +502,7 @@ def submit_review(request, product_id):
 
 def softwarepage(request):
     category = get_object_or_404(Category, name='Software')
-    products = Product.objects.filter(category__name='Software')
+    products = Product.objects.filter(category__name='Software').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -510,7 +511,7 @@ def softwarepage(request):
 
 def Robotspage(request):
     category = get_object_or_404(Category, name='Robot')
-    products = Product.objects.filter(category__name='Robot')
+    products = Product.objects.filter(category__name='Robot').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -519,7 +520,7 @@ def Robotspage(request):
 
 def Electronicspage(request):
     category = get_object_or_404(Category, name='Electronics')
-    products = Product.objects.filter(category__name='Electronics')
+    products = Product.objects.filter(category__name='Electronics').select_related('category')
     context = {
         'products': products,
         'category': category
