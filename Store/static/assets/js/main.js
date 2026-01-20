@@ -414,7 +414,7 @@ if (document.getElementById('layout-menu')) {
 
 // ! Removed following code if you do't wish to use jQuery. Remember that navbar search functionality will stop working on removal.
 if (typeof $ !== 'undefined') {
-  $(function () {
+  const onReady = function () {
     // ! TODO: Required to load after DOM is ready, did this now with jQuery ready.
     window.Helpers.initSidebarToggle();
     // Toggle Universal Sidebar
@@ -666,5 +666,11 @@ if (typeof $ !== 'undefined') {
         psSearch.update();
       });
     }
-  });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onReady);
+  } else {
+    onReady();
+  }
 }
