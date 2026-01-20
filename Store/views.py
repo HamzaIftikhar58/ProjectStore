@@ -704,7 +704,7 @@ def place_order(request):
                 request.session.create()
             cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
 
-        cart_items = cart.items.all()
+        cart_items = cart.items.select_related('product', 'variant').all()
 
         if not cart_items:
             return JsonResponse({"success": False, "message": "Your cart is empty."}, status=400)
