@@ -583,7 +583,7 @@ def get_cart(request):
             session_key = request.session.session_key
         cart, created = Cart.objects.get_or_create(session_key=session_key)
     items = []
-    for item in cart.items.all():
+    for item in cart.items.all().select_related('product', 'variant'):
         items.append({
             'id': item.id,
             'name': item.product.name,
