@@ -1,6 +1,10 @@
-from django.test import TestCase, Client, override_settings
+from django.test import TestCase, Client, RequestFactory, override_settings
+from django.test.utils import CaptureQueriesContext
+from django.urls import reverse
+from django.db import connection
+from Store.models import Category, Product
+from Store.views import AIpage
 from django.contrib.auth.models import User
-from Store.models import Order, OrderItem, Product, Category
 
 @override_settings(STORAGES={
     "default": {
