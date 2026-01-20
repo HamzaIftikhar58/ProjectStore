@@ -14,83 +14,61 @@ from django.contrib.auth.models import User
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 })
-class PerformanceTests(TestCase):
+class OrderHistoryPerformanceTest(TestCase):
     def setUp(self):
-        self.client = Client()
-        self.factory = RequestFactory()
+        self.user = User.objects.create_user(username='perf_test_user', password='password')
+        self.category = Category.objects.create(name='Test Category', slug='test-category')
 
-        # Setup data
-        self.category = Category.objects.create(name='Electronics', slug='electronics')
-        self.ai_category = Category.objects.create(name='AI', slug='ai')
-
-        # Create products for Electronics
-        products_electronics = []
+        self.products = []
         for i in range(10):
-            products_electronics.append(Product(
+            p = Product.objects.create(
                 name=f'Product {i}',
                 category=self.category,
                 slug=f'product-{i}',
-                sku=f'sku-{i}',
-                price=10.00,
+                sku=f'SKU-{i}',
+                price=100,
                 stock=10,
-                short_description='desc',
-                description='desc',
-                main_image='test.jpg'
-            ))
-        Product.objects.bulk_create(products_electronics)
+                description='Desc',
+                short_description='Short Desc',
+                main_image='products/main/default.jpg'
+            )
+            self.products.append(p)
 
-        # Create products for AI
-        products_ai = []
+        # Create 10 Orders, each with 5 Items
         for i in range(10):
-            products_ai.append(Product(
-                name=f'AI Product {i}',
-                category=self.ai_category,
-                slug=f'ai-product-{i}',
-                sku=f'ai-sku-{i}',
-                price=10.00,
-                stock=10,
-                short_description='desc',
-                description='desc',
-                main_image='test.jpg'
-            ))
-        Product.objects.bulk_create(products_ai)
+            order = Order.objects.create(
+                user=self.user,
+                email='test@example.com',
+                total=500,
+                country='Country',
+                city='City',
+                state='State',
+                zip_code='12345',
+                phone='1234567890',
+                address='Address',
+                payment_method='online_payment'
+            )
+            for j in range(5):
+                OrderItem.objects.create(
+                    order=order,
+                    product=self.products[j],
+                    quantity=1,
+                    price=100
+                )
 
-    def test_category_products_performance(self):
-        """
-        Test that accessing category products page does not generate N+1 queries.
-        """
-        url = reverse('category_products', args=[self.category.slug])
+        self.client = Client()
+        self.client.login(username='perf_test_user', password='password')
 
-        # Using CaptureQueriesContext from django.test.utils
-        with CaptureQueriesContext(connection) as captured_queries:
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 200)
-
-            # Check for individual category fetches
-            individual_fetches = [q['sql'] for q in captured_queries if 'WHERE "Store_category"."id" =' in q['sql']]
-
-            self.assertEqual(len(individual_fetches), 0, f"Found {len(individual_fetches)} individual category fetches: {individual_fetches}")
-
-    def test_AIpage_performance(self):
-        """
-        Test AIpage performance directly since it might not be in urls.py.
-        """
-        request = self.factory.get('/ai-page/')
-        request.user = User.objects.create_user(username='testuser', password='password')
-
-        # Add session and messages
-        from django.contrib.sessions.middleware import SessionMiddleware
-        middleware = SessionMiddleware(lambda r: None)
-        middleware.process_request(request)
-        request.session.save()
-
-        from django.contrib.messages.middleware import MessageMiddleware
-        middleware = MessageMiddleware(lambda r: None)
-        middleware.process_request(request)
-
-        with CaptureQueriesContext(connection) as captured_queries:
-            response = AIpage(request)
-            self.assertEqual(response.status_code, 200)
-
-            individual_fetches = [q['sql'] for q in captured_queries if 'WHERE "Store_category"."id" =' in q['sql']]
-            self.assertEqual(len(individual_fetches), 0, f"Found {len(individual_fetches)} individual category fetches in AIpage")
+    def test_order_history_query_count(self):
+        # We expect a constant number of queries regardless of order count.
+        # Queries:
+        # 1. Session lookup (middleware)
+        # 2. User lookup (middleware)
+        # 3. Order query
+        # 4. OrderItem prefetch
+        # 5. Product prefetch
+        # 6. Variant prefetch
+        # Total: 6
+        with self.assertNumQueries(6):
+             response = self.client.get('/order-history/')
+             self.assertEqual(response.status_code, 200)

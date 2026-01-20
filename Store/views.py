@@ -788,7 +788,7 @@ def order_confirmation(request):
 
 @login_required
 def order_history(request):
-    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    orders = Order.objects.filter(user=request.user).order_by('-created_at').prefetch_related('items__product', 'items__variant')
     context = {
         'orders': orders
     }
