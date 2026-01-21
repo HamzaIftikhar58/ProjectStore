@@ -1,0 +1,23 @@
+Watching for file changes with StatReloader
+[22/Jan/2026 01:31:10] "HEAD / HTTP/1.1" 200 0
+[22/Jan/2026 01:31:51] "GET / HTTP/1.1" 200 55638
+[22/Jan/2026 01:31:51] "GET /static/Images/zombie_apocalypse_video_poster.jpg HTTP/1.1" 200 246108
+[22/Jan/2026 01:31:51] "GET /static/Images/project_store_logo.png HTTP/1.1" 200 182255
+[22/Jan/2026 01:31:51] "GET /static/Images/collages.jpg HTTP/1.1" 200 403308
+[22/Jan/2026 01:31:51] "GET /static/Images/3d_printing_video_poster.jpg HTTP/1.1" 200 114295
+[22/Jan/2026 01:31:51] "GET /static/Images/wlogo.png HTTP/1.1" 200 56436
+[22/Jan/2026 01:31:51] "GET /static/style.css HTTP/1.1" 200 8590
+[22/Jan/2026 01:31:52] "GET /static/videos/3d_printing_video.mp4 HTTP/1.1" 200 322871
+[22/Jan/2026 01:31:52] "GET /static/videos/zombie_apocalypse_video.mp4 HTTP/1.1" 200 4548077
+[22/Jan/2026 01:31:52] "GET /cart-count/ HTTP/1.1" 200 12
+[22/Jan/2026 01:31:52] "GET /static/Images/settings.png HTTP/1.1" 200 18674
+[22/Jan/2026 01:31:52] "GET /static/Images/software.png HTTP/1.1" 200 89460
+[22/Jan/2026 01:31:52] "GET /static/Images/robot.png HTTP/1.1" 200 32400
+[22/Jan/2026 01:31:52] "GET /static/Images/computer.png HTTP/1.1" 200 10313
+Performing system checks...
+
+System check identified no issues (0 silenced).
+January 22, 2026 - 01:30:58
+Django version 5.1.4, using settings 'ProjectStore.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.

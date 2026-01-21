@@ -2,7 +2,7 @@ from django.test import TestCase, Client, RequestFactory, override_settings
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 from django.db import connection
-from Store.models import Category, Product
+from Store.models import Category, Product, Order, OrderItem
 from Store.views import AIpage
 from django.contrib.auth.models import User
 
@@ -72,3 +72,52 @@ class OrderHistoryPerformanceTest(TestCase):
         with self.assertNumQueries(6):
              response = self.client.get('/order-history/')
              self.assertEqual(response.status_code, 200)
+
+@override_settings(STORAGES={
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+})
+class SeoTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.category = Category.objects.create(name="Electronics", slug="electronics")
+        self.product = Product.objects.create(
+            name="Arduino Uno",
+            category=self.category,
+            slug="arduino-uno",
+            sku="ARD-001",
+            price=1000,
+            stock=10,
+            short_description="Microcontroller board",
+            description="Arduino Uno is a microcontroller board...",
+            main_image="products/main/default.jpg"
+        )
+
+    def test_robots_txt(self):
+        response = self.client.get('/robots.txt')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('User-agent: *', response.content.decode())
+        self.assertIn('Sitemap:', response.content.decode())
+
+    def test_home_seo(self):
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+        content = response.content.decode()
+        self.assertIn('<title>', content)
+        self.assertIn('<meta name="description"', content)
+        self.assertIn('og:type', content)
+        self.assertIn('application/ld+json', content)
+
+    def test_product_detail_seo(self):
+        response = self.client.get(reverse('product_detail', args=[self.product.slug]))
+        self.assertEqual(response.status_code, 200)
+        content = response.content.decode()
+        # Check if title contains product name
+        self.assertIn(f'{self.product.name} | Project Store', content)
+        self.assertIn(f'<meta property="og:title" content="{self.product.name} | Project Store">', content)
+        self.assertIn('application/ld+json', content)
+        self.assertIn('"@type": "Product"', content)
