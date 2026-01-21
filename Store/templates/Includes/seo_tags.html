@@ -1,0 +1,64 @@
+{% load static %}
+<title>{% if page_title %}{{ page_title }} | Project Store{% elif is_product and product %}{{ product.name }} | Project Store{% else %}Project Store | The Maker's Hub: DIY Kits, Components & Code Snippets{% endif %}</title>
+<meta name="description" content="{% if meta_description %}{{ meta_description }}{% elif is_product and product %}{{ product.meta_description|default:product.short_description }}{% else %}Pakistan's ultimate store for Students & Hobbyists. Shop ESP32 modules, sensors, ready-to-use DIY Project Kits, and professional Software Projects/Code Snippets.{% endif %}">
+<meta name="keywords" content="{% if meta_keywords %}{{ meta_keywords }}{% elif is_product and product %}{{ product.meta_keywords|default:product.name }}{% else %}Project Store, DIY Kits Pakistan, ESP32 price Lahore, Arduino Sensors, Software Projects, Python Code Snippets, 3D Printing Pakistan, Electronic Components Online{% endif %}">
+<meta name="author" content="Project Store">
+<link rel="canonical" href="{{ request.build_absolute_uri }}">
+<link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.png' %}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="{% if is_product %}product{% else %}website{% endif %}">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+<meta property="og:title" content="{% if og_title %}{{ og_title }}{% elif page_title %}{{ page_title }} | Project Store{% elif is_product and product %}{{ product.name }} | Project Store{% else %}Project Store | The Maker's Hub{% endif %}">
+<meta property="og:description" content="{% if og_description %}{{ og_description }}{% elif meta_description %}{{ meta_description }}{% elif is_product and product %}{{ product.meta_description|default:product.short_description }}{% else %}Pakistan's ultimate store for Students & Hobbyists. Shop ESP32 modules, sensors, DIY Project Kits.{% endif %}">
+<meta property="og:image" content="{% if og_image %}{{ og_image }}{% elif is_product and product and product.main_image %}{{ request.scheme }}://{{ request.get_host }}{{ product.main_image.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'Images/collages.jpg' %}{% endif %}">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="{{ request.build_absolute_uri }}">
+<meta property="twitter:title" content="{% if og_title %}{{ og_title }}{% elif page_title %}{{ page_title }} | Project Store{% elif is_product and product %}{{ product.name }} | Project Store{% else %}Project Store | The Maker's Hub{% endif %}">
+<meta property="twitter:description" content="{% if og_description %}{{ og_description }}{% elif meta_description %}{{ meta_description }}{% elif is_product and product %}{{ product.meta_description|default:product.short_description }}{% else %}Pakistan's ultimate store for Students & Hobbyists. Shop ESP32 modules, sensors, DIY Project Kits.{% endif %}">
+<meta property="twitter:image" content="{% if og_image %}{{ og_image }}{% elif is_product and product and product.main_image %}{{ request.scheme }}://{{ request.get_host }}{{ product.main_image.url }}{% else %}{{ request.scheme }}://{{ request.get_host }}{% static 'Images/collages.jpg' %}{% endif %}">
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Project Store",
+  "url": "{{ request.scheme }}://{{ request.get_host }}",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'Images/project_store_logo.png' %}",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+923104505008",
+    "contactType": "customer service"
+  }
+}
+</script>
+
+{% if is_product and product %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.name|escapejs }}",
+  "image": [
+    "{{ request.scheme }}://{{ request.get_host }}{{ product.main_image.url }}"
+   ],
+  "description": "{{ product.short_description|default:product.description|truncatewords:50|escapejs }}",
+  "sku": "{{ product.sku|escapejs }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "Project Store"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ request.build_absolute_uri }}",
+    "priceCurrency": "PKR",
+    "price": "{{ product.final_price }}",
+    "availability": "{% if product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition"
+  }
+}
+</script>
+{% endif %}

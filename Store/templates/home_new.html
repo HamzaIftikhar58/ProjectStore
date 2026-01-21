@@ -3,14 +3,9 @@
 {% load static %}
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Project Store | The Maker's Hub: DIY Kits, Components & Code Snippets</title>
-  
-  <meta name="description" content="Pakistan's ultimate store for Students & Hobbyists. Shop ESP32 modules, sensors, ready-to-use DIY Project Kits, and professional Software Projects/Code Snippets. Fast shipping from Hall Road to your doorstep.">
-  <meta name="keywords" content="Project Store, DIY Kits Pakistan, ESP32 price Lahore, Arduino Sensors, Software Projects for Students, Python Code Snippets, 3D Printing Pakistan, Electronic Components Online">
-  <meta name="author" content="Project Store">
+  {% include 'Includes/seo_tags.html' %}
 
   <!-- Preload Critical LCP Image -->
   <link rel="preload" as="image" href="{% static 'Images/zombie_apocalypse_video_poster.jpg' %}">

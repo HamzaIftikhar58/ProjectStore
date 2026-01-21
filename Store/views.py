@@ -328,7 +328,7 @@ def productDetail(request, slug):
 
         # 👇 Extra context for breadcrumb / dynamic UI
         'is_project': product.is_project,
-        'page_title': "Project Detail" if product.is_project else "Product Detail",
+        'page_title': product.name,
         'is_liked': product.liked_by.filter(id=request.user.id).exists() if request.user.is_authenticated else False,
     }
 

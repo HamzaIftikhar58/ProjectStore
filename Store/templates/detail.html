@@ -4,11 +4,8 @@
 {% load youtube_filters %}
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ product.name }} | Shopping Cart</title>
-  <meta name="description" content="{{ product.meta_description|default:product.short_description }}">
-  <meta name="keywords" content="{{ product.meta_keywords|default:product.name }}">
+  {% include 'Includes/seo_tags.html' with is_product=True %}
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
