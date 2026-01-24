@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /cart/
+Disallow: /checkout/
+Disallow: /login/
+Disallow: /Register/
+Disallow: /reset/
+Disallow: /verify-otp/
+Disallow: /contact/success/
+Disallow: /order-confirmation/
+Disallow: /order-history/
+Sitemap: https://projectstore.pk/sitemap.xml
