@@ -2,7 +2,7 @@ from django.test import TestCase, Client, RequestFactory, override_settings
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 from django.db import connection
-from Store.models import Category, Product
+from Store.models import Category, Product, Order, OrderItem
 from Store.views import AIpage
 from django.contrib.auth.models import User
 
@@ -72,3 +72,13 @@ class OrderHistoryPerformanceTest(TestCase):
         with self.assertNumQueries(6):
              response = self.client.get('/order-history/')
              self.assertEqual(response.status_code, 200)
+
+
+class RobotsTxtTest(TestCase):
+    def test_robots_txt(self):
+        response = self.client.get('/robots.txt')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/plain')
+        content = response.content.decode('utf-8')
+        self.assertIn('User-agent: *', content)
+        self.assertIn('Sitemap: https://projectstore.pk/sitemap.xml', content)
