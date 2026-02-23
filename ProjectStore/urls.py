@@ -6,6 +6,7 @@ from Store import views
 # from Store.forms import CustomSetPasswordForm
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
 from Store.sitemaps import ProductSitemap, CategorySitemap, StaticViewSitemap, ProjectSitemap, HomeSitemap
 
 sitemaps = {
@@ -65,6 +66,7 @@ urlpatterns = [
     path('submit-review/<int:product_id>/', views.submit_review, name='submit_review'),
     path('track-whatsapp-order/<int:product_id>/', views.track_whatsapp_order, name='track_whatsapp_order'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps, 'template_name': 'custom_sitemap.xml'}, name='django.contrib.sitemaps.views.sitemap'),
+    path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

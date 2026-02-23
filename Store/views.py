@@ -289,7 +289,8 @@ def checkout(request):
 
 def category_products(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    products_list = category.products.all()  # related_name="products"
+    # Optimized query to avoid N+1 problem in template
+    products_list = category.products.select_related('category').all()  # related_name="products"
     paginator = Paginator(products_list, 12)  # Show 12 products per page
     page = request.GET.get('page')
     try:
@@ -433,7 +434,7 @@ def project(request):
 @cache_page(60 * 15) # Cache for 15 minutes
 def AIpage(request):
     category = get_object_or_404(Category, name='AI')
-    products = Product.objects.filter(category__name='AI')
+    products = Product.objects.filter(category__name='AI').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -442,7 +443,7 @@ def AIpage(request):
 @cache_page(60 * 15) # Cache for 15 minutes
 def hardwarepage(request):
     category = get_object_or_404(Category, name='Hardware')
-    products = Product.objects.filter(category__name='Hardware')
+    products = Product.objects.filter(category__name='Hardware').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -503,7 +504,7 @@ def submit_review(request, product_id):
 @cache_page(60 * 15) # Cache for 15 minutes
 def softwarepage(request):
     category = get_object_or_404(Category, name='Software')
-    products = Product.objects.filter(category__name='Software')
+    products = Product.objects.filter(category__name='Software').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -512,7 +513,7 @@ def softwarepage(request):
 @cache_page(60 * 15) # Cache for 15 minutes
 def Robotspage(request):
     category = get_object_or_404(Category, name='Robot')
-    products = Product.objects.filter(category__name='Robot')
+    products = Product.objects.filter(category__name='Robot').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -521,7 +522,7 @@ def Robotspage(request):
 @cache_page(60 * 15) # Cache for 15 minutes
 def Electronicspage(request):
     category = get_object_or_404(Category, name='Electronics')
-    products = Product.objects.filter(category__name='Electronics')
+    products = Product.objects.filter(category__name='Electronics').select_related('category')
     context = {
         'products': products,
         'category': category
@@ -585,7 +586,7 @@ def get_cart(request):
             session_key = request.session.session_key
         cart, created = Cart.objects.get_or_create(session_key=session_key)
     items = []
-    for item in cart.items.all():
+    for item in cart.items.all().select_related('product', 'variant'):
         items.append({
             'id': item.id,
             'name': item.product.name,
@@ -706,7 +707,7 @@ def place_order(request):
                 request.session.create()
             cart, created = Cart.objects.get_or_create(session_key=request.session.session_key)
 
-        cart_items = cart.items.all()
+        cart_items = cart.items.select_related('product', 'variant').all()
 
         if not cart_items:
             return JsonResponse({"success": False, "message": "Your cart is empty."}, status=400)
@@ -789,7 +790,7 @@ def order_confirmation(request):
 
 @login_required
 def order_history(request):
-    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    orders = Order.objects.filter(user=request.user).order_by('-created_at').prefetch_related('items__product', 'items__variant')
     context = {
         'orders': orders
     }
