@@ -23,6 +23,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods, require_POST
+from django.views.decorators.cache import cache_control, cache_page
 
 from .forms import (
     LoginForm,
@@ -248,6 +249,7 @@ def reset_verify_otp(request):
 
 
 
+@cache_control(public=True, max_age=3600)  # Cash for 1 hour
 def home(request):
          return render(request, 'home_new.html')
 
@@ -428,7 +430,7 @@ def project(request):
 
 
 
-
+@cache_page(60 * 15) # Cache for 15 minutes
 def AIpage(request):
     category = get_object_or_404(Category, name='AI')
     products = Product.objects.filter(category__name='AI')
@@ -437,7 +439,7 @@ def AIpage(request):
         'category': category
     }
     return render(request, 'AIpage.html', context)
-
+@cache_page(60 * 15) # Cache for 15 minutes
 def hardwarepage(request):
     category = get_object_or_404(Category, name='Hardware')
     products = Product.objects.filter(category__name='Hardware')
@@ -498,7 +500,7 @@ def submit_review(request, product_id):
         return JsonResponse({'success': True, 'message': 'Review submitted successfully'})
     except Exception as e:
         return JsonResponse({'success': False, 'message': str(e)}, status=500)
-
+@cache_page(60 * 15) # Cache for 15 minutes
 def softwarepage(request):
     category = get_object_or_404(Category, name='Software')
     products = Product.objects.filter(category__name='Software')
@@ -507,7 +509,7 @@ def softwarepage(request):
         'category': category
     }
     return render(request, 'softwarepage.html', context)
-
+@cache_page(60 * 15) # Cache for 15 minutes
 def Robotspage(request):
     category = get_object_or_404(Category, name='Robot')
     products = Product.objects.filter(category__name='Robot')
@@ -516,7 +518,7 @@ def Robotspage(request):
         'category': category
     }
     return render(request, 'Robotspage.html', context)
-
+@cache_page(60 * 15) # Cache for 15 minutes
 def Electronicspage(request):
     category = get_object_or_404(Category, name='Electronics')
     products = Product.objects.filter(category__name='Electronics')
