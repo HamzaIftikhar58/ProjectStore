@@ -6,7 +6,7 @@
             <!-- Brand & About -->
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                 <div class="footer-logo mb-4">
-                    <img src="{% static 'Images/project_store_logo.png' %}" alt="Logo" style="height: 60px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
+                    <img src="{% static 'Images/project_store_logo.webp' %}" alt="Logo" style="height: 60px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
                 </div>
                 <p class="text-white-50 lh-lg mb-4" style="font-size: 0.95rem;">
                     ProjectStore is Pakistan's premier hub for Makers, Students, and Hobbyists. 
@@ -36,7 +36,7 @@
 
             <!-- Categories -->
             <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
-                <h5 class="text-white fw-bold mb-4 position-relative footer-heading">Categories</h5>
+                <h2 class="text-white fw-bold mb-4 position-relative footer-heading h5">Categories</h2>
                 <ul class="list-unstyled footer-links">
                     {% for category in categories|slice:":6" %}
                     <li class="mb-2"><a href="{% url 'category_products' category.slug %}" class="text-white-50 text-decoration-none hover-text-primary">{{ category.name }}</a></li>
@@ -46,7 +46,7 @@
 
             <!-- Quick Menu -->
             <div class="col-lg-2 col-md-6 mb-4 mb-lg-0">
-                <h5 class="text-white fw-bold mb-4 position-relative footer-heading">Main Menu</h5>
+                <h2 class="text-white fw-bold mb-4 position-relative footer-heading h5">Main Menu</h2>
                 <ul class="list-unstyled footer-links">
                     <li class="mb-2"><a href="{% url 'home' %}" class="text-white-50 text-decoration-none hover-text-primary">Home</a></li>
                     <li class="mb-2"><a href="{% url 'product' %}" class="text-white-50 text-decoration-none hover-text-primary">All Products</a></li>
@@ -58,7 +58,7 @@
 
             <!-- Contact & Trust -->
             <div class="col-lg-4 col-md-6">
-                <h5 class="text-white fw-bold mb-4 position-relative footer-heading">Contact Us</h5>
+                <h2 class="text-white fw-bold mb-4 position-relative footer-heading h5">Contact Us</h2>
                 <div class="d-flex align-items-start mb-3">
                     <div class="contact-icon me-3"><i class="bi bi-geo-alt text-primary fs-5"></i></div>
                     <p class="text-white-50 mb-0 small">Industrial State, Kacha Jail Road, Lahore, Pakistan</p>
@@ -88,7 +88,7 @@
                 <div class="d-flex align-items-center">
                     <span class="text-white-50 small me-2">Powered by</span>
                     <a href="https://www.isol.pk/" target="_blank">
-                        <img src="{% static 'Images/wlogo.png' %}" alt="ISOL" style="height: 30px; transition: transform 0.3s ease;" class="hover-scale-sm">
+                        <img src="{% static 'Images/wlogo.webp' %}" alt="ISOL" style="height: 30px; transition: transform 0.3s ease;" class="hover-scale-sm">
                     </a>
                 </div>
             </div>

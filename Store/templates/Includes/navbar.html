@@ -32,7 +32,7 @@
     <div class="container-fluid px-lg-5">
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center m-0 me-lg-4" href="{% url 'home' %}">
-            <img src="{% static 'Images/project_store_logo.png' %}" alt="Logo" class="logo-img">
+            <img src="{% static 'Images/project_store_logo.webp' %}" alt="Logo" class="logo-img">
         </a>
 
         <!-- Universal Search (Desktop) -->
@@ -48,13 +48,13 @@
         <div class="d-flex align-items-center order-lg-2 ms-lg-3">
             
             <!-- Mobile Search Toggle -->
-            <button class="btn btn-link text-dark d-lg-none me-2 p-1" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-expanded="false">
+            <button class="btn btn-link text-dark d-lg-none me-2 p-1" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSearch" aria-expanded="false" aria-label="Toggle Mobile Search">
                 <i class="bi bi-search fs-4"></i>
             </button>
 
             <!-- Cart Dropdown Container -->
             <div class="me-2 me-lg-3 position-relative dropdown">
-                <a class="nav-icon-glass dropdown-toggle no-caret" href="#" id="cartIconMain" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                <a class="nav-icon-glass dropdown-toggle no-caret" href="#" id="cartIconMain" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" aria-label="Shopping Cart">
                     {% if request.user.is_authenticated %}
                         <i class="bi bi-cart"></i>
                     {% else %}
@@ -87,7 +87,7 @@
 
             <!-- Profile Dropdown -->
             <div class="dropdown me-2 me-lg-0">
-                <a class="nav-icon-glass dropdown-toggle profile-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-icon-glass dropdown-toggle profile-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="User Profile Menu">
                     <i class="bi bi-person"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3 animate slideIn p-2" aria-labelledby="profileDropdown" style="border-radius: 12px; min-width: 200px;">
@@ -107,7 +107,7 @@
             </div>
 
             <!-- Mobile Toggle -->
-            <button class="navbar-toggler border-0 shadow-none ms-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <button class="navbar-toggler border-0 shadow-none ms-2 p-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-label="Toggle Navigation">
                 <div class="nav-icon-glass">
                     <span class="navbar-toggler-icon" style="width: 1.25rem; height: 1.25rem; background-size: 80%;"></span>
                 </div>

@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-key-for-dev')
 CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:9082',
     'http://localhost:9082',
-    'https://projectstore.pk',
+    'https://projectstore.isol.pk',
     'https://www.projectstore.isol.pk',
 ]
 

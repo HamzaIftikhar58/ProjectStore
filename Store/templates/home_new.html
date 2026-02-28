@@ -3,7 +3,7 @@
 {% load static %}
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <title>Project Store | The Maker's Hub: DIY Kits, Components & Code Snippets</title>
@@ -13,7 +13,7 @@
   <meta name="author" content="Project Store">
 
   <!-- Preload Critical LCP Image -->
-  <link rel="preload" as="image" href="{% static 'Images/zombie_apocalypse_video_poster.jpg' %}">
+  <link rel="preload" as="image" href="{% static 'Images/zombie_apocalypse_video_poster.webp' %}">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -418,6 +418,7 @@
   {% include 'Includes/navbar.html' %}
   {% include 'Includes/messages.html' %}
 
+  <main>
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-bg-accent"></div>
@@ -444,7 +445,7 @@
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/zombie_apocalypse_video_poster.jpg' %}">
+                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/zombie_apocalypse_video_poster.webp' %}">
                     <source src="{% static 'videos/zombie_apocalypse_video.mp4' %}" type="video/mp4">
                     Your browser does not support the video tag.
                   </video>
@@ -465,7 +466,7 @@
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <img src="{% static 'Images/collages.jpg' %}" class="img-fluid hero-img" alt="Hardware Project Kits">
+                  <img src="{% static 'Images/collages.webp' %}" class="img-fluid hero-img" alt="Hardware Project Kits">
                 </div>
               </div>
             </div>
@@ -483,7 +484,7 @@
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/3d_printing_video_poster.jpg' %}">
+                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/3d_printing_video_poster.webp' %}">
                     <source src="{% static 'videos/3d_printing_video.mp4' %}" type="video/mp4">
                     Your browser does not support the video tag.
                   </video>
@@ -521,9 +522,9 @@
         <a href="{% url 'project' %}" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/software.png' %}" alt="Code" loading="lazy">
+              <img src="{% static 'Images/software.webp' %}" alt="Code" loading="lazy">
             </div>
-            <h5 class="cat-title">Software & Scripts</h5>
+            <h3 class="cat-title h5">Software & Scripts</h3>
             <p class="cat-desc">Verified tested code for your applications.</p>
           </div>
         </a>
@@ -533,9 +534,9 @@
         <a href="{% url 'product' %}?category=kits" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/settings.png' %}" alt="Kits" loading="lazy">
+              <img src="{% static 'Images/settings.webp' %}" alt="Kits" loading="lazy">
             </div>
-            <h5 class="cat-title">Project Kits</h5>
+            <h3 class="cat-title h5">Project Kits</h3>
             <p class="cat-desc">Complete DIY solutions with components.</p>
           </div>
         </a>
@@ -545,9 +546,9 @@
         <a href="{% url 'product' %}?category=components" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/computer.png' %}" alt="Components" loading="lazy">
+              <img src="{% static 'Images/computer.webp' %}" alt="Components" loading="lazy">
             </div>
-            <h5 class="cat-title">Components</h5>
+            <h3 class="cat-title h5">Components</h3>
             <p class="cat-desc">Sensors, Modules, ESP32 & more.</p>
           </div>
         </a>
@@ -557,9 +558,9 @@
         <a href="/3d-printing/" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/robot.png' %}" alt="3D" loading="lazy">
+              <img src="{% static 'Images/robot.webp' %}" alt="3D" loading="lazy">
             </div>
-            <h5 class="cat-title">3D Printing</h5>
+            <h3 class="cat-title h5">3D Printing</h3>
             <p class="cat-desc">Custom casings designed & printed.</p>
           </div>
         </a>
@@ -584,28 +585,28 @@
             <div class="col-6">
               <div class="trust-item p-0">
                 <i class="fa-solid fa-microchip trust-icon"></i>
-                <h5 class="trust-title">Tested Hardware</h5>
+                <h3 class="trust-title h5">Tested Hardware</h3>
                 <small class="text-muted">Every module is quality-checked before shipping.</small>
               </div>
             </div>
             <div class="col-6">
               <div class="trust-item p-0">
                 <i class="fa-solid fa-code trust-icon"></i>
-                <h5 class="trust-title">Verified Scripts</h5>
+                <h3 class="trust-title h5">Verified Scripts</h3>
                 <small class="text-muted">Download bug-free Python, Arduino & Django code.</small>
               </div>
             </div>
             <div class="col-6">
               <div class="trust-item p-0">
                 <i class="fa-solid fa-truck-fast trust-icon"></i>
-                <h5 class="trust-title">Fast Delivery</h5>
+                <h3 class="trust-title h5">Fast Delivery</h3>
                 <small class="text-muted">2-3 working days across Pakistan via top couriers.</small>
               </div>
             </div>
             <div class="col-6">
               <div class="trust-item p-0">
                 <i class="fa-solid fa-headset trust-icon"></i>
-                <h5 class="trust-title">Student Support</h5>
+                <h3 class="trust-title h5">Student Support</h3>
                 <small class="text-muted">Free basic guidance for your DIY & Final Year Projects.</small>
               </div>
             </div>
@@ -687,6 +688,7 @@
       </div>
     </div>
   </section>
+  </main>
 
   {% include 'Includes/footer.html' %}
 

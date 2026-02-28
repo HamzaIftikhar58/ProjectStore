@@ -11,7 +11,7 @@ def add_watermark(image):
     """
     try:
         # Construct path to the watermark image
-        watermark_path = os.path.join(settings.BASE_DIR, 'Store', 'static', 'Images', 'project_store_logo.png')
+        watermark_path = os.path.join(settings.BASE_DIR, 'Store', 'static', 'Images', 'project_store_logo.webp')
         
         if not os.path.exists(watermark_path):
             print(f"⚠️ Watermark not found at: {watermark_path}")
