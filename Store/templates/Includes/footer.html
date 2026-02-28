@@ -6,7 +6,7 @@
             <!-- Brand & About -->
             <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
                 <div class="footer-logo mb-4">
-                    <img src="{% static 'Images/project_store_logo.webp' %}" alt="Logo" style="height: 60px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
+                    <img src="{% static 'Images/project_store_logo.webp' %}" alt="Logo" width="180" height="50" style="height: 50px; width: auto; object-fit: contain; filter: brightness(0) invert(1);">
                 </div>
                 <p class="text-white-50 lh-lg mb-4" style="font-size: 0.95rem;">
                     ProjectStore is Pakistan's premier hub for Makers, Students, and Hobbyists. 
@@ -88,7 +88,7 @@
                 <div class="d-flex align-items-center">
                     <span class="text-white-50 small me-2">Powered by</span>
                     <a href="https://www.isol.pk/" target="_blank">
-                        <img src="{% static 'Images/wlogo.webp' %}" alt="ISOL" style="height: 30px; transition: transform 0.3s ease;" class="hover-scale-sm">
+                        <img src="{% static 'Images/wlogo.webp' %}" alt="ISOL" width="80" height="24" style="height: 24px; transition: transform 0.3s ease;" class="hover-scale-sm">
                     </a>
                 </div>
             </div>
@@ -99,7 +99,7 @@
 <!-- Floating Chat Button Integration -->
 {% if site_settings.whatsapp_number %}
 <div class="chat-widget-container">
-    <a href="https://wa.me/{{ site_settings.whatsapp_number }}" target="_blank" class="whatsapp-bubble">
+    <a href="https://wa.me/{{ site_settings.whatsapp_number }}" target="_blank" class="whatsapp-bubble" aria-label="Chat with us on WhatsApp">
         <i class="fab fa-whatsapp"></i>
         <span>Chat with Support <span class="whatsapp-badge">Online</span></span>
     </a>
