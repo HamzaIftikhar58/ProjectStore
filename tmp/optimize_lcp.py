@@ -30,11 +30,11 @@ def optimize_image(filename, target_width=None, quality=60):
     img.save(output_path, "WEBP", quality=quality)
     print(f"Optimized {filename} -> {output_path} (Size: {os.path.getsize(output_path)} bytes)")
 
-# 1. Re-compress LCP Poster (Aggressive)
-optimize_image("zombie_apocalypse_video_poster.jpg", quality=40)
+# 1. Re-compress LCP Poster (EXTREME)
+optimize_image("zombie_apocalypse_video_poster.jpg", quality=25)
 
 # 2. Resize and Compress Logo (Aggressive)
 optimize_image("project_store_logo.png", target_width=434, quality=40)
 
 # 3. Optimize ISOL Logo in footer
-optimize_image("wlogo.png", target_width=120, quality=40)
+optimize_image("wlogo.png", target_width=113, quality=40) # 113 for 2.17 ratio if height=52
