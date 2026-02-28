@@ -9,4 +9,16 @@ Disallow: /verify-otp/
 Disallow: /contact/success/
 Disallow: /order-confirmation/
 Disallow: /order-history/
+Disallow: /add-to-cart/
+Disallow: /place-order/
+Disallow: /ajax-login/
+Disallow: /ajax-register/
+Disallow: /get-cart/
+Disallow: /update-cart/
+Disallow: /remove-from-cart/
+Disallow: /cart-count/
+Disallow: /toggle-like/
+Disallow: /share-product/
+Disallow: /submit-review/
+Disallow: /track-whatsapp-order/
 Sitemap: https://projectstore.pk/sitemap.xml

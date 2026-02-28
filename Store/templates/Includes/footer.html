@@ -13,9 +13,24 @@
                     From verified software projects to DIY hardware kits, we provide the tools to bring your ideas to life.
                 </p>
                 <div class="social-links d-flex gap-3">
-                    <a href="https://www.facebook.com/IsolPaki" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://www.youtube.com/@Isol_pk" class="social-btn" aria-label="Youtube"><i class="fa-brands fa-youtube"></i></a>
-                    <a href="https://wa.me/923104505008" class="social-btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    {% if site_settings.facebook_url %}
+                    <a href="{{ site_settings.facebook_url }}" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    {% endif %}
+                    {% if site_settings.instagram_url %}
+                    <a href="{{ site_settings.instagram_url }}" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    {% endif %}
+                    {% if site_settings.youtube_url %}
+                    <a href="{{ site_settings.youtube_url }}" class="social-btn" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    {% endif %}
+                    {% if site_settings.twitter_url %}
+                    <a href="{{ site_settings.twitter_url }}" class="social-btn" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                    {% endif %}
+                    {% if site_settings.linkedin_url %}
+                    <a href="{{ site_settings.linkedin_url }}" class="social-btn" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    {% endif %}
+                    {% if site_settings.whatsapp_number %}
+                    <a href="https://wa.me/{{ site_settings.whatsapp_number }}" class="social-btn" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    {% endif %}
                 </div>
             </div>
 
@@ -82,12 +97,14 @@
 </footer>
 
 <!-- Floating Chat Button Integration -->
+{% if site_settings.whatsapp_number %}
 <div class="chat-widget-container">
-    <a href="https://wa.me/923104505008" target="_blank" class="whatsapp-bubble">
+    <a href="https://wa.me/{{ site_settings.whatsapp_number }}" target="_blank" class="whatsapp-bubble">
         <i class="fab fa-whatsapp"></i>
         <span>Chat with Support <span class="whatsapp-badge">Online</span></span>
     </a>
 </div>
+{% endif %}
 
 <style>
     .footer-heading::after {

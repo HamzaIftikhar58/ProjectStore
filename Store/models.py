@@ -21,6 +21,32 @@ class UserProfile(models.Model):
     def __str__(self):
         return f"Profile of {self.user.username}"
 
+
+class SiteSetting(models.Model):
+    """Singleton model for global site settings, including social media links and contact info."""
+    facebook_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.facebook.com/IsolPaki")
+    instagram_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.instagram.com/yourpage")
+    youtube_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.youtube.com/@Isol_pk")
+    whatsapp_number = models.CharField(max_length=20, blank=True, null=True, help_text="e.g. 923104505008 (Include country code without +)")
+    twitter_url = models.URLField(max_length=255, blank=True, null=True, help_text="X/Twitter Profile URL")
+    linkedin_url = models.URLField(max_length=255, blank=True, null=True, help_text="LinkedIn Profile URL")
+    
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Site Setting"
+        verbose_name_plural = "Site Settings"
+
+    def __str__(self):
+        return "Global Site Settings"
+    
+    def save(self, *args, **kwargs):
+        """Ensure only one instance exists"""
+        if not self.pk and SiteSetting.objects.exists():
+            return
+        return super(SiteSetting, self).save(*args, **kwargs)
+
+
 class Category(models.Model):
     """
     Model for product categories.

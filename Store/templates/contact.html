@@ -337,6 +337,7 @@
         padding-top: 0;
     }
   </style>
+  <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
 </head>
 <body>
     {% include 'Includes/navbar.html' %}
@@ -404,10 +405,18 @@
                         </div>
 
                         <div class="social-links">
-                            <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                            {% if site_settings.facebook_url %}
+                            <a href="{{ site_settings.facebook_url }}" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                            {% endif %}
+                            {% if site_settings.twitter_url %}
+                            <a href="{{ site_settings.twitter_url }}" class="social-btn"><i class="fab fa-twitter"></i></a>
+                            {% endif %}
+                            {% if site_settings.instagram_url %}
+                            <a href="{{ site_settings.instagram_url }}" class="social-btn"><i class="fab fa-instagram"></i></a>
+                            {% endif %}
+                            {% if site_settings.linkedin_url %}
+                            <a href="{{ site_settings.linkedin_url }}" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

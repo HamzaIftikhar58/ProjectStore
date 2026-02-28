@@ -301,10 +301,12 @@
 
     .swiper-button-next {
         right: -15px !important;
+        left: auto !important;
     }
 
     .swiper-button-prev {
         left: -15px !important;
+        right: auto !important;
     }
 
     /* Hide default Swiper icons */
@@ -329,8 +331,8 @@
     .swiper-button-prev:hover i { transform: translateX(-3px); }
     
     @media (max-width: 1400px) {
-        .swiper-button-next { right: 0 !important; border-radius: 14px 0 0 14px; } /* Stick to edge on smaller screens */
-        .swiper-button-prev { left: 0 !important; border-radius: 0 14px 14px 0; }
+        .swiper-button-next { right: 0 !important; left: auto !important; border-radius: 14px 0 0 14px; } /* Stick to edge on smaller screens */
+        .swiper-button-prev { left: 0 !important; right: auto !important; border-radius: 0 14px 14px 0; }
     }
 
     @media (max-width: 768px) {
@@ -427,6 +429,7 @@
         background: transparent !important;
     }
   </style>
+  <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
 </head>
 <body>
   {% include 'Includes/navbar.html' %}

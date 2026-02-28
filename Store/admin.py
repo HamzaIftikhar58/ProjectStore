@@ -1,8 +1,9 @@
 from django.contrib import admin
-from .models import Cart, CartItem, Category, ContactMessage, Order, OrderItem, Product, ProductVariant, ProductImage, ProductSpecification , ProductReview, ProductFeature, UserProfile
+from .models import Cart, CartItem, Category, ContactMessage, Order, OrderItem, Product, ProductVariant, ProductImage, ProductSpecification , ProductReview, ProductFeature, UserProfile, SiteSetting
 
 
 admin.site.register(UserProfile)
+admin.site.register(SiteSetting)
 admin.site.register(ContactMessage)
 admin.site.register(Cart)
 admin.site.register(CartItem)

@@ -1,0 +1,42 @@
+services:
+  web:
+    build: .
+    # The command runs Gunicorn.
+    command: gunicorn --bind 0.0.0.0:8000 ProjectStore.wsgi:application
+    # Mount the project code for live-reloading during development.
+    volumes:
+      # - .:/usr/src/app
+      # Mount a volume for the sqlite database file
+      - ./db.sqlite3:/usr/src/app/db.sqlite3
+      - ./static:/usr/src/app/static
+      - ./media:/usr/src/app/media
+      - static_volume:/usr/src/app/staticfiles
+    # Expose the port to other containers on the Docker network, but not to the host.
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-H", "Host: 127.0.0.1", "http://127.0.0.1:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+    env_file:
+      - .env
+
+  nginx:
+    # Use the official Nginx image.
+    image: nginx:1.21-alpine
+    # Map the host port 80 to the container port 80, making the app publicly accessible.
+    ports:
+      - "9082:80"
+    # Mount the nginx.conf file and the static and media directories.
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./media:/usr/src/app/media
+      - static_volume:/usr/src/app/staticfiles
+    # Ensure Nginx starts after the web service is ready.
+    depends_on:
+      - web
+
+volumes:
+  static_volume:
