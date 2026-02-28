@@ -2,7 +2,8 @@ services:
   web:
     build: .
     # The command runs Gunicorn.
-    command: gunicorn --bind 0.0.0.0:8000 ProjectStore.wsgi:application
+    # Running collectstatic at runtime ensures named volumes are updated with new files from the build.
+    command: sh -c "python manage.py collectstatic --noinput && gunicorn --bind 0.0.0.0:8000 ProjectStore.wsgi:application"
     # Mount the project code for live-reloading during development.
     volumes:
       # - .:/usr/src/app
