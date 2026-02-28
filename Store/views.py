@@ -363,7 +363,7 @@ def product(request):
         # Combine all rules with AND (product must contain ALL terms)
         if search_rules:
             combined_filter = reduce(operator.and_, search_rules)
-            products = Product.objects.filter(is_active=True).filter(combined_filter)
+            products = Product.objects.filter(combined_filter, is_active=True).distinct()
         else:
             products = Product.objects.none()
 
