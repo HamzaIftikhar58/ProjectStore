@@ -960,3 +960,162 @@ def ajax_register(request):
             'success': False,
             'message': f'Error: {str(e)}'
         }, status=500)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Facebook / Google Merchant Center Product Feed Views
+# ─────────────────────────────────────────────────────────────────────────────
+import csv
+from django.http import StreamingHttpResponse
+
+
+# Max additional images Facebook / GMC supports per product
+_MAX_ADDITIONAL_IMAGES = 10
+
+
+def _build_product_rows(request, products_qs):
+    """
+    Yield one CSV row dict per active product.
+    Columns match the Google Merchant Center / Facebook feed spec.
+    Includes main image + up to 10 additional gallery/variant images.
+    """
+    products_qs = (
+        products_qs
+        .select_related('category')
+        .prefetch_related('images', 'variants')
+        .filter(is_active=True)
+    )
+    for product in products_qs:
+        # Build absolute URLs
+        product_url = request.build_absolute_uri(
+            reverse('product_detail', args=[product.slug])
+        )
+        try:
+            image_url = request.build_absolute_uri(product.main_image.url)
+        except Exception:
+            image_url = ''
+
+        # Collect additional images: gallery first, then variant images
+        extra_images = []
+        for img in product.images.all():
+            try:
+                extra_images.append(request.build_absolute_uri(img.image.url))
+            except Exception:
+                pass
+        for variant in product.variants.filter(is_active=True):
+            try:
+                extra_images.append(request.build_absolute_uri(variant.image.url))
+            except Exception:
+                pass
+
+        # Deduplicate while preserving order
+        seen = set()
+        unique_extras = []
+        for url in extra_images:
+            if url not in seen:
+                seen.add(url)
+                unique_extras.append(url)
+        extra_images = unique_extras[:_MAX_ADDITIONAL_IMAGES]
+
+        availability = 'in stock' if (product.availability and product.stock > 0) else 'out of stock'
+        price = f"{product.final_price:.2f} PKR"
+
+        row = {
+            'id': product.sku,
+            'title': product.name,
+            'description': product.short_description or product.name,
+            'availability': availability,
+            'condition': 'new',
+            'price': price,
+            'link': product_url,
+            'image_link': image_url,
+            'brand': request.get_host(),
+            'google_product_category': product.category.name,
+        }
+
+        # Add additional_image_link, additional_image_link_2 … up to _MAX_ADDITIONAL_IMAGES
+        for i, extra_url in enumerate(extra_images, start=1):
+            key = 'additional_image_link' if i == 1 else f'additional_image_link_{i}'
+            row[key] = extra_url
+
+        yield row
+
+
+# additional_image_link, additional_image_link_2 … additional_image_link_10
+_ADDITIONAL_IMAGE_FIELDS = (
+    ['additional_image_link'] +
+    [f'additional_image_link_{i}' for i in range(2, _MAX_ADDITIONAL_IMAGES + 1)]
+)
+
+FEED_FIELDS = (
+    ['id', 'title', 'description', 'availability', 'condition',
+     'price', 'link', 'image_link', 'brand', 'google_product_category'] +
+    _ADDITIONAL_IMAGE_FIELDS
+)
+
+
+class _EchoBuffer:
+    """Minimal write-back object for StreamingHttpResponse."""
+    def write(self, value):
+        return value
+
+
+def _stream_csv(header, rows):
+    """Generator: yields CSV header then data rows as bytes."""
+    pseudo_buffer = _EchoBuffer()
+    writer = csv.DictWriter(pseudo_buffer, fieldnames=FEED_FIELDS)
+    yield writer.writeheader() or ','.join(FEED_FIELDS) + '\r\n'
+    for row in rows:
+        yield writer.writerow(row)
+
+
+def fb_feed_all(request):
+    """
+    Facebook / Google Merchant Center product feed — ALL active products.
+
+    URL  : /feeds/facebook/
+    Usage: Paste this URL into Facebook Commerce Manager → Add products →
+           Use a URL or Google Sheets.
+    """
+    products_qs = Product.objects.filter(is_active=True).select_related('category')
+    rows = _build_product_rows(request, products_qs)
+
+    pseudo_buffer = _EchoBuffer()
+    writer = csv.DictWriter(pseudo_buffer, fieldnames=FEED_FIELDS)
+
+    def generate():
+        yield ','.join(FEED_FIELDS) + '\r\n'
+        for row in rows:
+            yield writer.writerow(row)
+
+    response = StreamingHttpResponse(generate(), content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="facebook_feed_all.csv"'
+    return response
+
+
+def fb_feed_category(request, category_slug):
+    """
+    Facebook / Google Merchant Center product feed — per CATEGORY.
+
+    URL  : /feeds/facebook/<category-slug>/
+    Usage: Paste e.g. https://projectstore.isol.pk/feeds/facebook/ai/
+           into Facebook Commerce Manager → Add products → Use a URL.
+    """
+    category = get_object_or_404(Category, slug=category_slug, is_active=True)
+    products_qs = Product.objects.filter(
+        category=category, is_active=True
+    ).select_related('category')
+    rows = _build_product_rows(request, products_qs)
+
+    pseudo_buffer = _EchoBuffer()
+    writer = csv.DictWriter(pseudo_buffer, fieldnames=FEED_FIELDS)
+
+    def generate():
+        yield ','.join(FEED_FIELDS) + '\r\n'
+        for row in rows:
+            yield writer.writerow(row)
+
+    filename = f"facebook_feed_{category_slug}.csv"
+    response = StreamingHttpResponse(generate(), content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response

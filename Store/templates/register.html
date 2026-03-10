@@ -207,6 +207,7 @@
         }
     </style>
   <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
+  {% include 'Includes/metapixel.html' %}
 </head>
 <body>
 
@@ -288,7 +289,7 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" data-fb-event="CompleteRegistration">
                     Create Account <i class="fas fa-arrow-right ms-2"></i>
                 </button>
             </form>

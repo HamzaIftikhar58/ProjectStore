@@ -207,6 +207,7 @@
         }
     </style>
   <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
+  {% include 'Includes/metapixel.html' %}
 </head>
 <body>
     <!-- Loading Overlay -->
@@ -339,7 +340,8 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100 mt-4" id="submitOrderBtn">
+                        <button type="submit" class="btn btn-primary w-100 mt-4" id="submitOrderBtn"
+                          data-fb-event="AddPaymentInfo">
                             <i class="fas fa-shopping-cart me-2"></i>Complete Order
                         </button>
                     </form>

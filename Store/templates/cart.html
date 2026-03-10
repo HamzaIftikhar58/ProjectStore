@@ -247,6 +247,7 @@
         }
     </style>
   <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
+  {% include 'Includes/metapixel.html' %}
 </head>
 <body>
 
@@ -365,7 +366,8 @@
                             <span class="fs-3 fw-800 text-primary">Rs {{ total }}</span>
                         </div>
 
-                        <a href="{% url 'checkout' %}" class="btn btn-checkout w-100 mb-3 {% if not items %}disabled{% endif %}">
+                        <a href="{% url 'checkout' %}" class="btn btn-checkout w-100 mb-3 {% if not items %}disabled{% endif %}"
+                          data-fb-event="InitiateCheckout">
                             Proceed to Secure Checkout <i class="bi bi-shield-lock ms-2"></i>
                         </a>
 

@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.text import slugify
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.sites.models import Site
 
 
 class UserProfile(models.Model):
@@ -388,3 +389,24 @@ class ContactMessage(models.Model):
 
 #     def __str__(self):
 #         return f"WhatsApp order for {self.product.name} at {self.timestamp}"
+
+
+class SiteConfiguration(models.Model):
+    """
+    Configuration model for site-specific settings like Meta Pixel ID.
+    Extends the Django Sites framework.
+    """
+    site = models.OneToOneField(Site, on_delete=models.CASCADE, related_name='configuration')
+    meta_pixel_id = models.CharField(
+        max_length=255, 
+        blank=True, 
+        null=True, 
+        help_text="Enter the Meta Pixel ID for this site (e.g. 1664993358009540)"
+    )
+
+    class Meta:
+        verbose_name = "Site Configuration"
+        verbose_name_plural = "Site Configurations"
+
+    def __str__(self):
+        return f"Configuration for {self.site.domain}"

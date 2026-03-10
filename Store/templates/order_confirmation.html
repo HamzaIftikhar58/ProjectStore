@@ -47,9 +47,27 @@
     href="{% static 'css/swiper-bundle.min.css' %}"
   />
         <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
+  {% include 'Includes/metapixel.html' %}
 </head>
 <body>
     {% include 'Includes/navbar2.html' %}
+
+    {% if META_PIXEL_ID %}
+    <!-- Meta Pixel: Purchase - fires when order is confirmed -->
+    <script>
+      fbq('track', 'Purchase', {
+        value: {{ order.total }},
+        currency: 'PKR',
+        content_type: 'product',
+        order_id: '{{ order.id }}',
+        contents: [
+          {% for item in order.items.all %}
+          { id: '{{ item.product.id }}', quantity: {{ item.quantity }}, item_price: {{ item.price }} }{% if not forloop.last %},{% endif %}
+          {% endfor %}
+        ]
+      });
+    </script>
+    {% endif %}
 
     <div class="container-fluid py-5">
         <div class="container">

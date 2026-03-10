@@ -65,6 +65,10 @@ urlpatterns = [
     path('share-product/<int:product_id>/', views.share_product, name='share_product'),
     path('submit-review/<int:product_id>/', views.submit_review, name='submit_review'),
     path('track-whatsapp-order/<int:product_id>/', views.track_whatsapp_order, name='track_whatsapp_order'),
+    # ── Facebook / Google Merchant Center Product Feeds ──────────────────────
+    path('feeds/facebook/', views.fb_feed_all, name='fb_feed_all'),
+    path('feeds/facebook/<slug:category_slug>/', views.fb_feed_category, name='fb_feed_category'),
+    # ─────────────────────────────────────────────────────────────────────────
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps, 'template_name': 'custom_sitemap.xml'}, name='django.contrib.sitemaps.views.sitemap'),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
 ]

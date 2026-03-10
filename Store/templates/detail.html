@@ -762,9 +762,23 @@
   </style>
   </style>
   <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
+  {% include 'Includes/metapixel.html' %}
 </head>
 <body>
   {% include 'Includes/navbar.html' %}
+
+  {% if META_PIXEL_ID %}
+  <!-- Meta Pixel: ViewContent - fires when user views this product page -->
+  <script>
+    fbq('track', 'ViewContent', {
+      content_name: '{{ product.name|escapejs }}',
+      content_ids: ['{{ product.id }}'],
+      content_type: 'product',
+      value: {{ product.final_price }},
+      currency: 'PKR'
+    });
+  </script>
+  {% endif %}
   
   <!-- Notification div -->
   <div id="notification" class="notification">
@@ -881,6 +895,13 @@
                 {% for variant in product.variants.all %}
                 <div class="swiper-slide"><img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}"></div>
                 {% endfor %}
+                {% if product.youtube_video_url %}
+                <div class="swiper-slide">
+                  <div class="d-flex align-items-center justify-content-center h-100 bg-dark rounded">
+                    <i class="fab fa-youtube text-danger fs-2"></i>
+                  </div>
+                </div>
+                {% endif %}
               </div>
             </div>
             <!-- Main Gallery -->
@@ -902,7 +923,14 @@
                 {% if product.youtube_video_url %}
                   <div class="swiper-slide">
                     <div class="ratio ratio-16x9 w-100">
-                      <iframe src="{{ product.youtube_video_url|youtube_embed_url }}" allowfullscreen></iframe>
+                      <iframe 
+                        src="{{ product.youtube_video_url|youtube_embed_url }}" 
+                        title="{{ product.name }} Video"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                        style="border-radius:12px;">
+                      </iframe>
                     </div>
                   </div>
                 {% endif %}
@@ -963,17 +991,21 @@
 
           <div class="action-buttons">
             {% if request.user.is_authenticated %}
-              <button class="btn-premium btn-buy add-to-cart" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+              <button class="btn-premium btn-buy add-to-cart" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+                data-fb-event="AddToCart" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "content_ids": ["{{ product.id }}"], "content_type": "product", "value": {{ product.final_price }}, "currency": "PKR"}'>
                 <i class="fa-solid fa-cart-shopping"></i> Add to Cart
               </button>
-              <button class="btn-premium btn-whatsapp order-whatsapp" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+              <button class="btn-premium btn-whatsapp order-whatsapp" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+                data-fb-event="Contact" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "method": "WhatsApp"}'>
                 <i class="fab fa-whatsapp"></i> WhatsApp Order
               </button>
             {% else %}
-              <button class="btn-premium btn-buy add-to-cart-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+              <button class="btn-premium btn-buy add-to-cart-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+                data-fb-event="AddToCart" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "content_ids": ["{{ product.id }}"], "content_type": "product", "value": {{ product.final_price }}, "currency": "PKR"}'>
                 <i class="fa-solid fa-cart-shopping"></i> Add to Cart
               </button>
-              <button class="btn-premium btn-whatsapp order-whatsapp-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+              <button class="btn-premium btn-whatsapp order-whatsapp-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+                data-fb-event="Contact" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "method": "WhatsApp"}'>
                 <i class="fab fa-whatsapp"></i> WhatsApp Order
               </button>
             {% endif %}
@@ -1081,17 +1113,21 @@
   <div class="d-block d-md-none" id="end">
     <div class="d-flex gap-2">
       {% if request.user.is_authenticated %}
-        <button class="btn-premium btn-buy flex-grow-1 py-3 add-to-cart" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+        <button class="btn-premium btn-buy flex-grow-1 py-3 add-to-cart" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+          data-fb-event="AddToCart" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "content_ids": ["{{ product.id }}"], "content_type": "product", "value": {{ product.final_price }}, "currency": "PKR"}'>
           <i class="fa-solid fa-cart-shopping"></i> Add
         </button>
-        <button class="btn-premium btn-whatsapp flex-grow-1 py-3 order-whatsapp" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+        <button class="btn-premium btn-whatsapp flex-grow-1 py-3 order-whatsapp" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+          data-fb-event="Contact" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "method": "WhatsApp"}'>
           <i class="fab fa-whatsapp"></i> Order
         </button>
       {% else %}
-        <button class="btn-premium btn-buy flex-grow-1 py-3 add-to-cart-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+        <button class="btn-premium btn-buy flex-grow-1 py-3 add-to-cart-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+          data-fb-event="AddToCart" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "content_ids": ["{{ product.id }}"], "content_type": "product", "value": {{ product.final_price }}, "currency": "PKR"}'>
           <i class="fa-solid fa-cart-shopping"></i> Add
         </button>
-        <button class="btn-premium btn-whatsapp flex-grow-1 py-3 order-whatsapp-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}">
+        <button class="btn-premium btn-whatsapp flex-grow-1 py-3 order-whatsapp-unauth" data-name="{{ product.name }}" data-price="{{ product.price }}" data-product-id="{{ product.id }}"
+          data-fb-event="Contact" data-fb-params='{"content_name": "{{ product.name|escapejs }}", "method": "WhatsApp"}'>
           <i class="fab fa-whatsapp"></i> Order
         </button>
       {% endif %}
