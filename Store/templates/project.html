@@ -5,11 +5,28 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Final Year & Student Projects | AI, Robotics & Engineering Kits Pakistan</title>
   
-  <title>Project Store | Software, Hardware, AI & Robotics Projects</title>
-  
-  <meta name="description" content="Explore our Project Store featuring software, hardware, AI, and robotics projects. From face recognition systems to automation tools, we deliver innovative solutions.">
-  <meta name="keywords" content="project store, software projects, hardware projects, AI projects, robotics projects, automation systems, face recognition, IoT projects, machine learning, student projects, final year projects">
+  <meta name="description" content="Explore ready-to-build final year student projects (FYP), AI systems, robotics kits, and software projects in Pakistan with complete source code & hardware support.">
+  <meta name="keywords" content="final year projects pakistan, fyp projects, ai projects for students, robotics project kits, project maker near me, project store">
+  <link rel="canonical" href="https://projectstore.pk/project/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://projectstore.pk/project/">
+  <meta property="og:title" content="Final Year & Student Projects | AI, Robotics & Engineering Kits Pakistan">
+  <meta property="og:description" content="Explore ready-to-build final year student projects (FYP), AI systems, robotics kits, and software projects in Pakistan.">
+
+  <!-- JSON-LD Structured Data Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Engineering & Student Projects",
+    "url": "https://projectstore.pk/project/",
+    "numberOfItems": {{ projects.count|default:10 }}
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

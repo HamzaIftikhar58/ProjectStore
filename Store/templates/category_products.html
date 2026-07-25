@@ -5,13 +5,27 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ category.name }} - Products</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
-    <meta name="description" content="Explore {{ category.name }} projects including software, hardware, AI, robotics, and electronics solutions. Browse all related products and innovations.">
-    <meta name="keywords" content="{{ category.name }}, projects, products, software, hardware, AI, robotics, electronics, student projects, final year projects">
+    <title>{{ category.name }} Projects & Electronic Components in Pakistan | ProjectStore.pk</title>
+    <meta name="description" content="Buy {{ category.name }} projects, electronic components, and DIY hardware in Pakistan. Cash on delivery & fast shipping across Pakistan.">
+    <meta name="keywords" content="{{ category.name }}, {{ category.name }} projects pakistan, {{ category.name }} components, buy {{ category.name }} online, project store">
+    <link rel="canonical" href="https://projectstore.pk/category/{{ category.slug }}/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://projectstore.pk/category/{{ category.slug }}/">
+    <meta property="og:title" content="{{ category.name }} Projects & Components in Pakistan | ProjectStore.pk">
+    <meta property="og:description" content="Buy {{ category.name }} projects, electronic components, and DIY hardware in Pakistan.">
+
+    <!-- JSON-LD Structured Data Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "{{ category.name|escapejs }} Projects & Products",
+      "url": "https://projectstore.pk/category/{{ category.slug }}/",
+      "numberOfItems": {{ products.count|default:10 }}
+    }
+    </script>
     <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}" crossorigin="anonymous">

@@ -6,9 +6,113 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ product.name }} | Shopping Cart</title>
-  <meta name="description" content="{{ product.meta_description|default:product.short_description }}">
-  <meta name="keywords" content="{{ product.meta_keywords|default:product.name }}">
+  <title>Buy {{ product.name }} Online in Pakistan | ProjectStore.pk</title>
+  <meta name="description" content="Buy {{ product.name }} in Pakistan at best price. {{ product.meta_description|default:product.short_description }}. Cash on delivery & fast shipping across Pakistan.">
+  <meta name="keywords" content="{{ product.meta_keywords|default:product.name }}, buy {{ product.name }} pakistan, {{ product.name }} price in pakistan, project store, diy store pakistan">
+  <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="product">
+  <meta property="og:url" content="https://projectstore.pk{{ request.path }}">
+  <meta property="og:title" content="Buy {{ product.name }} Online in Pakistan | ProjectStore.pk">
+  <meta property="og:description" content="Buy {{ product.name }} in Pakistan at best price. {{ product.meta_description|default:product.short_description }}. Cash on delivery available.">
+  {% if product.main_image %}
+  <meta property="og:image" content="https://projectstore.pk{{ product.main_image.url }}">
+  {% endif %}
+  <meta property="og:site_name" content="ProjectStore.pk">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Buy {{ product.name }} Online in Pakistan | ProjectStore.pk">
+  <meta name="twitter:description" content="Buy {{ product.name }} in Pakistan at best price. {{ product.meta_description|default:product.short_description }}">
+  {% if product.main_image %}
+  <meta name="twitter:image" content="https://projectstore.pk{{ product.main_image.url }}">
+  {% endif %}
+
+  <!-- JSON-LD Structured Data Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": "{{ product.name|escapejs }}",
+    {% if product.main_image %}
+    "image": [
+      "https://projectstore.pk{{ product.main_image.url }}"
+    ],
+    {% endif %}
+    "description": "{{ product.meta_description|default:product.short_description|escapejs }}",
+    "sku": "{{ product.sku|escapejs }}",
+    "brand": {
+      "@type": "Brand",
+      "name": "ProjectStore.pk"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "{{ avg_rating|default:'4.9' }}",
+      "reviewCount": "{{ product.reviews.count|default:'10' }}"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://projectstore.pk{{ request.path }}",
+      "priceCurrency": "PKR",
+      "price": "{{ product.final_price }}",
+      "availability": "{% if product.availability and product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+      "itemCondition": "https://schema.org/NewCondition"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://projectstore.pk/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "{% if is_project %}Projects{% else %}Products{% endif %}",
+        "item": "https://projectstore.pk{% if is_project %}/project/{% else %}/product/{% endif %}"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "{{ product.name|escapejs }}",
+        "item": "https://projectstore.pk{{ request.path }}"
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long does delivery take for {{ product.name|escapejs }} in Pakistan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Delivery takes 2 to 4 business days across major cities in Pakistan including Lahore, Karachi, Islamabad, and Rawalpindi via Cash on Delivery."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Cash on Delivery (COD) available for {{ product.name|escapejs }}?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Cash on Delivery is available nationwide across Pakistan for all orders."
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

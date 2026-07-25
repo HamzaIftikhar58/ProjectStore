@@ -13,7 +13,8 @@ from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Avg, Prefetch, Q
 
-from django.http import HttpResponseRedirect, JsonResponse
+from html import escape
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
@@ -1119,3 +1120,41 @@ def fb_feed_category(request, category_slug):
     response = StreamingHttpResponse(generate(), content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
     return response
+
+
+def google_merchant_feed(request):
+    """
+    Google Merchant Center RSS 2.0 XML Product Feed.
+    URL: /feeds/google/
+    """
+    products = Product.objects.filter(is_active=True).select_related('category')
+    xml_items = []
+    
+    for p in products:
+        link = request.build_absolute_uri(p.get_absolute_url())
+        image_url = request.build_absolute_uri(p.main_image.url) if p.main_image else ""
+        availability = "in_stock" if p.availability and p.stock > 0 else "out_of_stock"
+        desc = p.meta_description or p.short_description or p.name
+        
+        xml_items.append(f"""    <item>
+      <g:id>{p.id}</g:id>
+      <g:title>{escape(p.name)}</g:title>
+      <g:description>{escape(desc)}</g:description>
+      <g:link>{escape(link)}</g:link>
+      <g:image_link>{escape(image_url)}</g:image_link>
+      <g:condition>new</g:condition>
+      <g:availability>{availability}</g:availability>
+      <g:price>{p.final_price} PKR</g:price>
+      <g:brand>ProjectStore.pk</g:brand>
+    </item>""")
+
+    xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml_content += '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">\n'
+    xml_content += '  <channel>\n'
+    xml_content += '    <title>ProjectStore.pk Products</title>\n'
+    xml_content += '    <link>https://projectstore.pk</link>\n'
+    xml_content += '    <description>ProjectStore.pk Google Merchant Center Feed</description>\n'
+    xml_content += '\n'.join(xml_items) + '\n'
+    xml_content += '  </channel>\n</rss>'
+
+    return HttpResponse(xml_content, content_type='application/xml; charset=utf-8')

@@ -5,11 +5,28 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy Hardware & Electronic Components Online in Pakistan | ProjectStore.pk</title>
   
-  <title>Project Store | Software, Hardware, AI & Robotics Products</title>
-  
-  <meta name="description" content="Explore our Project Store featuring software, hardware, AI, and robotics projects. From face recognition systems to automation tools, we deliver innovative solutions.">
-  <meta name="keywords" content="project store, software projects, hardware projects, AI projects, robotics projects, automation systems, face recognition, IoT projects, machine learning, student projects, final year projects">
+  <meta name="description" content="Browse electronic components, sensors, microcontrollers, Arduino, ESP32, and DIY hardware in Pakistan. Cash on delivery & fast shipping.">
+  <meta name="keywords" content="project shop near me, electronic components pakistan, esp32 price lahore, arduino sensors online, buy electronics pakistan, project store">
+  <link rel="canonical" href="https://projectstore.pk/product/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://projectstore.pk/product/">
+  <meta property="og:title" content="Buy Hardware & Electronic Components Online in Pakistan | ProjectStore.pk">
+  <meta property="og:description" content="Browse electronic components, sensors, microcontrollers, Arduino, ESP32, and DIY hardware in Pakistan.">
+
+  <!-- JSON-LD Structured Data Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Electronic Components & Hardware Products",
+    "url": "https://projectstore.pk/product/",
+    "numberOfItems": {{ products.count|default:10 }}
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
