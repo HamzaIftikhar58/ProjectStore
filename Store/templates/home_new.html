@@ -336,6 +336,31 @@
         backdrop-filter: blur(5px);
     }
 
+    /* Lock Carousel Height on Desktop to prevent Layout Shifts (CLS) */
+    @media (min-width: 992px) {
+        #projectCarousel .carousel-inner,
+        #projectCarousel .carousel-item {
+            min-height: 480px;
+        }
+        #projectCarousel .carousel-item > .row {
+            min-height: 480px;
+        }
+    }
+
+    /* Ensure Font Awesome and Bootstrap Icons swap instantly */
+    @font-face {
+        font-family: 'Font Awesome 6 Free';
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'Font Awesome 6 Brands';
+        font-display: swap;
+    }
+    @font-face {
+        font-family: 'bootstrap-icons';
+        font-display: swap;
+    }
+
     /* Scrolling Marquee */
     .scrolling-wrapper {
         background: var(--text-dark);
@@ -596,7 +621,7 @@
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <img src="{% static 'Images/collages.webp' %}" class="img-fluid hero-img" alt="DIY Hardware Project Kits Pakistan">
+                  <img src="{% static 'Images/collages.webp' %}" class="img-fluid hero-img" alt="DIY Hardware Project Kits Pakistan" width="500" height="320">
                 </div>
               </div>
             </div>
@@ -606,10 +631,12 @@
           <div class="carousel-item">
             <div class="row align-items-center">
               <div class="col-lg-6">
+                <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 fw-bold"><i class="fa-solid fa-cube me-1"></i> Custom 3D Printing & CAD Prototyping</span>
                 <h1 class="hero-h1">3D Printing <br><span>Custom Services</span></h1>
-                <p class="hero-subtitle">Need a custom casing for your project? We design and print high-quality 3D models tailored to your specific requirements.</p>
+                <p class="hero-subtitle">Need a custom casing for your project? We design and 3D print precision PLA+, PETG, and ABS enclosures tailored to your exact electronic components.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
-<a href="https://wa.me/923244222340?text=Hi%20Project%20Store,%20I%20am%20interested%20in%20your%203D%20printing%20services." target="_blank" class="btn hero-btn btn-warning-custom"><i class="fa-brands fa-whatsapp me-2"></i>Order 3D Print</a>
+                  <a href="{% url 'three_d_printing_service' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-cube me-2"></i>Instant 3D Quote</a>
+                  <a href="https://wa.me/923244222340?text=Hi%20Project%20Store,%20I%20am%20interested%20in%20your%203D%20printing%20services." target="_blank" class="btn hero-btn btn-outline-light-custom"><i class="fa-brands fa-whatsapp me-2"></i>WhatsApp Us</a>
                 </div>
               </div>
               <div class="col-lg-6">
