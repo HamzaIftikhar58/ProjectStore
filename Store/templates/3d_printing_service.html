@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Primary SEO Meta Tags -->
+  <title>3D Printing Services in Pakistan | Custom 3D Printing Lahore | ProjectStore.pk</title>
+  <meta name="description" content="Professional custom 3D printing service in Pakistan. Fast rapid prototyping, engineering FYP enclosures, robotics parts & architectural models in Lahore, Karachi & Islamabad. Instant WhatsApp quote & nationwide Cash on Delivery.">
+  <meta name="keywords" content="3d printing services, 3d printing in pakistan, custom 3d printing lahore, 3d printing fyp projects, rapid prototyping pakistan, 3d print online lahore, pla petg 3d printing, 3d printer service near me, 3d printing karachi, 3d printing islamabad">
+  <meta name="author" content="ProjectStore.pk">
+  <link rel="canonical" href="https://projectstore.pk/3d-printing-service/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://projectstore.pk/3d-printing-service/">
+  <meta property="og:title" content="3D Printing Services in Pakistan | Custom 3D Printing Lahore | ProjectStore.pk">
+  <meta property="og:description" content="Professional custom 3D printing service in Pakistan. Fast rapid prototyping, engineering FYP enclosures, robotics parts & architectural models in Lahore, Karachi & Islamabad.">
+  <meta property="og:image" content="https://projectstore.pk/static/Images/project_store_logo.webp">
+  <meta property="og:site_name" content="ProjectStore.pk">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="3D Printing Services in Pakistan | Custom 3D Printing Lahore">
+  <meta name="twitter:description" content="Rapid prototyping and precision 3D printing service in Pakistan. Instant WhatsApp quote & COD across Pakistan.">
+  <meta name="twitter:image" content="https://projectstore.pk/static/Images/project_store_logo.webp">
+
+  <!-- JSON-LD Structured Data (SEO / AIO / GEO Optimization) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://projectstore.pk/3d-printing-service/#service",
+        "name": "Custom 3D Printing & Rapid Prototyping Service in Pakistan",
+        "serviceType": "3D Printing Service",
+        "description": "Custom precision 3D printing in PLA+, PETG, ABS, TPU flexible, and Resin for electronics enclosures, robotics parts, engineering FYP models, and rapid prototyping across Pakistan.",
+        "provider": {
+          "@type": "LocalBusiness",
+          "@id": "https://projectstore.pk/#store",
+          "name": "ProjectStore.pk",
+          "url": "https://projectstore.pk",
+          "telephone": "+923104505008",
+          "email": "support@projectstore.pk",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2nd Floor, 72, Westend Plaza, Shahrah-e-Quaid-e-Azam, Mozang Chungi",
+            "addressLocality": "Lahore",
+            "addressRegion": "Punjab",
+            "postalCode": "54000",
+            "addressCountry": "PK"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 31.5204,
+            "longitude": 74.3587
+          }
+        },
+        "areaServed": [
+          "PK", "Lahore", "Karachi", "Islamabad", "Rawalpindi", "Faisalabad", "Multan", "Peshawar"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "3D Printing Materials Catalog",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "PLA+ Rapid 3D Printing (Prototyping & Enclosures)"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "PETG Engineering Grade 3D Printing (High Heat & Weather Resistance)"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "TPU Flexible 3D Printing (Gaskets, Grips & Shock Absorbers)"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "High-Detail UV Resin 3D Printing (Jewelry, Miniatures & Fine Gears)"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://projectstore.pk/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "3D Printing Services",
+            "item": "https://projectstore.pk/3d-printing-service/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://projectstore.pk/3d-printing-service/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How much does 3D printing service cost in Pakistan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "3D printing costs in Pakistan typically range from Rs 10 to Rs 25 per gram for standard PLA+, depending on layer height, print hours, and infill density. For a precise estimate, send your .STL or .STEP file to our WhatsApp at +92 310 4505008 for an instant sliced quotation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What 3D file formats do you accept?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We accept all standard 3D CAD formats including .STL, .OBJ, .STEP, .STP, .3MF, and SolidWorks part files. If you only have dimensions or a sketch, our CAD team can also model the 3D part for you."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What materials can I choose for 3D printing?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We print in Tough PLA+ (ideal for student FYP prototypes and project enclosures), PETG (for high-temperature, outdoor, or mechanical stress parts), ABS, TPU (flexible rubber-like parts), and High-Detail UV Photopolymer Resin."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How fast is delivery for 3D prints in Lahore, Karachi, and Islamabad?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "In Lahore, most 3D prints are completed and ready for pickup or same-day dispatch within 24 hours. For Karachi, Islamabad, Rawalpindi, and other cities across Pakistan, parcels arrive within 2-3 business days via express Cash on Delivery (COD) couriers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you offer discounts for university engineering FYP projects?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! We offer a special 15% academic discount for university engineering students working on Final Year Projects (FYP), robotics competitions, and IEEE/maker projects across Pakistan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the maximum build volume you can 3D print?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our standard single-piece build volume is up to 300 x 300 x 400 mm. For larger parts (such as life-size robotics chassis or drone bodies), we engineer precision interlocking dovetail joints that assemble seamlessly with industrial rigidity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I choose custom filament colors for my parts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! We stock Matte Black, Pure White, Industrial Gray, Royal Blue, Signal Orange, Army Green, and Transparent Clear PETG. Custom corporate pantone colors are available for bulk production runs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you install threaded brass heat-set inserts for screws?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! For project enclosures that require frequent opening, we install precision M2, M2.5, M3, and M4 brass heat-set inserts so screws thread into solid brass rather than plastic."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you print functional moving gears and mechanical mechanisms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! We calibrate our dual-gear extruders to ±0.15mm mechanical tolerance, allowing print-in-place hinges, planetary gearboxes, and rack-and-pinion mechanisms to rotate smoothly."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="{% static 'css/google-fonts.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <style>
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #3b82f6;
+      --secondary-blue: #2563eb;
+      --accent-yellow: #fbbf24;
+      --accent-green: #10b981;
+      --text-dark: #1e293b;
+      --text-gray: #64748b;
+      --bg-light: #f8fafc;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .hero-3d {
+      background: linear-gradient(135deg, #0b1329 0%, #1e293b 100%);
+      color: white;
+      padding: 90px 0 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-3d::after {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .badge-pill-custom {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      display: inline-block;
+    }
+
+    .quote-card {
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+      padding: 40px;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px 24px;
+      height: 100%;
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .step-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.1);
+      border-color: var(--primary-blue);
+    }
+
+    .step-num {
+      width: 44px;
+      height: 44px;
+      background: #eff6ff;
+      color: var(--primary-blue);
+      font-weight: 800;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 20px;
+    }
+
+    .material-card {
+      background: white;
+      border-radius: 18px;
+      padding: 24px;
+      border: 1px solid #e2e8f0;
+      transition: transform 0.3s ease;
+    }
+
+    .material-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-blue);
+    }
+
+    .btn-whatsapp-quote {
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+      transition: all 0.3s ease;
+      border: none;
+    }
+
+    .btn-whatsapp-quote:hover {
+      background: linear-gradient(135deg, #1ebe5d, #0e7064);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.4);
+    }
+
+    .faq-accordion .accordion-button:not(.collapsed) {
+      background-color: #eff6ff;
+      color: var(--primary-blue);
+      font-weight: 700;
+    }
+
+    .faq-accordion .accordion-button {
+      font-weight: 600;
+      padding: 20px;
+      border-radius: 14px !important;
+    }
+
+    .faq-accordion .accordion-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 14px !important;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+  </style>
+
+  {% include 'Includes/metapixel.html' %}
+</head>
+<body>
+
+  {% include 'Includes/navbar.html' %}
+
+  <!-- Hero Section -->
+  <section class="hero-3d">
+    <div class="container position-relative z-1">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 text-center text-lg-start">
+          <span class="badge-pill-custom mb-3">
+            <i class="fas fa-cube me-2"></i>#1 Precision 3D Printing Service in Pakistan
+          </span>
+          <h1 class="display-4 fw-800 text-white mb-3" style="letter-spacing: -0.02em;">
+            Custom 3D Printing & <br><span class="text-primary">Rapid Prototyping</span> in Lahore
+          </h1>
+          <p class="lead text-white-50 mb-4 fs-6">
+            Turn your 3D models into real functional parts in <strong>24 Hours</strong>. Specializing in custom electronics enclosures, robotics chassis, university engineering FYP models, and custom maker parts in Lahore with nationwide Cash on Delivery across Pakistan.
+          </p>
+
+          <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+            <a href="https://wa.me/923104505008?text=Hello%20ProjectStore,%20I%20have%20a%203D%20model%20(.STL/.STEP)%20for%203D%20printing.%20Please%20provide%20a%20quote." target="_blank" class="btn-whatsapp-quote">
+              <i class="fab fa-whatsapp fs-5"></i> Send 3D File for Instant Quote
+            </a>
+            <a href="#quote-calculator" class="btn btn-outline-light px-4 py-3 rounded-pill fw-semibold">
+              <i class="fas fa-calculator me-2"></i>Estimate Cost
+            </a>
+          </div>
+
+          <div class="row mt-5 pt-3 border-top border-white border-opacity-10 g-3">
+            <div class="col-4">
+              <h4 class="fw-800 text-white mb-0">±0.15mm</h4>
+              <span class="text-white-50 small">Precision Tolerance</span>
+            </div>
+            <div class="col-4">
+              <h4 class="fw-800 text-white mb-0">24 Hours</h4>
+              <span class="text-white-50 small">Fast Turnaround</span>
+            </div>
+            <div class="col-4">
+              <h4 class="fw-800 text-white mb-0">15% Off</h4>
+              <span class="text-white-50 small">FYP Student Discount</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Card / Quick Specs -->
+        <div class="col-lg-5" id="quote-calculator">
+          <div class="quote-card">
+            <h3 class="fw-bold mb-3 text-dark"><i class="fas fa-bolt text-warning me-2"></i>Instant 3D Print Quote</h3>
+            <p class="text-muted small mb-4">Have an STL, STEP, or 3MF file? Select your specs below to generate an instant WhatsApp request with our slicing engineers.</p>
+
+            <form id="quoteQuickForm" onsubmit="generateWhatsAppQuote(event)">
+              <div class="mb-3">
+                <label class="form-label small fw-bold text-dark">Material Selection</label>
+                <select class="form-select rounded-3 py-2" id="materialSelect" required>
+                  <option value="PLA+ (Tough PLA)">Tough PLA+ (Best for Enclosures & Prototypes)</option>
+                  <option value="PETG (High Strength & Heat)">PETG (High Heat & Outdoor Mechanical)</option>
+                  <option value="ABS (Impact Resistant)">ABS (Automotive & Rigid Enclosures)</option>
+                  <option value="TPU (Flexible Rubber)">TPU Flexible (Gaskets & Soft Bumpers)</option>
+                  <option value="Resin (High-Detail SLA)">SLA UV Resin (Ultra-Fine Jewelry/Gears)</option>
+                </select>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-6">
+                  <label class="form-label small fw-bold text-dark">Infill Density</label>
+                  <select class="form-select rounded-3 py-2" id="infillSelect">
+                    <option value="20%">20% (Standard / Lightweight)</option>
+                    <option value="40%">40% (Rigid Robot Chassis)</option>
+                    <option value="70%">70% (Heavy Duty Gears)</option>
+                    <option value="100%">100% (Solid / Maximum Strength)</option>
+                  </select>
+                </div>
+                <div class="col-6">
+                  <label class="form-label small fw-bold text-dark">Your City</label>
+                  <input type="text" id="cityInput" class="form-control rounded-3 py-2" placeholder="e.g. Lahore, Karachi" required>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label class="form-label small fw-bold text-dark">Project / Part Description</label>
+                <textarea id="partNotes" class="form-control rounded-3" rows="2" placeholder="e.g. ESP32 enclosure, dimensions approx 10x6x4 cm..."></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 py-3 rounded-pill fw-bold shadow-sm">
+                <i class="fab fa-whatsapp me-2 fs-5"></i> Get Sliced Price on WhatsApp
+              </button>
+            </form>
+            <div class="text-center mt-3">
+              <span class="text-muted small"><i class="fas fa-shield-check text-success me-1"></i> Workshop Address: Mozang Chungi, Lahore • Fast Delivery Nationwide</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="py-5 bg-white">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-primary fw-bold text-uppercase small">Simple 4-Step Process</span>
+        <h2 class="display-6 fw-800 text-dark">How Custom 3D Printing Works</h2>
+        <p class="text-muted">From 3D CAD design to physical delivery in your hands anywhere in Pakistan.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-3 col-sm-6">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <h5 class="fw-bold mb-2">Send 3D Model</h5>
+            <p class="text-muted small mb-0">Share your <code>.STL</code>, <code>.STEP</code>, or <code>.OBJ</code> CAD file via WhatsApp or email for instant engineering review.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <h5 class="fw-bold mb-2">Slicing & Quote</h5>
+            <p class="text-muted small mb-0">We slice the model, calculate exact gram weight and print time, and provide an all-inclusive transparent quotation.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <h5 class="fw-bold mb-2">Precision Printing</h5>
+            <p class="text-muted small mb-0">Printed on industrial calibrated 3D printers using premium filaments with heated chamber and clean surface finish.</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <h5 class="fw-bold mb-2">Fast Dispatch</h5>
+            <p class="text-muted small mb-0">Same-day pickup/courier in Lahore. Shipped via express Cash on Delivery (COD) to Karachi, Islamabad, and nationwide.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prototyping Workshop Spotlight Section -->
+  <section class="py-5 bg-white border-top border-bottom">
+    <div class="container py-4">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <div class="position-relative">
+            <img src="{% static 'Images/3d_printer_workshop.webp' %}" class="img-fluid rounded-4 shadow-lg border" alt="ProjectStore 3D Printing Prototyping Workshop in Lahore" style="width: 100%; max-height: 480px; object-fit: cover;">
+            <div class="position-absolute bottom-0 start-0 m-3 p-3 rounded-3 bg-dark bg-opacity-75 text-white shadow" style="backdrop-filter: blur(8px);">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fas fa-circle text-success small"></i>
+                <span class="small fw-bold">Workshop Lab: Mozang Chungi, Lahore</span>
+              </div>
+              <span class="d-block text-white-50" style="font-size: 0.75rem;">Precision FDM Rapid Prototyping Lab</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <span class="text-primary fw-bold text-uppercase small">Prototyping Facility</span>
+          <h2 class="display-6 fw-800 text-dark mb-3">Engineered for Hardware Makers & FYP Students</h2>
+          <p class="text-secondary mb-4">
+            Unlike commercial bureaus that charge high industrial setup fees, our workshop is built specifically for Pakistani makers, electrical engineering students, robotics competitors, and hardware startups.
+          </p>
+          <div class="row g-3 mb-4">
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                  <i class="fas fa-microchip fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Electronics-First CAD</h6>
+                  <p class="text-muted small mb-0">Custom snap-fits, board standoffs, and port apertures for ESP32, Arduino & Raspberry Pi.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                  <i class="fas fa-layer-group fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">0.12 - 0.28mm Layers</h6>
+                  <p class="text-muted small mb-0">Ultra-high resolution finishes or rapid prototyping drafts to fit your budget.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                  <i class="fas fa-tools fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Brass Heat Inserts</h6>
+                  <p class="text-muted small mb-0">M2, M3, M4 threaded brass inserts for reusable bolted enclosures.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="d-flex align-items-start gap-3">
+                <div class="p-2 rounded-3 bg-primary bg-opacity-10 text-primary">
+                  <i class="fas fa-truck-fast fs-5"></i>
+                </div>
+                <div>
+                  <h6 class="fw-bold mb-1">Lahore Same-Day COD</h6>
+                  <p class="text-muted small mb-0">Self-pickup in Lahore or 24-48h express courier dispatch across Pakistan.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="https://wa.me/923104505008?text=Hello%20ProjectStore,%20I%20want%20to%20consult%20regarding%20a%203D%20printing%20prototype." target="_blank" class="btn btn-primary rounded-pill px-4 py-2 fw-bold">
+            <i class="fab fa-whatsapp me-2"></i> Discuss Prototype with CAD Engineer
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Materials Guide Table -->
+  <section class="py-5 bg-light" id="materials">
+    <div class="container py-4">
+      <div class="text-center mb-5">
+        <span class="text-primary fw-bold text-uppercase small">Filaments & Resins</span>
+        <h2 class="display-6 fw-800 text-dark">High-Performance 3D Printing Materials</h2>
+        <p class="text-muted">Choose the perfect material suited for your project's mechanical and thermal requirements.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="material-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="fw-bold text-dark mb-0">Tough PLA+</h4>
+              <span class="badge bg-primary-subtle text-primary fw-bold">Most Popular</span>
+            </div>
+            <p class="text-muted small">Enhanced toughness over standard PLA. Low warping, clean overhangs, and sharp geometric details.</p>
+            <ul class="list-unstyled small mb-0 text-secondary">
+              <li class="mb-1"><i class="fas fa-check text-success me-2"></i><strong>Best for:</strong> FYP project enclosures, sensor mounts</li>
+              <li class="mb-1"><i class="fas fa-check text-success me-2"></i><strong>Heat Tolerance:</strong> Up to 55°C</li>
+              <li><i class="fas fa-check text-success me-2"></i><strong>Strength:</strong> High Rigidity & Impact Resistance</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="material-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="fw-bold text-dark mb-0">PETG Engineering</h4>
+              <span class="badge bg-success-subtle text-success fw-bold">Outdoor Grade</span>
+            </div>
+            <p class="text-muted small">Combines the ease of PLA with the strength of ABS. Weatherproof, chemical resistant, and ductile.</p>
+            <ul class="list-unstyled small mb-0 text-secondary">
+              <li class="mb-1"><i class="fas fa-check text-success me-2"></i><strong>Best for:</strong> Drone arms, robotics gears, water tanks</li>
+              <li class="mb-1"><i class="fas fa-check text-success me-2"></i><strong>Heat Tolerance:</strong> Up to 80°C</li>
+              <li><i class="fas fa-check text-success me-2"></i><strong>Strength:</strong> High Impact & Zero Delamination</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="material-card h-100">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="fw-bold text-dark mb-0">TPU Flexible (95A)</h4>
+              <span class="badge bg-warning-subtle text-dark fw-bold">Flexible Rubber</span>
+            </div>
+            <p class="text-muted small">Rubber-like elasticity and vibration absorption. Can bend and stretch without snapping or deforming.</p>
+            <ul class="list-unstyled small mb-0 text-secondary">
+              <li class="mb-1"><i class="fas fa-check text-success me-2"></i><strong>Best for:</strong> Robot wheels, phone cases, waterproof seals</li>
+              <li class="mb-1"><i class="fas fa-check text-success me-2"></i><strong>Heat Tolerance:</strong> Up to 70°C</li>
+              <li><i class="fas fa-check text-success me-2"></i><strong>Flexibility:</strong> Semi-flexible elastic memory</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ready to Buy 3D Printed Accessories Showcase -->
+  <section class="py-5 bg-white">
+    <div class="container py-4">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+        <div>
+          <span class="text-primary fw-bold text-uppercase small">Workshop Catalog</span>
+          <h2 class="display-6 fw-800 text-dark mb-0">Popular 3D Printed Electronic Parts</h2>
+        </div>
+        <a href="{% url 'product' %}" class="btn btn-outline-primary rounded-pill px-4 mt-3 mt-md-0 fw-bold">
+          View All Parts <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-3 col-6">
+          <div class="card h-100 border rounded-4 shadow-sm overflow-hidden">
+            <img src="/media/products/main/3d_esp32_cam_case_watermarked_CJx5QRB.webp" class="card-img-top p-3" alt="ESP32-CAM 3D Printed Case" style="height:170px; object-fit:contain;">
+            <div class="card-body p-3 d-flex flex-column justify-content-between text-center">
+              <h6 class="fw-bold mb-1"><a href="/detail/esp32-cam-3d-printed-protective-case/" class="text-decoration-none text-dark">ESP32-CAM Snap-Fit Case</a></h6>
+              <div class="text-primary fw-bold">Rs 405</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <div class="card h-100 border rounded-4 shadow-sm overflow-hidden">
+            <img src="/media/products/main/3d_hcsr04_bracket_watermarked_sHyXYAK.webp" class="card-img-top p-3" alt="HC-SR04 3D Bracket" style="height:170px; object-fit:contain;">
+            <div class="card-body p-3 d-flex flex-column justify-content-between text-center">
+              <h6 class="fw-bold mb-1"><a href="/detail/hc-sr04-ultrasonic-sensor-3d-printed-bracket/" class="text-decoration-none text-dark">HC-SR04 Dual Bracket</a></h6>
+              <div class="text-primary fw-bold">Rs 250</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <div class="card h-100 border rounded-4 shadow-sm overflow-hidden">
+            <img src="/media/products/main/3d_arduino_case_watermarked_YN7Svd0.webp" class="card-img-top p-3" alt="Arduino Uno 3D Case" style="height:170px; object-fit:contain;">
+            <div class="card-body p-3 d-flex flex-column justify-content-between text-center">
+              <h6 class="fw-bold mb-1"><a href="/detail/arduino-uno-mega-3d-printed-protective-bumper-case/" class="text-decoration-none text-dark">Arduino Uno/Mega Bumper</a></h6>
+              <div class="text-primary fw-bold">Rs 350</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <div class="card h-100 border rounded-4 shadow-sm overflow-hidden">
+            <img src="/media/products/main/3d_servo_bracket_watermarked_kYkRrqK.webp" class="card-img-top p-3" alt="SG90 Pan Tilt Mount" style="height:170px; object-fit:contain;">
+            <div class="card-body p-3 d-flex flex-column justify-content-between text-center">
+              <h6 class="fw-bold mb-1"><a href="/detail/sg90-mg90s-micro-servo-3d-printed-pan-tilt-bracket-kit/" class="text-decoration-none text-dark">SG90/MG90S Servo Mount</a></h6>
+              <div class="text-primary fw-bold">Rs 300</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Engineering Student FYP Discount Banner -->
+  <section class="py-5" style="background: linear-gradient(135deg, #1e3a8a, #0f172a);">
+    <div class="container py-4 text-center text-white">
+      <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3">
+        <i class="fas fa-graduation-cap me-2"></i>University FYP Special
+      </span>
+      <h2 class="display-6 fw-800 mb-3">Building a Final Year Engineering Project (FYP)?</h2>
+      <p class="lead text-white-50 max-w-700 mx-auto mb-4 fs-6">
+        We support university engineering students across UET, NUST, FAST, COMSATS, GIKI, and NED with <strong>15% Academic Discounts</strong> on all custom 3D printed enclosures, robotic chassis, and IoT sensor housings.
+      </p>
+      <a href="https://wa.me/923104505008?text=Hello%20ProjectStore,%20we%20are%20engineering%20students%20working%20on%20our%20FYP.%20We%20need%203D%20printing%20services%20with%20the%20student%20discount." target="_blank" class="btn btn-warning px-5 py-3 rounded-pill fw-bold shadow-lg">
+        Claim Student FYP Discount on WhatsApp <i class="fas fa-arrow-right ms-2"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ Section with Schema Accordion -->
+  <section class="py-5 bg-light" id="faq">
+    <div class="container py-4">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-primary fw-bold text-uppercase small">Got Questions?</span>
+        <h2 class="display-6 fw-800 text-dark">Frequently Asked Questions</h2>
+        <p class="text-muted">Everything you need to know about our custom 3D printing service in Pakistan.</p>
+      </div>
+
+      <div class="accordion faq-accordion max-w-800 mx-auto" id="threeDFaqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              How much does 3D printing service cost in Pakistan?
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              3D printing costs in Pakistan typically range from <strong>Rs 10 to Rs 25 per gram</strong> for standard PLA+, depending on layer height, total print hours, and infill density. For a free, exact sliced estimate, send your .STL or .STEP file to our WhatsApp at <strong>+92 310 4505008</strong>.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              What 3D CAD file formats do you accept?
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              We accept all standard 3D CAD formats including <code>.STL</code>, <code>.STEP</code>, <code>.STP</code>, <code>.OBJ</code>, <code>.3MF</code>, and SolidWorks part files. If you do not have a 3D model yet, our CAD engineers can model the enclosure or mechanism from your sketches or dimensions.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              What materials can I choose from?
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              We stock and print in Tough PLA+ (ideal for electronic project enclosures and brackets), PETG (for high-temperature and outdoor mechanical parts), ABS, TPU (flexible rubber parts and gaskets), and High-Detail UV Photopolymer Resin.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingFour">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              How fast can I receive my 3D printed parts in Lahore, Karachi, or Islamabad?
+            </button>
+          </h2>
+          <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              In Lahore, most standard prints are completed and ready for pickup at our Mozang Chungi office or dispatched same-day within 24 hours. For Karachi, Islamabad, Rawalpindi, Faisalabad, and other cities across Pakistan, orders are delivered in 2-3 business days with nationwide Cash on Delivery.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingFive">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+              Can you design the 3D model if I only have a physical circuit board?
+            </button>
+          </h2>
+          <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              Yes! You can bring or courier your PCB / microcontroller to our Lahore office (2nd Floor, 72 Westend Plaza, Mozang Chungi, Lahore). Our CAD engineers will take digital caliper measurements and design a custom snap-fit enclosure with cutouts for all ports, buttons, and display screens.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingSix">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+              What is the maximum build volume (size) you can 3D print?
+            </button>
+          </h2>
+          <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              Our standard single-piece build volume is up to <strong>300 x 300 x 400 mm</strong>. For larger projects (such as life-size robotics chassis or drone bodies), we engineer precision interlocking dovetail joints that assemble seamlessly with industrial structural rigidity.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingSeven">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+              Can I choose custom filament colors for my parts?
+            </button>
+          </h2>
+          <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              Yes! We stock multiple colors including Matte Black, Pure White, Industrial Gray, Royal Blue, Signal Orange, Army Green, and Transparent Clear PETG. Custom corporate pantone colors are available for bulk production runs.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingEight">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+              Do you install threaded brass heat-set inserts for screws?
+            </button>
+          </h2>
+          <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              Yes! For project enclosures that require frequent opening, we install precision <strong>M2, M2.5, M3, and M4 brass heat-set inserts</strong> so screws thread into solid brass rather than plastic, preventing thread wear.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingNine">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+              Can you print functional moving gears and mechanical mechanisms?
+            </button>
+          </h2>
+          <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#threeDFaqAccordion">
+            <div class="accordion-body text-secondary">
+              Yes! We calibrate our dual-gear extruders to <strong>±0.15mm mechanical tolerance</strong>, allowing print-in-place hinges, planetary gearboxes, and rack-and-pinion mechanisms to rotate smoothly without post-processing.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="py-5 bg-primary text-white text-center">
+    <div class="container py-3">
+      <h2 class="display-6 fw-800 mb-3">Ready to Bring Your 3D Idea to Life?</h2>
+      <p class="lead mb-4 fs-6 opacity-90">Send us your 3D design file today and get professional rapid prototyping delivered to your doorstep.</p>
+      <a href="https://wa.me/923104505008?text=Hello%20ProjectStore,%20I%20would%20like%20to%20get%20a%203D%20printing%20quote%20for%20my%20model." target="_blank" class="btn btn-dark px-5 py-3 rounded-pill fw-bold fs-6 shadow">
+        <i class="fab fa-whatsapp text-success me-2 fs-5"></i> Chat with 3D Printing Specialist
+      </a>
+    </div>
+  </section>
+
+  {% include 'Includes/footer.html' %}
+
+  <!-- Scripts -->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script>
+    function generateWhatsAppQuote(e) {
+      e.preventDefault();
+      const material = document.getElementById('materialSelect').value;
+      const infill = document.getElementById('infillSelect').value;
+      const city = document.getElementById('cityInput').value;
+      const notes = document.getElementById('partNotes').value;
+
+      let msg = `Hello ProjectStore, I would like to get a 3D Printing Quote:\n\n`;
+      msg += `*Material:* ${material}\n`;
+      msg += `*Infill:* ${infill}\n`;
+      msg += `*City:* ${city}\n`;
+      if (notes) {
+        msg += `*Details:* ${notes}\n`;
+      }
+      msg += `\nI will send my 3D file (.STL/.STEP) right now. Please slice and quote the cost.`;
+
+      const waUrl = `https://wa.me/923104505008?text=${encodeURIComponent(msg)}`;
+      window.open(waUrl, '_blank');
+    }
+  </script>
+</body>
+</html>

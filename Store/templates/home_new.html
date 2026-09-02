@@ -6,58 +6,134 @@
   <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ProjectStore.pk | DIY Electronics, Robotics Kits & Engineering Project Shop Pakistan</title>
+  <title>ProjectStore.pk | Premium DIY Store | Kits, Hardware & Software Codes for All</title>
   
-  <meta name="description" content="Pakistan's #1 DIY Electronics & Engineering Project Store. Buy ESP32, Arduino sensors, robotics kits & FYP project components with nationwide Cash on Delivery.">
-  <meta name="keywords" content="diy store pakistan, project shop near me, project maker near me, Project Store, DIY Kits Pakistan, ESP32 price Lahore, Arduino Sensors, Electronic Components Online">
+  <meta name="description" content="Pakistan's premium DIY store where we sell complete DIY kits, electronic components, and software codes for all. 100% verified stock with nationwide Cash on Delivery.">
+  <meta name="keywords" content="premium diy store, diy kits pakistan, software codes for projects, buy arduino esp32 pakistan, electronic components, fyp project kits, projectstore">
   <meta name="author" content="Project Store">
   <link rel="canonical" href="https://projectstore.pk/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://projectstore.pk/">
-  <meta property="og:title" content="ProjectStore.pk | DIY Electronics, Robotics Kits & Project Shop Pakistan">
-  <meta property="og:description" content="Pakistan's #1 DIY Electronics & Engineering Project Store. Buy ESP32, Arduino sensors, robotics kits & FYP project components.">
+  <meta property="og:title" content="ProjectStore.pk | Premium DIY Store | Kits, Hardware & Software Codes for All">
+  <meta property="og:description" content="Pakistan's premium DIY store where we sell complete DIY kits, hardware components, and software codes for all. Nationwide Cash on Delivery.">
   <meta property="og:site_name" content="ProjectStore.pk">
 
-  <!-- JSON-LD Structured Data Schema -->
+  <!-- JSON-LD Structured Data Schemas (SEO & GEO / AI Optimization) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "ProjectStore.pk",
-    "image": "https://projectstore.pk/static/Images/project_store_logo.webp",
-    "@id": "https://projectstore.pk",
-    "url": "https://projectstore.pk",
-    "telephone": "+923104505008",
-    "priceRange": "PKR",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Lahore",
-      "addressRegion": "Punjab",
-      "addressCountry": "PK"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 31.5204,
-      "longitude": 74.3587
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ],
-      "opens": "09:00",
-      "closes": "21:00"
-    },
-    "sameAs": [
-      "https://www.facebook.com/IsolPaki",
-      "https://www.youtube.com/@Isol_pk"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://projectstore.pk/#website",
+        "url": "https://projectstore.pk/",
+        "name": "ProjectStore.pk",
+        "description": "Pakistan's Premium DIY Store — Selling Complete Kits, Hardware & Software Codes for All",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://projectstore.pk/product/?search={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "OnlineStore",
+        "@id": "https://projectstore.pk/#store",
+        "name": "ProjectStore.pk",
+        "url": "https://projectstore.pk",
+        "logo": "https://projectstore.pk/static/Images/project_store_logo.webp",
+        "image": "https://projectstore.pk/static/Images/project_store_logo.webp",
+        "telephone": "+923104505008",
+        "email": "support@projectstore.pk",
+        "priceRange": "PKR",
+        "currenciesAccepted": "PKR",
+        "paymentAccepted": "Cash on Delivery, Bank Transfer, EasyPaisa, JazzCash",
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "ISOL",
+          "url": "https://isol.pk"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "2nd Floor, 72, Westend Plaza, Shahrah-e-Quaid-e-Azam, Mozang Chungi",
+          "addressLocality": "Lahore",
+          "addressRegion": "Punjab",
+          "postalCode": "54000",
+          "addressCountry": "PK"
+        },
+        "areaServed": [
+          "PK",
+          "Lahore",
+          "Karachi",
+          "Islamabad",
+          "Rawalpindi",
+          "Faisalabad",
+          "Peshawar",
+          "Multan"
+        ],
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 31.5204,
+          "longitude": 74.3587
+        },
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+          ],
+          "opens": "09:00",
+          "closes": "21:00"
+        },
+        "sameAs": [
+          "https://www.facebook.com/IsolPaki",
+          "https://www.youtube.com/@Isol_pk",
+          "https://isol.pk"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://projectstore.pk/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What components and DIY hardware are available at ProjectStore.pk?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ProjectStore.pk offers genuine microcontrollers (ESP32, ESP8266, Arduino Uno/Mega/Nano, STM32, Raspberry Pi), electronic sensors (temperature, ultrasonic, PIR, gas, biomedical), robotics kits, motor drivers, IoT hardware modules, and ready-to-build Final Year Engineering Projects (FYP) with full circuit diagrams and source code."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does ProjectStore.pk deliver across Pakistan with Cash on Delivery (COD)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, ProjectStore.pk provides nationwide Cash on Delivery (COD) across Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta, and over 250 cities across Pakistan with 24 to 48 hours dispatch."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are the components and development boards tested before shipping?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All microcontrollers, sensors, and electronic modules are 100% pre-tested and quality-checked by engineers at the Lahore fulfillment center before dispatch, backed by a 7-day replacement warranty."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can students order Final Year Projects (FYP) with hardware and code support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Students can browse ready-made FYP projects on https://projectstore.pk/project/ or request custom engineering development via WhatsApp at +92 310 4505008 with complete hardware fabrication, schematics, and software documentation."
+            }
+          }
+        ]
+      }
     ]
   }
   </script>
@@ -487,11 +563,12 @@
           <div class="carousel-item active">
             <div class="row align-items-center">
               <div class="col-lg-6">
-                <h1 class="hero-h1">Verified Code Modules <br><span>& Reference Projects</span></h1>
-                <p class="hero-subtitle">Get production-ready, verified Python, Django, and Arduino snippets to accelerate your FYP and hobby builds.Learn from the best to build the best.</p>
+                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3 fw-bold"><i class="fa-solid fa-star me-1"></i> Pakistan's #1 DIY Project Shop & Maker</span>
+                <h1 class="hero-h1">Complete DIY Kits <br><span>& Software Codes</span></h1>
+                <p class="hero-subtitle">Looking for a project shop near you? ProjectStore.pk is Pakistan's premium DIY store selling ready-to-run kits, tested code modules, ESP32, Arduino, and sensors with nationwide Cash on Delivery.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
-                  <a href="{% url 'project' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-download me-2"></i>Download Scripts</a>
-                  <a href="#faq" class="btn hero-btn btn-outline-light-custom">How Not to Fail?</a>
+                  <a href="{% url 'project' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-code me-2"></i>Explore Projects & Codes</a>
+                  <a href="{% url 'product' %}" class="btn hero-btn btn-outline-light-custom"><i class="fa-solid fa-microchip me-2"></i>Buy Components</a>
                 </div>
               </div>
               <div class="col-lg-6">
@@ -509,15 +586,16 @@
           <div class="carousel-item">
             <div class="row align-items-center">
               <div class="col-lg-6">
-                <h1 class="hero-h1">Ready-to-Build <br><span>Project Kits</span></h1>
-                <p class="hero-subtitle">Everything you need in one box. Wires, sensors, microcontrollers, and the code. Start building your future today.</p>
+                <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 fw-bold"><i class="fa-solid fa-truck-fast me-1"></i> 24-48h Nationwide Fast Delivery</span>
+                <h1 class="hero-h1">Ready-to-Build <br><span>Project Kits & Sensors</span></h1>
+                <p class="hero-subtitle">Everything in one box: wires, sensors, microcontrollers (ESP32 / Arduino), and complete source codes. Best component prices in Lahore, Karachi, Islamabad & all Pakistan.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
-                  <a href="{% url 'product' %}?category=kits" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-box-open me-2"></i>Shop Kits</a>
+                  <a href="{% url 'product' %}?category=kits" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-box-open me-2"></i>Shop DIY Kits</a>
                 </div>
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <img src="{% static 'Images/collages.webp' %}" class="img-fluid hero-img" alt="Hardware Project Kits">
+                  <img src="{% static 'Images/collages.webp' %}" class="img-fluid hero-img" alt="DIY Hardware Project Kits Pakistan">
                 </div>
               </div>
             </div>

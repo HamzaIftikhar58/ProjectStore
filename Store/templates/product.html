@@ -5,26 +5,62 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buy Hardware & Electronic Components Online in Pakistan | ProjectStore.pk</title>
+  <title>{% if search_query %}Search: {{ search_query }} | DIY Kits & Components | ProjectStore.pk{% else %}Premium DIY Store | Electronic Kits, Components & Software Codes | ProjectStore.pk{% endif %}</title>
   
-  <meta name="description" content="Browse electronic components, sensors, microcontrollers, Arduino, ESP32, and DIY hardware in Pakistan. Cash on delivery & fast shipping.">
-  <meta name="keywords" content="project shop near me, electronic components pakistan, esp32 price lahore, arduino sensors online, buy electronics pakistan, project store">
+  <meta name="description" content="{% if search_query %}Order '{{ search_query }}' at ProjectStore.pk. Premium DIY kits, hardware components & software codes with 24-48h fast shipping & COD in Pakistan.{% else %}Pakistan's premium DIY store. Buy complete DIY kits, Arduino, ESP32, sensors, robotics modules & software codes for all. 100% verified stock & nationwide COD.{% endif %}">
+  <meta name="keywords" content="premium diy store, diy kits pakistan, software codes for projects, buy electronic components pakistan, esp32 price lahore, arduino sensors online, robotics parts store, project store">
   <link rel="canonical" href="https://projectstore.pk/product/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://projectstore.pk/product/">
-  <meta property="og:title" content="Buy Hardware & Electronic Components Online in Pakistan | ProjectStore.pk">
-  <meta property="og:description" content="Browse electronic components, sensors, microcontrollers, Arduino, ESP32, and DIY hardware in Pakistan.">
+  <meta property="og:title" content="Premium DIY Store | Electronic Kits, Components & Software Codes | ProjectStore.pk">
+  <meta property="og:description" content="Pakistan's premium DIY store. Buy complete DIY kits, hardware components, and software codes for all. Fast 24-48h delivery with Cash on Delivery.">
+  <meta property="og:site_name" content="ProjectStore.pk">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Premium DIY Store | Electronic Kits, Components & Software Codes | ProjectStore.pk">
+  <meta name="twitter:description" content="Pakistan's premium DIY store. Buy complete DIY kits, hardware components, and software codes for all. Fast 24-48h delivery with Cash on Delivery.">
 
   <!-- JSON-LD Structured Data Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Electronic Components & Hardware Products",
+    "@type": "CollectionPage",
+    "name": "Electronic Components, Sensors & DIY Hardware in Pakistan",
     "url": "https://projectstore.pk/product/",
-    "numberOfItems": {{ products.count|default:10 }}
+    "description": "Order Arduino, ESP32, sensors, robotics modules & DIY electronic components online in Pakistan with fast 24-48h shipping and Cash on Delivery.",
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Electronic Components & Hardware Products",
+      "url": "https://projectstore.pk/product/"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How to buy electronics and Arduino components online in Pakistan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Browse components on ProjectStore.pk, add items to cart, and checkout with nationwide Cash on Delivery (COD) or online payment. Orders are dispatched from Lahore within 24-48 hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the delivery fee for hardware components in Pakistan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard nationwide shipping is flat PKR 250 across all cities including Karachi, Lahore, Rawalpindi, Islamabad, and Faisalabad."
+        }
+      }
+    ]
   }
   </script>
 

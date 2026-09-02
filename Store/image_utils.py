@@ -10,11 +10,23 @@ def add_watermark(image):
     Apply a single large diagonal watermark to the image.
     """
     try:
-        # Construct path to the watermark image
-        watermark_path = os.path.join(settings.BASE_DIR, 'Store', 'static', 'Images', 'project_store_logo.webp')
-        
-        if not os.path.exists(watermark_path):
-            print(f"⚠️ Watermark not found at: {watermark_path}")
+        # Construct paths to candidate watermark logo images
+        candidate_paths = [
+            os.path.join(settings.BASE_DIR, 'Store', 'static', 'Images', 'project_store_logo.webp'),
+            os.path.join(settings.BASE_DIR, 'Store', 'static', 'Images', 'project_store_logo.png'),
+        ]
+        if hasattr(settings, 'STATIC_ROOT') and settings.STATIC_ROOT:
+            candidate_paths.append(os.path.join(settings.STATIC_ROOT, 'Images', 'project_store_logo.webp'))
+            candidate_paths.append(os.path.join(settings.STATIC_ROOT, 'Images', 'project_store_logo.png'))
+
+        watermark_path = None
+        for path in candidate_paths:
+            if path and os.path.exists(path):
+                watermark_path = path
+                break
+
+        if not watermark_path:
+            print(f"⚠️ Watermark not found at candidate paths: {candidate_paths}")
             return image
         
         # Open watermark
@@ -104,9 +116,10 @@ def compress_image(image_field, quality=90, max_size=(1920, 1080), format='WEBP'
         compressed_data = output.getvalue()
         
         # Create a new filename with the correct extension
-        filename = os.path.splitext(image_field.name)[0] + ext
+        raw_name = image_field.name if hasattr(image_field, 'name') else str(image_field)
+        filename = os.path.splitext(os.path.basename(raw_name))[0] + ext
         return ContentFile(compressed_data, name=filename)
 
     except Exception as e:
-        print(f"❌ Error compressing/watermarking image: {e}")
+        print(f"Error compressing/watermarking image: {e}")
         return None

@@ -1,0 +1,29 @@
+# ProjectStore.pk
+
+> Pakistan's premium DIY store where we sell complete DIY kits, hardware components, and software codes for all — engineering students, developers, makers, and innovators.
+
+ProjectStore.pk is a premium DIY electronics store and engineering prototyping platform based in Lahore, Pakistan. We provide complete ready-to-build DIY kits, verified hardware components, sensors, microcontrollers (ESP32, Arduino, Raspberry Pi), and complete software source codes with circuit schematics and documentation for all skill levels.
+
+## Key Facts & Specifications
+- **Name**: ProjectStore.pk
+- **Headquarters**: 2nd Floor, 72, Westend Plaza, Shahrah-e-Quaid-e-Azam, Mozang Chungi, Lahore, 54000, Pakistan
+- **Parent Network**: ISOL (https://isol.pk)
+- **Nationwide Coverage**: Fast 24-48h dispatch to Karachi, Lahore, Islamabad, Rawalpindi, Faisalabad, Multan, Peshawar, Quetta, and 250+ cities across Pakistan.
+- **Payment Methods**: Cash on Delivery (COD), Online Bank Transfer, EasyPaisa, JazzCash.
+- **Product Guarantee**: 100% authentic, pre-tested components with a 7-day replacement warranty.
+- **Currency**: Pakistani Rupee (PKR).
+
+## Core Product Categories & Direct Links
+- [All Products & Hardware Catalog](https://projectstore.pk/product/): Browse full catalog of electronic components, DIY kits, and sensors.
+- [Custom 3D Printing & Rapid Prototyping](https://projectstore.pk/3d-printing-service/): Professional 3D printing services in PLA+, PETG, ABS, TPU, and Resin for electronics enclosures and engineering FYPs.
+- [3D Printed Parts & Enclosures](https://projectstore.pk/category/3d-printed-parts/): Precision 3D printed sensor brackets, ESP32-CAM cases, and Arduino bumper enclosures.
+- [Project Guides & DIY Tutorials](https://projectstore.pk/blog/): In-depth engineering tutorials, ESP32/Arduino wiring guides, and top Final Year Project (FYP) architectures with verified source code.
+- [Final Year Student Projects (FYP)](https://projectstore.pk/project/): Complete engineering and AI projects with working hardware, circuit diagrams, and source code.
+- [Return & Refund Policy](https://projectstore.pk/return-policy/): 7-day free replacement guarantee details.
+- [Electronic Categories](https://projectstore.pk/category/): Categorized index of components and accessories.
+- [Direct Contact & Engineering Support](https://projectstore.pk/contact/): Technical inquiries, custom PCB fabrication, and component sourcing.
+- [XML Sitemap](https://projectstore.pk/sitemap.xml): Full machine-readable URL index for web crawlers.
+
+## Direct Query Endpoints
+- In-Site Product Search: `https://projectstore.pk/product/?search={query}`
+- WhatsApp Quick Ordering: `https://wa.me/923104505008`

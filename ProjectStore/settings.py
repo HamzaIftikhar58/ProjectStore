@@ -42,6 +42,10 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
+# Host & Canonical URL Settings
+PREPEND_WWW = False
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Application definition
 

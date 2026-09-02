@@ -7,12 +7,13 @@ from Store import views
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
 from django.views.generic import TemplateView
-from Store.sitemaps import ProductSitemap, CategorySitemap, StaticViewSitemap, ProjectSitemap, HomeSitemap
+from Store.sitemaps import ProductSitemap, CategorySitemap, StaticViewSitemap, ProjectSitemap, HomeSitemap, BlogSitemap
 
 sitemaps = {
     'home': HomeSitemap,
     'products': ProductSitemap,
     'projects': ProjectSitemap,
+    'blog': BlogSitemap,
     'categories': CategorySitemap,
     'static': StaticViewSitemap,
 }
@@ -57,6 +58,11 @@ urlpatterns = [
     path("cart/",views.cart,name="cart"),
     path('contact/', views.contact, name='contact'),
     path('contact/success/', views.contact_success, name='contact_success'),
+    path('return-policy/', views.return_policy, name='return_policy'),
+    path('3d-printing-service/', views.three_d_printing_service, name='three_d_printing_service'),
+    # ── Project Guides & Tutorials Blog ──────────────────────────────────────
+    path('blog/', views.blog_list, name='blog_list'),
+    path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
     path('place-order/', views.place_order, name='place_order'),
     path('order-confirmation/', views.order_confirmation, name='order_confirmation'),
     path('order-history/', views.order_history, name='order_history'),
@@ -64,6 +70,7 @@ urlpatterns = [
     path('toggle-like/<int:product_id>/', views.toggle_like, name='toggle_like'),
     path('share-product/<int:product_id>/', views.share_product, name='share_product'),
     path('submit-review/<int:product_id>/', views.submit_review, name='submit_review'),
+    path('ask-question/', views.ask_item_question, name='ask_item_question'),
     path('track-whatsapp-order/<int:product_id>/', views.track_whatsapp_order, name='track_whatsapp_order'),
     # ── Facebook / Google Merchant Center Product Feeds ──────────────────────
     path('feeds/facebook/', views.fb_feed_all, name='fb_feed_all'),
@@ -72,6 +79,10 @@ urlpatterns = [
     # ─────────────────────────────────────────────────────────────────────────
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps, 'template_name': 'custom_sitemap.xml'}, name='django.contrib.sitemaps.views.sitemap'),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain")),
+    # ── AI Optimization (GEO / LLMO) ─────────────────────────────────────────
+    path("llms.txt", TemplateView.as_view(template_name="llms.txt", content_type="text/markdown; charset=utf-8")),
+    path("llms-full.txt", views.llms_full_txt, name="llms_full_txt"),
+    # ─────────────────────────────────────────────────────────────────────────
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

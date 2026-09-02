@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Return & Refund Policy | ProjectStore.pk</title>
+  <meta name="description" content="Read ProjectStore.pk's 7-Day return, replacement, and refund policy for electronic components, DIY kits, and hardware in Pakistan.">
+  <meta name="keywords" content="return policy, refund policy, projectstore warranty, replacement guarantee, pakistan">
+  <link rel="canonical" href="https://projectstore.pk/return-policy/" />
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="{% static 'css/google-fonts.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <style>
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #3b82f6;
+      --secondary-blue: #2563eb;
+      --accent-yellow: #fbbf24;
+      --text-dark: #1e293b;
+      --text-gray: #64748b;
+      --bg-light: #f8fafc;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+    .policy-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 60px 0 40px;
+      margin-bottom: 40px;
+    }
+    .policy-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+      padding: 40px;
+      margin-bottom: 30px;
+      border: 1px solid #e2e8f0;
+    }
+    .policy-card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .policy-card h2 i {
+      color: var(--primary-blue);
+    }
+    .policy-card p, .policy-card li {
+      color: var(--text-gray);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .highlight-badge {
+      background-color: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+  </style>
+</head>
+<body>
+
+  {% include 'Includes/navbar.html' %}
+  {% include 'Includes/messages.html' %}
+
+  <!-- Hero -->
+  <section class="policy-hero text-center">
+    <div class="container">
+      <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3"><i class="fa-solid fa-shield-check me-1"></i> Customer Protection</span>
+      <h1 class="fw-bold mb-2">Return & Refund Policy</h1>
+      <p class="text-white-50 mb-0">Transparent 7-Day replacement and customer satisfaction guarantee across Pakistan.</p>
+    </div>
+  </section>
+
+  <!-- Policy Content -->
+  <main class="container pb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <div class="highlight-badge d-flex align-items-center gap-3">
+          <i class="fa-solid fa-circle-check text-primary fs-2"></i>
+          <div>
+            <h5 class="fw-bold text-dark mb-1">7-Day Free Replacement Guarantee</h5>
+            <p class="text-muted mb-0 small">All electronic modules, microcontrollers, and DIY kits are pre-tested before dispatch. We offer free replacements for defective or damaged items.</p>
+          </div>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fa-solid fa-rotate-left"></i> 1. Return & Replacement Window</h2>
+          <p>You may initiate a return or replacement request within <strong>7 days</strong> of receiving your package. If 7 days have passed since delivery, please contact our engineering support team for troubleshooting assistance.</p>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fa-solid fa-box-open"></i> 2. Eligibility for Returns & Replacements</h2>
+          <p>To qualify for a replacement or return:</p>
+          <ul>
+            <li>The item must be in its original packaging with all included accessories (headers, cables, manuals).</li>
+            <li>For transit damage or missing components, please provide an unboxing photo/video or proof of delivery.</li>
+            <li>Pre-tested microcontrollers and sensors damaged by user incorrect wiring, overvoltage, or short-circuits are not eligible for standard returns but can be diagnosed by our tech team.</li>
+          </ul>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fa-solid fa-money-bill-transfer"></i> 3. Refunds (Cash on Delivery & Online)</h2>
+          <p>Once your returned item is received and inspected at our Lahore fulfillment center:</p>
+          <ul>
+            <li><strong>Replacements:</strong> Dispatched immediately within 24 hours at zero additional shipping cost.</li>
+            <li><strong>Refunds:</strong> Processed within 2–3 business days directly to your Bank Account, JazzCash, or EasyPaisa wallet.</li>
+          </ul>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fa-solid fa-truck"></i> 4. Return Shipping Process</h2>
+          <p>To start a return:</p>
+          <ol>
+            <li>Message our customer support on WhatsApp at <strong>+92 310 4505008</strong> or email <strong>support@projectstore.pk</strong> with your Order ID.</li>
+            <li>Pack the item safely and send it via any courier (TCS, Leopards, PostEx, M&P) to our Lahore fulfillment address:
+              <br><em class="text-dark">2nd Floor, 72, Westend Plaza, Shahrah-e-Quaid-e-Azam, Mozang Chungi, Lahore, 54000, Pakistan</em></li>
+            <li>If the return is due to a defective or incorrect item, ProjectStore will reimburse the return courier charges.</li>
+          </ol>
+        </div>
+
+        <div class="policy-card">
+          <h2><i class="fa-solid fa-headset"></i> 5. Need Immediate Help?</h2>
+          <p class="mb-3">Our engineering support team is active Monday to Saturday from 9:00 AM to 9:00 PM PKT.</p>
+          <a href="https://wa.me/923104505008?text=Hi%20ProjectStore,%20I%20have%20an%20inquiry%20regarding%20returns." target="_blank" class="btn btn-success"><i class="fa-brands fa-whatsapp me-2"></i>Contact Support on WhatsApp</a>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  {% include 'Includes/footer.html' %}
+
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

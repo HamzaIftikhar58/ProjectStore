@@ -44,6 +44,8 @@ from .models import (
     ProductVariant,
     UserProfile,
     ContactMessage,
+    BlogPost,
+    ItemQuestion,
 )
 from .isol_functions import create_verification_code, send_order_email_admin, send_order_email_customer, send_verification_code
     # Set up logging
@@ -285,6 +287,80 @@ def contact(request):
 
 def contact_success(request):
     return render(request, 'contact_success.html')
+
+def return_policy(request):
+    """Return and Refund Policy page for customer trust and Google Merchant Center compliance."""
+    return render(request, 'return_policy.html')
+
+def blog_list(request):
+    """
+    Project Guides, Tutorials, and Engineering Articles Index.
+    Supports filtering by category (?category=ai-ml) and search (?q=esp32).
+    """
+    category_filter = request.GET.get('category', '').strip()
+    search_query = request.GET.get('q', '').strip()
+    
+    posts_qs = BlogPost.objects.filter(is_published=True)
+    
+    if category_filter:
+        posts_qs = posts_qs.filter(category=category_filter)
+    if search_query:
+        posts_qs = posts_qs.filter(
+            Q(title__icontains=search_query) |
+            Q(excerpt__icontains=search_query) |
+            Q(content__icontains=search_query) |
+            Q(meta_keywords__icontains=search_query)
+        )
+        
+    paginator = Paginator(posts_qs, 9)
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+        
+    blog_categories = BlogPost.CATEGORY_CHOICES
+    featured_post = BlogPost.objects.filter(is_published=True, is_featured=True).first()
+    recent_posts = BlogPost.objects.filter(is_published=True).order_by('-created_at')[:5]
+    
+    return render(request, 'blog_list.html', {
+        'posts': posts,
+        'blog_categories': blog_categories,
+        'selected_category': category_filter,
+        'search_query': search_query,
+        'featured_post': featured_post,
+        'recent_posts': recent_posts,
+    })
+
+def blog_detail(request, slug):
+    """
+    Tutorial & Project Guide reader view with embedded buyable components and Schema.org Article JSON-LD.
+    """
+    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
+    
+    # Increment view count safely
+    BlogPost.objects.filter(id=post.id).update(views_count=post.views_count + 1)
+    post.views_count += 1
+    
+    related_posts = BlogPost.objects.filter(
+        category=post.category, is_published=True
+    ).exclude(id=post.id)[:3]
+    
+    # Fetch related buyable products/kits embedded in this tutorial
+    related_products = post.related_products.filter(is_active=True).select_related('category')
+    
+    # Community Q&A
+    questions = post.questions.filter(is_approved=True).select_related('user', 'answered_by').order_by('-created_at')
+    
+    return render(request, 'blog_detail.html', {
+        'post': post,
+        'related_posts': related_posts,
+        'related_products': related_products,
+        'questions': questions,
+    })
+
 def checkout(request):
     return render(request, 'checkout.html')
 
@@ -321,6 +397,9 @@ def productDetail(request, slug):
     half_star = (avg_rating - full_stars) >= 0.5
     empty_stars = 5 - full_stars - (1 if half_star else 0)
 
+    # Community Q&A
+    questions = product.questions.filter(is_approved=True).select_related('user', 'answered_by').order_by('-created_at')
+
     context = {
         'product': product,
         'reviews': reviews,
@@ -328,6 +407,7 @@ def productDetail(request, slug):
         'full_stars': range(full_stars),
         'half_star': half_star,
         'empty_stars': range(empty_stars),
+        'questions': questions,
 
         # 👇 Extra context for breadcrumb / dynamic UI
         'is_project': product.is_project,
@@ -336,6 +416,54 @@ def productDetail(request, slug):
     }
 
     return render(request, 'detail.html', context)
+
+
+@require_POST
+def ask_item_question(request):
+    """
+    Handles question submission for products, projects, and blog tutorials.
+    Requires authentication to eliminate spam while providing immediate user confirmation.
+    """
+    if not request.user.is_authenticated:
+        return JsonResponse({
+            'success': False,
+            'login_required': True,
+            'message': 'Please login or register to ask a question.'
+        }, status=401)
+
+    question_text = request.POST.get('question', '').strip()
+    if not question_text:
+        return JsonResponse({'success': False, 'message': 'Please type your question.'}, status=400)
+
+    product_id = request.POST.get('product_id')
+    blog_id = request.POST.get('blog_id')
+
+    product = None
+    blog_post = None
+
+    if product_id:
+        product = get_object_or_404(Product, id=product_id)
+    elif blog_id:
+        blog_post = get_object_or_404(BlogPost, id=blog_id)
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid item reference.'}, status=400)
+
+    item_q = ItemQuestion.objects.create(
+        user=request.user,
+        product=product,
+        blog_post=blog_post,
+        question=question_text,
+        is_approved=True
+    )
+
+    return JsonResponse({
+        'success': True,
+        'message': 'Your question has been posted! Our engineering team will reply shortly.',
+        'question_id': item_q.id,
+        'username': request.user.first_name or request.user.username,
+        'question': item_q.question,
+        'created_at': item_q.created_at.strftime('%b %d, %Y')
+    })
 
 
 
@@ -1124,7 +1252,7 @@ def fb_feed_category(request, category_slug):
 
 def google_merchant_feed(request):
     """
-    Google Merchant Center RSS 2.0 XML Product Feed.
+    Google Merchant Center RSS 2.0 XML Product Feed with Return Policy and Shipping metadata.
     URL: /feeds/google/
     """
     products = Product.objects.filter(is_active=True).select_related('category')
@@ -1144,8 +1272,17 @@ def google_merchant_feed(request):
       <g:image_link>{escape(image_url)}</g:image_link>
       <g:condition>new</g:condition>
       <g:availability>{availability}</g:availability>
-      <g:price>{p.final_price} PKR</g:price>
+      <g:price>{p.final_price:.2f} PKR</g:price>
       <g:brand>ProjectStore.pk</g:brand>
+      <g:mpn>{escape(p.sku)}</g:mpn>
+      <g:product_type>{escape(p.category.name)}</g:product_type>
+      <g:identifier_exists>no</g:identifier_exists>
+      <g:return_policy_label>7_day_return</g:return_policy_label>
+      <g:shipping>
+        <g:country>PK</g:country>
+        <g:service>Standard Courier Delivery</g:service>
+        <g:price>250.00 PKR</g:price>
+      </g:shipping>
     </item>""")
 
     xml_content = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -1157,4 +1294,74 @@ def google_merchant_feed(request):
     xml_content += '\n'.join(xml_items) + '\n'
     xml_content += '  </channel>\n</rss>'
 
-    return HttpResponse(xml_content, content_type='application/xml; charset=utf-8')
+    return HttpResponse(xml_content, content_type='application/xml; charset=utf-8')
+
+
+def llms_full_txt(request):
+    """
+    Dynamic endpoint generating full LLM-readable catalog representation
+    for Generative Engine Optimization (GEO) and AI agents (ChatGPT, Perplexity, Claude).
+    """
+    categories = Category.objects.filter(is_active=True).prefetch_related(
+        Prefetch('products', queryset=Product.objects.filter(is_active=True))
+    )
+    lines = [
+        "# ProjectStore.pk — Premium DIY Kits, Components & Software Codes Catalog",
+        "",
+        "> Pakistan's premium DIY store where we sell complete DIY kits, hardware components, and software codes for all with nationwide Cash on Delivery (COD).",
+        "",
+        "## Business Details",
+        "- **Store**: ProjectStore.pk (ISOL)",
+        "- **Headquarters**: Lahore, Punjab, Pakistan",
+        "- **Currency**: PKR (Pakistani Rupee)",
+        "- **Nationwide Delivery**: 24-48 hours delivery across all Pakistan cities",
+        "- **Support WhatsApp**: +92 310 4505008",
+        "- **Official URL**: https://projectstore.pk",
+        "",
+        "## Catalog by Category",
+        ""
+    ]
+    for cat in categories:
+        products = cat.products.all()
+        if not products:
+            continue
+        lines.append(f"### {cat.name} ({len(products)} items)")
+        lines.append(f"- Category Link: https://projectstore.pk{cat.get_absolute_url()}")
+        for p in products:
+            price_str = f"PKR {p.final_price:.2f}"
+            stock_status = "In Stock" if p.availability and p.stock > 0 else "Out of Stock"
+            lines.append(f"- **[{p.name}](https://projectstore.pk{p.get_absolute_url()})** — SKU: `{p.sku}` | Price: {price_str} | Status: {stock_status}")
+            if p.short_description:
+                lines.append(f"  {p.short_description}")
+        lines.append("")
+    
+    # ── Project Guides & Tutorials Section ───────────────────────────────────
+    blog_posts = BlogPost.objects.filter(is_published=True).order_by('-created_at')
+    if blog_posts.exists():
+        lines.append("## Engineering Guides, Tutorials & FYP Architectures")
+        lines.append("")
+        for post in blog_posts:
+            lines.append(f"- **[{post.title}](https://projectstore.pk{post.get_absolute_url()})** ({post.get_category_display()} | {post.reading_time})")
+            lines.append(f"  {post.excerpt}")
+            related = post.related_products.filter(is_active=True)
+            if related.exists():
+                related_names = ", ".join([r.name for r in related])
+                lines.append(f"  *Hardware & Code Featured*: {related_names}")
+        lines.append("")
+
+    content = "\n".join(lines)
+    return HttpResponse(content, content_type="text/markdown; charset=utf-8")
+
+
+def three_d_printing_service(request):
+    """
+    Dedicated landing page for Custom 3D Printing & Rapid Prototyping Services.
+    Optimized for Local SEO, GEO location targeting across Pakistan, and rich schema markup.
+    """
+    context = {
+        'page_title': '3D Printing Services in Pakistan | Custom 3D Printing Lahore | ProjectStore.pk',
+        'meta_description': 'Professional custom 3D printing service in Pakistan. Fast rapid prototyping, engineering FYP enclosures, robotics parts & architectural models in Lahore, Karachi & Islamabad.',
+    }
+    return render(request, '3d_printing_service.html', context)
+
+

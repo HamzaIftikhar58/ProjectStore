@@ -3,28 +3,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Final Year & Student Projects | AI, Robotics & Engineering Kits Pakistan</title>
+  <title>Engineering Projects, Complete DIY Kits & Software Codes | ProjectStore.pk</title>
   
-  <meta name="description" content="Explore ready-to-build final year student projects (FYP), AI systems, robotics kits, and software projects in Pakistan with complete source code & hardware support.">
-  <meta name="keywords" content="final year projects pakistan, fyp projects, ai projects for students, robotics project kits, project maker near me, project store">
+  <meta name="description" content="Explore ready-to-build engineering DIY kits, AI systems, robotics kits, and complete software source codes for students and developers across Pakistan with 100% working hardware support.">
+  <meta name="keywords" content="diy kits pakistan, software codes for projects, fyp engineering projects, ai robotics kits, project store pakistan">
   <link rel="canonical" href="https://projectstore.pk/project/" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://projectstore.pk/project/">
-  <meta property="og:title" content="Final Year & Student Projects | AI, Robotics & Engineering Kits Pakistan">
-  <meta property="og:description" content="Explore ready-to-build final year student projects (FYP), AI systems, robotics kits, and software projects in Pakistan.">
+  <meta property="og:title" content="Engineering Projects, Complete DIY Kits & Software Codes | ProjectStore.pk">
+  <meta property="og:description" content="Explore ready-to-build engineering DIY kits, AI systems, robotics kits, and complete software codes for all in Pakistan.">
 
   <!-- JSON-LD Structured Data Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Engineering & Student Projects",
+    "@type": "CollectionPage",
+    "name": "Engineering Projects & Complete DIY Kits",
+    "description": "Explore ready-to-build engineering DIY kits, AI systems, robotics kits, and complete software source codes for students and developers across Pakistan.",
     "url": "https://projectstore.pk/project/",
-    "numberOfItems": {{ projects.count|default:10 }}
+    "mainEntity": {
+      "@type": "ItemList",
+      "name": "Engineering Projects Catalog",
+      "numberOfItems": {{ projects.count|default:10 }}
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where can I buy final year engineering projects (FYP) in Pakistan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can explore and buy verified Final Year Projects (FYP) for AI, Robotics, IoT, and Software on ProjectStore.pk with full circuit schematics, source code, and hardware kits dispatched across Lahore, Karachi, Islamabad, and all Pakistan."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do project kits come with source code and documentation?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, all our project kits include tested source code (Arduino/Python/C#), circuit connection diagrams, and step-by-step documentation."
+        }
+      }
+    ]
   }
   </script>
 

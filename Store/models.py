@@ -129,6 +129,31 @@ class Product(models.Model):
         help_text="Comma-separated keywords for SEO."
     )
 
+    # ✅ Content Enrichment Fields
+    package_includes = models.TextField(
+        blank=True,
+        null=True,
+        help_text="Items included in the box (one item per line, e.g. 1x ESP32 Board\n1x Pinout Guide)."
+    )
+    guarantee_text = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        default="Pre-tested & Quality Checked before dispatch across Pakistan. 100% Genuine Guaranteed.",
+        help_text="Custom buyer quality assurance callout."
+    )
+    related_products = models.ManyToManyField(
+        'self',
+        blank=True,
+        symmetrical=False,
+        help_text="Select related products or accessories for cross-linking."
+    )
+
+    def get_package_includes_list(self):
+        if not self.package_includes:
+            return []
+        return [item.strip() for item in self.package_includes.splitlines() if item.strip()]
+
     def is_liked_by_user(self, user):
         """Check if the product is liked by a specific user"""
         return self.liked_by.filter(id=user.id).exists() if user.is_authenticated else False
@@ -410,3 +435,81 @@ class SiteConfiguration(models.Model):
 
     def __str__(self):
         return f"Configuration for {self.site.domain}"
+
+
+class BlogPost(models.Model):
+    """
+    Project Guides, Tutorials, and Engineering Blog Posts designed to capture
+    high-intent organic search queries and funnel readers to buy kits & codes.
+    """
+    CATEGORY_CHOICES = [
+        ('ai-ml', 'AI & Machine Learning'),
+        ('iot-embedded', 'IoT & Embedded Systems'),
+        ('robotics-hardware', 'Robotics & Hardware'),
+        ('fyp-guides', 'Final Year Project (FYP) Guides'),
+        ('tutorials', 'DIY Tutorials & How-To'),
+    ]
+
+    title = models.CharField(max_length=255, verbose_name="Article Title")
+    slug = models.SlugField(max_length=280, unique=True, help_text="Unique URL slug")
+    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='tutorials')
+    featured_image = models.ImageField(upload_to='blog/images/', blank=True, null=True)
+    excerpt = models.TextField(max_length=500, help_text="Short summary for article cards and meta description")
+    content = models.TextField(help_text="Full article content in HTML or Markdown")
+    author = models.CharField(max_length=100, default="ISOL Engineering Team")
+    reading_time = models.CharField(max_length=20, default="5 min read")
+    is_featured = models.BooleanField(default=False)
+    is_published = models.BooleanField(default=True)
+    views_count = models.PositiveIntegerField(default=0)
+    
+    # SEO fields
+    meta_title = models.CharField(max_length=200, blank=True, null=True)
+    meta_description = models.TextField(max_length=300, blank=True, null=True)
+    meta_keywords = models.CharField(max_length=255, blank=True, null=True)
+    
+    # Related products embedded in this tutorial
+    related_products = models.ManyToManyField(
+        'Product', 
+        blank=True, 
+        related_name='blog_posts', 
+        help_text="Products/kits mentioned in this tutorial for 1-click buying"
+    )
+    
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-is_featured', '-created_at']
+        verbose_name = "Blog & Tutorial Post"
+        verbose_name_plural = "Blog & Tutorial Posts"
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('blog_detail', kwargs={'slug': self.slug})
+
+
+class ItemQuestion(models.Model):
+    """
+    Community Q&A for Products, Projects, and Blog Tutorials.
+    Empowers AEO/GEO indexing by capturing long-tail user queries and providing verified answers.
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='item_questions')
+    product = models.ForeignKey('Product', on_delete=models.CASCADE, null=True, blank=True, related_name='questions')
+    blog_post = models.ForeignKey('BlogPost', on_delete=models.CASCADE, null=True, blank=True, related_name='questions')
+    question = models.TextField(verbose_name="Question")
+    answer = models.TextField(blank=True, null=True, verbose_name="Official Answer")
+    answered_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='answered_questions')
+    answered_at = models.DateTimeField(null=True, blank=True)
+    is_approved = models.BooleanField(default=True, help_text="Approved questions are visible to all visitors")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Community Question"
+        verbose_name_plural = "Community Questions"
+
+    def __str__(self):
+        target = self.product.name if self.product else (self.blog_post.title if self.blog_post else "General")
+        return f"{self.user.username}: {self.question[:40]} ({target})"

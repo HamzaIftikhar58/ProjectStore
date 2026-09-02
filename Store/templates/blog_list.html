@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Guides, DIY Tutorials & FYP Ideas | ProjectStore.pk</title>
+  <meta name="description" content="Explore step-by-step DIY tutorials, ESP32/Arduino guides, and top Final Year Project (FYP) ideas with source code, circuit diagrams, and hardware components in Pakistan.">
+  <meta name="keywords" content="ai final year projects, esp32 diy tutorials, arduino projects pakistan, engineering fyp ideas, python machine learning projects, robotics guide lahore, projectstore blog">
+  <link rel="canonical" href="https://projectstore.pk/blog/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://projectstore.pk/blog/">
+  <meta property="og:title" content="Project Guides, DIY Tutorials & FYP Ideas | ProjectStore.pk">
+  <meta property="og:description" content="Explore step-by-step DIY tutorials, ESP32/Arduino guides, and top FYP ideas with source code in Pakistan.">
+  <meta property="og:site_name" content="ProjectStore.pk">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="{% static 'css/google-fonts.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- Schema.org Blog / CollectionPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "ProjectStore Engineering & DIY Tutorials",
+    "description": "Comprehensive engineering tutorials, robotics guides, and FYP project architectures for Pakistani developers and students.",
+    "url": "https://projectstore.pk/blog/",
+    "publisher": {
+      "@type": "Organization",
+      "name": "ISOL",
+      "url": "https://isol.pk"
+    }
+  }
+  </script>
+
+  <style>
+    :root {
+      --primary-dark: #0f172a;
+      --primary-blue: #3b82f6;
+      --secondary-blue: #2563eb;
+      --accent-yellow: #fbbf24;
+      --text-dark: #1e293b;
+      --text-gray: #64748b;
+      --bg-light: #f8fafc;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+    .blog-hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: 70px 0 50px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .blog-search-box {
+      max-width: 550px;
+      margin: 25px auto 0;
+    }
+    .category-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+    .cat-pill {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 18px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.2s ease;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
+      color: white;
+      transform: translateY(-2px);
+    }
+    .blog-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+      border: 1px solid #e2e8f0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+    .blog-card-img-wrapper {
+      height: 200px;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .blog-card-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .blog-card:hover .blog-card-img-wrapper img {
+      transform: scale(1.05);
+    }
+    .blog-category-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      color: #38bdf8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 50px;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .blog-card-body {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card-title {
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      color: var(--primary-dark);
+      transition: color 0.2s ease;
+    }
+    .blog-card:hover .blog-card-title {
+      color: var(--primary-blue);
+    }
+    .blog-card-excerpt {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      flex-grow: 1;
+      margin-bottom: 16px;
+    }
+    .blog-card-meta {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 14px;
+    }
+    .featured-banner {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08);
+      border: 1px solid #cbd5e1;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  {% include 'Includes/navbar.html' %}
+  {% include 'Includes/messages.html' %}
+
+  <!-- Hero Header -->
+  <section class="blog-hero text-center">
+    <div class="container">
+      <span class="badge bg-warning text-dark px-3 py-2 rounded-pill fw-bold mb-3"><i class="fa-solid fa-graduation-cap me-1"></i> Maker & Student Knowledge Hub</span>
+      <h1 class="fw-bold mb-3">Project Guides & DIY Tutorials</h1>
+      <p class="text-white-50 mx-auto" style="max-width: 650px;">Step-by-step tutorials, ESP32/Arduino code, circuit schematics, and industry-grade Final Year Project architectures with tested source code.</p>
+
+      <!-- Search Form -->
+      <form class="blog-search-box" action="{% url 'blog_list' %}" method="GET">
+        <div class="input-group bg-white rounded-pill p-1 shadow-lg">
+          <span class="input-group-text bg-transparent border-0 ps-3"><i class="bi bi-search text-muted"></i></span>
+          <input type="text" name="q" class="form-control border-0 shadow-none" placeholder="Search guides, project ideas, ESP32, Python..." value="{{ search_query }}">
+          <button class="btn btn-primary rounded-pill px-4" type="submit">Find Guide</button>
+        </div>
+      </form>
+
+      <!-- Category Filter Pills -->
+      <div class="category-pills">
+        <a href="{% url 'blog_list' %}" class="cat-pill {% if not selected_category %}active{% endif %}">All Guides</a>
+        {% for cat_key, cat_label in blog_categories %}
+        <a href="{% url 'blog_list' %}?category={{ cat_key }}" class="cat-pill {% if selected_category == cat_key %}active{% endif %}">{{ cat_label }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Articles Grid -->
+  <main class="container pb-5">
+    
+    {% if featured_post and not selected_category and not search_query and posts.number == 1 %}
+    <!-- Featured Hero Article -->
+    <div class="featured-banner">
+      <div class="row g-0 align-items-center">
+        <div class="col-lg-6 p-4 p-lg-5">
+          <span class="badge bg-primary text-white mb-3"><i class="fa-solid fa-fire me-1"></i> Featured Flagship Guide</span>
+          <h2 class="fw-bold mb-3">
+            <a href="{{ featured_post.get_absolute_url }}" class="text-dark text-decoration-none hover-text-primary">{{ featured_post.title }}</a>
+          </h2>
+          <p class="text-muted mb-4">{{ featured_post.excerpt }}</p>
+          <div class="d-flex align-items-center gap-3">
+            <a href="{{ featured_post.get_absolute_url }}" class="btn btn-primary rounded-pill px-4"><i class="fa-solid fa-book-open me-2"></i>Read Full Guide</a>
+            <span class="small text-muted"><i class="bi bi-clock me-1"></i>{{ featured_post.reading_time }}</span>
+          </div>
+        </div>
+        <div class="col-lg-6" style="min-height: 320px; background: #0f172a; display: flex; align-items: center; justify-content: center;">
+          {% if featured_post.featured_image %}
+          <img src="{{ featured_post.featured_image.url }}" alt="{{ featured_post.title }}" style="width: 100%; height: 100%; object-fit: cover;">
+          {% else %}
+          <div class="text-center p-5 text-white">
+            <i class="fa-solid fa-microchip text-primary" style="font-size: 5rem;"></i>
+            <h5 class="mt-3 text-white-50">{{ featured_post.get_category_display }}</h5>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Article Cards Grid -->
+    <div class="row g-4">
+      {% for post in posts %}
+      <div class="col-lg-4 col-md-6">
+        <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
+          <div class="blog-card">
+            <div class="blog-card-img-wrapper">
+              <span class="blog-category-badge">{{ post.get_category_display }}</span>
+              {% if post.featured_image %}
+              <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" loading="lazy">
+              {% else %}
+              <div class="text-center text-white-50 p-4">
+                <i class="fa-solid fa-laptop-code fs-1 text-primary mb-2"></i>
+                <div class="small">{{ post.author }}</div>
+              </div>
+              {% endif %}
+            </div>
+            <div class="blog-card-body">
+              <h3 class="blog-card-title">{{ post.title }}</h3>
+              <p class="blog-card-excerpt">{{ post.excerpt|truncatewords:22 }}</p>
+              <div class="blog-card-meta">
+                <span><i class="bi bi-person me-1"></i>{{ post.author }}</span>
+                <span><i class="bi bi-clock me-1"></i>{{ post.reading_time }}</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5">
+        <i class="bi bi-journal-x text-muted fs-1 mb-3 d-block"></i>
+        <h4 class="fw-bold">No articles found</h4>
+        <p class="text-muted">Try clearing your search query or selecting another category.</p>
+        <a href="{% url 'blog_list' %}" class="btn btn-outline-primary rounded-pill mt-2">View All Guides</a>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if posts.has_other_pages %}
+    <div class="d-flex justify-content-center mt-5">
+      <nav aria-label="Blog pagination">
+        <ul class="pagination">
+          {% if posts.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ posts.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}">Previous</a></li>
+          {% endif %}
+          
+          {% for num in posts.paginator.page_range %}
+          <li class="page-item {% if posts.number == num %}active{% endif %}">
+            <a class="page-link" href="?page={{ num }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}">{{ num }}</a>
+          </li>
+          {% endfor %}
+
+          {% if posts.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ posts.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&q={{ search_query }}{% endif %}">Next</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+    {% endif %}
+
+  </main>
+
+  {% include 'Includes/footer.html' %}
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

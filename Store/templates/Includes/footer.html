@@ -51,6 +51,9 @@
                     <li class="mb-2"><a href="{% url 'home' %}" class="text-white-50 text-decoration-none hover-text-primary">Home</a></li>
                     <li class="mb-2"><a href="{% url 'product' %}" class="text-white-50 text-decoration-none hover-text-primary">All Products</a></li>
                     <li class="mb-2"><a href="{% url 'project' %}" class="text-white-50 text-decoration-none hover-text-primary">Projects</a></li>
+                    <li class="mb-2"><a href="{% url 'blog_list' %}" class="text-white-50 text-decoration-none hover-text-primary">Tutorials & Guides</a></li>
+                    <li class="mb-2"><a href="{% url 'three_d_printing_service' %}" class="text-white-50 text-decoration-none hover-text-primary">3D Printing Services</a></li>
+                    <li class="mb-2"><a href="{% url 'return_policy' %}" class="text-white-50 text-decoration-none hover-text-primary">Return & Refund Policy</a></li>
                     <li class="mb-2"><a href="{% url 'home' %}#faq" class="text-white-50 text-decoration-none hover-text-primary">FAQs</a></li>
                     <li class="mb-2"><a href="{% url 'contact' %}" class="text-white-50 text-decoration-none hover-text-primary">Contact Us</a></li>
                 </ul>
@@ -61,7 +64,7 @@
                 <h2 class="text-white fw-bold mb-4 position-relative footer-heading h5">Contact Us</h2>
                 <div class="d-flex align-items-start mb-3">
                     <div class="contact-icon me-3"><i class="bi bi-geo-alt text-primary fs-5"></i></div>
-                    <p class="text-white-50 mb-0 small">Industrial State, Kacha Jail Road, Lahore, Pakistan</p>
+                    <p class="text-white-50 mb-0 small">2nd Floor, 72, Westend Plaza, Shahrah-e-Quaid-e-Azam, Mozang Chungi, Lahore, 54000</p>
                 </div>
                 <div class="d-flex align-items-center mb-3">
                     <div class="contact-icon me-3"><i class="bi bi-telephone text-primary fs-5"></i></div>
@@ -77,17 +80,24 @@
                     </div>
                 </div>
             </div>
-        <!-- Popular Searches SEO Links -->
+        <!-- Popular Searches & City Delivery SEO Links -->
         <div class="row pt-4 mt-4 border-top border-white border-opacity-10">
-            <div class="col-12 text-center text-md-start">
+            <div class="col-12 text-center text-md-start mb-2">
                 <span class="text-white-50 small me-2 fw-bold">Popular Searches in Pakistan:</span>
                 <span class="small text-white-50">
-                    <a href="{% url 'detail' 'esp-32' %}" class="text-white-50 text-decoration-none hover-text-primary">ESP32 Price Lahore</a> |
-                    <a href="{% url 'detail' 'circuit-heights-spiderbot-kit' %}" class="text-white-50 text-decoration-none hover-text-primary">Spiderbot Robotics Kit</a> |
+                    <a href="{% url 'product_detail' 'esp-32' %}" class="text-white-50 text-decoration-none hover-text-primary">ESP32 Price Lahore</a> |
+                    <a href="{% url 'three_d_printing_service' %}" class="text-white-50 text-decoration-none hover-text-primary">3D Printing in Pakistan</a> |
+                    <a href="{% url 'product_detail' 'circuit-heights-spiderbot-kit' %}" class="text-white-50 text-decoration-none hover-text-primary">Spiderbot Robotics Kit</a> |
                     <a href="{% url 'product' %}" class="text-white-50 text-decoration-none hover-text-primary">Arduino Sensors Pakistan</a> |
                     <a href="{% url 'project' %}" class="text-white-50 text-decoration-none hover-text-primary">Final Year FYP Projects</a> |
                     <a href="{% url 'category_products' 'ai' %}" class="text-white-50 text-decoration-none hover-text-primary">AI Projects for Students</a> |
                     <a href="{% url 'home' %}" class="text-white-50 text-decoration-none hover-text-primary">DIY Store Pakistan</a>
+                </span>
+            </div>
+            <div class="col-12 text-center text-md-start">
+                <span class="text-white-50 small me-2 fw-bold">Fast Cash on Delivery Cities:</span>
+                <span class="small text-white-50">
+                    Lahore • Karachi • Islamabad • Rawalpindi • Faisalabad • Multan • Peshawar • Quetta • Gujranwala • Sialkot • Bahawalpur • Sargodha • Sukkur
                 </span>
             </div>
         </div>
