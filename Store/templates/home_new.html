@@ -338,12 +338,23 @@
 
     /* Lock Carousel Height on Desktop to prevent Layout Shifts (CLS) */
     @media (min-width: 992px) {
-        #projectCarousel .carousel-inner,
+        .hero-section {
+            height: 580px !important;
+            padding: 0 !important;
+        }
+        #projectCarousel {
+            height: 480px !important;
+        }
+        #projectCarousel .carousel-inner {
+            height: 480px !important;
+            overflow: hidden !important;
+        }
         #projectCarousel .carousel-item {
-            min-height: 480px;
+            height: 480px !important;
         }
         #projectCarousel .carousel-item > .row {
-            min-height: 480px;
+            height: 480px !important;
+            align-items: center !important;
         }
     }
 
@@ -575,7 +586,7 @@
   <section class="hero-section">
     <div class="hero-bg-accent"></div>
     <div class="container position-relative z-2">
-      <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+      <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7500">
         <!-- Indicators -->
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -617,6 +628,7 @@
                 <p class="hero-subtitle">Everything in one box: wires, sensors, microcontrollers (ESP32 / Arduino), and complete source codes. Best component prices in Lahore, Karachi, Islamabad & all Pakistan.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
                   <a href="{% url 'product' %}?category=kits" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-box-open me-2"></i>Shop DIY Kits</a>
+                  <a href="{% url 'product' %}" class="btn hero-btn btn-outline-light-custom"><i class="fa-solid fa-microchip me-2"></i>Browse All Parts</a>
                 </div>
               </div>
               <div class="col-lg-6">

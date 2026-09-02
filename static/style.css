@@ -221,19 +221,22 @@ h1 {
   transform: translateY(-50%);
   z-index: 10;
   color: #000;
-  /* background-color: #ffffff; */
-  /* border: 2px solid #000;  */
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  padding: 5px;
+}
+.swiper-button-prev {
   left: 10px;
-  padding: 5px;
-  padding: 5px;
+  right: auto;
+}
+.swiper-button-next {
   right: 10px;
+  left: auto;
 }
 
 #isol1 {

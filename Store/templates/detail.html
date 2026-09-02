@@ -6,6 +6,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>Buy {{ product.name }} in Pakistan (PKR {{ product.final_price|floatformat:0 }}) | SKU: {{ product.sku }} | ProjectStore.pk</title>
   <meta name="description" content="Buy {{ product.name }} (SKU: {{ product.sku }}) in Pakistan at best price (PKR {{ product.final_price|floatformat:0 }}). {{ product.meta_description|default:product.short_description }}. Cash on delivery & 24-48h dispatch across Pakistan.">
   <meta name="keywords" content="{{ product.name }} price in pakistan, buy {{ product.name }} online pakistan, {{ product.sku }}, {{ product.meta_keywords|default:product.name }}, project shop near me, diy kits pakistan, projectstore">
@@ -192,6 +193,11 @@
   }
   </script>
 
+  {% if product.main_image %}
+  <!-- Preload LCP Product Image -->
+  <link rel="preload" as="image" href="{{ product.main_image.url }}" fetchpriority="high">
+  {% endif %}
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,17 +207,8 @@
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
-  <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/easyzoom.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
   <link rel="stylesheet" href="{% static 'style.css' %}">
-  <link
-    href="{% static 'css/bootstrap-icons.css' %}"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="{% static 'css/swiper-bundle.min.css' %}"
-  />
   <style>
     :root {
       --primary-dark: #0f172a;
@@ -269,16 +266,19 @@
     /* Product Showcase Base */
     .product-main-container {
         padding: 40px 0;
+        min-height: 600px;
     }
 
     /* Gallery Styling */
     .gallery-container {
         display: flex;
         gap: 20px;
+        min-height: 550px;
     }
 
     .gallery-thumbs {
         width: 80px;
+        height: 550px;
         flex-shrink: 0;
     }
 
@@ -334,6 +334,47 @@
         max-height: 100%;
         object-fit: contain;
         filter: drop-shadow(0 10px 20px rgba(0,0,0,0.08));
+    }
+
+    .gallery-top .swiper-button-next,
+    .gallery-top .swiper-button-prev {
+        width: 44px !important;
+        height: 44px !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(0, 0, 0, 0.08) !important;
+        border-radius: 50% !important;
+        color: var(--primary-dark) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+        transition: all 0.25s ease;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
+        z-index: 20 !important;
+    }
+
+    .gallery-top .swiper-button-prev {
+        left: 15px !important;
+        right: auto !important;
+    }
+
+    .gallery-top .swiper-button-next {
+        right: 15px !important;
+        left: auto !important;
+    }
+
+    .gallery-top .swiper-button-next:hover,
+    .gallery-top .swiper-button-prev:hover {
+        background: #ffffff !important;
+        color: var(--primary-blue) !important;
+        transform: translateY(-50%) scale(1.08) !important;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18) !important;
+    }
+
+    .gallery-top .swiper-button-next::after,
+    .gallery-top .swiper-button-prev::after {
+        font-size: 18px !important;
+        font-weight: 700 !important;
     }
 
     /* Sidebar Actions */
@@ -942,7 +983,6 @@
         .custom-tabs .nav-link { font-size: 1rem; padding: 10px 15px; white-space: nowrap; }
     }
   </style>
-  </style>
   <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
   {% include 'Includes/metapixel.html' %}
 </head>
@@ -1070,12 +1110,12 @@
             <!-- Thumbs -->
             <div class="swiper gallery-thumbs d-none d-md-block">
               <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}"></div>
+                <div class="swiper-slide"><img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}" width="80" height="80" loading="lazy"></div>
                 {% for image in product.images.all %}
-                <div class="swiper-slide"><img src="{{ image.image.url }}" alt="{{ image.get_alt_text }}"></div>
+                <div class="swiper-slide"><img src="{{ image.image.url }}" alt="{{ image.get_alt_text }}" width="80" height="80" loading="lazy"></div>
                 {% endfor %}
                 {% for variant in product.variants.all %}
-                <div class="swiper-slide"><img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}"></div>
+                <div class="swiper-slide"><img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}" width="80" height="80" loading="lazy"></div>
                 {% endfor %}
                 {% if product.youtube_video_url %}
                 <div class="swiper-slide">
@@ -1090,29 +1130,36 @@
             <div class="swiper gallery-top">
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
-                    <div class="easyzoom easyzoom--overlay">
-                        <a href="{{ product.main_image.url }}">
-                            <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}" data-price="{{ product.price }}">
-                        </a>
-                    </div>
+                  <div class="product-main-img-wrap d-flex align-items-center justify-content-center h-100">
+                    <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}" data-price="{{ product.price }}" fetchpriority="high" width="600" height="600" style="width: 100%; height: 100%; object-fit: contain;">
+                  </div>
                 </div>
                 {% for image in product.images.all %}
-                <div class="swiper-slide"><img src="{{ image.image.url }}" alt="{{ image.get_alt_text }}"></div>
+                <div class="swiper-slide"><img src="{{ image.image.url }}" alt="{{ image.get_alt_text }}" width="600" height="600" loading="lazy" style="width: 100%; height: 100%; object-fit: contain;"></div>
                 {% endfor %}
                 {% for variant in product.variants.all %}
-                <div class="swiper-slide"><img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}" data-price="{{ variant.price }}"></div>
+                <div class="swiper-slide"><img src="{{ variant.image.url }}" alt="{{ variant.get_alt_text }}" data-price="{{ variant.price }}" width="600" height="600" loading="lazy" style="width: 100%; height: 100%; object-fit: contain;"></div>
                 {% endfor %}
                 {% if product.youtube_video_url %}
                   <div class="swiper-slide">
-                    <div class="ratio ratio-16x9 w-100">
-                      <iframe 
-                        src="{{ product.youtube_video_url|youtube_embed_url }}" 
-                        title="{{ product.name }} Video"
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowfullscreen
-                        style="border-radius:12px;">
-                      </iframe>
+                    <div class="ratio ratio-16x9 w-100 rounded-3 overflow-hidden position-relative bg-dark d-flex align-items-center justify-content-center yt-facade" 
+                         id="ytPlayerContainer"
+                         data-yt-id="{{ product.youtube_video_url|youtube_video_id }}"
+                         data-yt-title="{{ product.name }}"
+                         style="cursor: pointer; background: #0f172a; border-radius: 12px;"
+                         role="button"
+                         aria-label="Play {{ product.name }} demo video"
+                         onclick="loadProductVideo(this)">
+                      <img src="https://i.ytimg.com/vi/{{ product.youtube_video_url|youtube_video_id }}/hqdefault.jpg" 
+                           alt="{{ product.name }} Video Preview" 
+                           loading="lazy" 
+                           width="480" height="360"
+                           style="width: 100%; height: 100%; object-fit: cover; opacity: 0.9;">
+                      <div class="position-absolute top-50 start-50 translate-middle" style="pointer-events: none;">
+                        <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center shadow-lg" style="width: 64px; height: 64px;">
+                          <i class="fas fa-play fs-4 ps-1"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 {% endif %}
@@ -1155,9 +1202,9 @@
 
           <div class="d-flex align-items-center gap-4 mb-4">
             <div class="qty-selector">
-              <button class="qty-btn" onclick="updateQuantity(-1, 'quantity')"><i class="bi bi-dash"></i></button>
-              <input type="text" id="quantity" class="qty-input" value="1" readonly>
-              <button class="qty-btn" onclick="updateQuantity(1, 'quantity')"><i class="bi bi-plus"></i></button>
+              <button class="qty-btn" type="button" onclick="updateQuantity(-1, 'quantity')" aria-label="Decrease quantity"><i class="bi bi-dash"></i></button>
+              <input type="text" id="quantity" class="qty-input" value="1" readonly aria-label="Product quantity">
+              <button class="qty-btn" type="button" onclick="updateQuantity(1, 'quantity')" aria-label="Increase quantity"><i class="bi bi-plus"></i></button>
             </div>
             
             {% if product.stock %}
@@ -1262,7 +1309,7 @@
             
             {% if product.get_package_includes_list %}
             <div class="mt-4 p-4 rounded-4 bg-white border shadow-sm">
-              <h4 class="fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;"><i class="fas fa-box-open text-primary me-2"></i>What's Included in the Package:</h4>
+              <h2 class="h4 fw-bold text-dark mb-3" style="font-family: 'Outfit', sans-serif;"><i class="fas fa-box-open text-primary me-2"></i>What's Included in the Package:</h2>
               <ul class="list-unstyled mb-0 row g-3">
                 {% for item in product.get_package_includes_list %}
                 <li class="col-md-6 d-flex align-items-center gap-2 text-dark fw-500">
@@ -1470,7 +1517,7 @@
       <div class="row g-4">
         <div class="col-lg-4">
           <div class="review-summary-card">
-            <h4 class="text-gray mb-3">Average Rating</h4>
+            <h3 class="h4 text-gray mb-3">Average Rating</h3>
             <div class="avg-rating-val">{{ avg_rating }}</div>
             <div class="text-warning fs-3 mb-2">
               {% for _ in full_stars %}<i class="fas fa-star"></i>{% endfor %}
@@ -1580,7 +1627,7 @@
           
           <div class="text-center mt-5">
             <p class="text-gray small mb-0">Don't have an account yet? 
-              <a href="javascript:void(0);" id="showRegister" class="text-primary fw-800 text-decoration-none">Create One</a>
+              <button type="button" id="showRegister" class="btn btn-link p-0 text-primary fw-800 text-decoration-none align-baseline">Create One</button>
             </p>
           </div>
         </div>
@@ -1620,7 +1667,7 @@
           
           <div class="text-center mt-5">
             <p class="text-gray small mb-0">Already have an account? 
-              <a href="javascript:void(0);" id="showLogin" class="text-primary fw-800 text-decoration-none">Login Here</a>
+              <button type="button" id="showLogin" class="btn btn-link p-0 text-primary fw-800 text-decoration-none align-baseline">Login Here</button>
             </p>
           </div>
         </div>
@@ -2586,10 +2633,32 @@ function initSwipers() {
   }
 }
 
+function loadProductVideo(el) {
+  var videoId = el.getAttribute('data-yt-id');
+  var videoTitle = el.getAttribute('data-yt-title') || 'Product Video';
+  if (!videoId) return;
+  var iframe = document.createElement('iframe');
+  iframe.setAttribute('src', 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&rel=0&enablejsapi=1');
+  iframe.setAttribute('title', videoTitle);
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+  iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+  iframe.setAttribute('allowfullscreen', 'true');
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
+  iframe.style.borderRadius = '12px';
+  iframe.style.border = '0';
+  el.onclick = null;
+  el.innerHTML = '';
+  el.appendChild(iframe);
+}
+
 // Initialize Swipers on DOM load
 document.addEventListener('DOMContentLoaded', function() {
   initSwipers();
-  fetchCartItems();
+  if (typeof fetchCartItems === 'function') {
+    fetchCartItems();
+  }
   updateCartCount();
   
   // Initialize Bootstrap tooltips if needed
@@ -2704,12 +2773,8 @@ if (questionForm) {
   });
 }
 
-// Initialize EasyZoom
-var $easyzoom = $('.easyzoom').easyZoom();
-
 // Refresh cart count periodically
 setInterval(updateCartCount, 10000);
 </script>
-  <script src="{% static 'js/easyzoom.min.js' %}"></script>
 </body>
 </html>
