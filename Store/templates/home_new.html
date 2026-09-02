@@ -139,7 +139,7 @@
   </script>
 
   <!-- Preload Critical LCP Image -->
-  <link rel="preload" as="image" href="{% static 'Images/zombie_apocalypse_video_poster.webp' %}">
+  <link rel="preload" as="image" href="{% static 'Images/zombie_apocalypse_video_poster.webp' %}" fetchpriority="high">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -573,8 +573,9 @@
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/zombie_apocalypse_video_poster.webp' %}">
+                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/zombie_apocalypse_video_poster.webp' %}" aria-label="ProjectStore robotics and DIY engineering projects video demonstration">
                     <source src="{% static 'videos/zombie_apocalypse_video.mp4' %}" type="video/mp4">
+                    <track kind="captions" src="data:text/vtt,WEBVTT%0A%0A00:00.000%20--%3E%2000:10.000%0AProjectStore%20Engineering%20Showcase" label="English" default>
                     Your browser does not support the video tag.
                   </video>
                 </div>
@@ -613,8 +614,9 @@
               </div>
               <div class="col-lg-6">
                 <div class="hero-img-container text-center">
-                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/3d_printing_video_poster.webp' %}">
+                  <video class="img-fluid hero-img" autoplay loop muted playsinline preload="metadata" poster="{% static 'Images/3d_printing_video_poster.webp' %}" aria-label="ProjectStore 3D printing and rapid prototyping video demonstration">
                     <source src="{% static 'videos/3d_printing_video.mp4' %}" type="video/mp4">
+                    <track kind="captions" src="data:text/vtt,WEBVTT%0A%0A00:00.000%20--%3E%2000:10.000%0AProjectStore%203D%20Printing%20Showcase" label="English" default>
                     Your browser does not support the video tag.
                   </video>
                 </div>

@@ -31,12 +31,12 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-glass py-2">
     <div class="container-fluid px-lg-5">
         <!-- Logo -->
-        <a class="navbar-brand d-flex align-items-center m-0 me-lg-4" href="{% url 'home' %}">
-            <img src="{% static 'Images/project_store_logo.webp' %}" alt="Logo" class="logo-img">
+        <a class="navbar-brand d-flex align-items-center m-0 me-lg-4" href="{% url 'home' %}" aria-label="ProjectStore Home">
+            <img src="{% static 'Images/project_store_logo.webp' %}" alt="ProjectStore.pk Logo" class="logo-img" width="180" height="60">
         </a>
 
         <!-- Universal Search (Desktop) -->
-        <form class="d-none d-lg-flex mx-auto search-form position-relative" action="{% url 'product' %}" method="GET" style="max-width: 500px; width: 100%;">
+        <form class="d-none d-lg-flex mx-auto search-form position-relative" action="{% url 'product' %}" method="GET" style="max-width: 380px; width: 100%; flex-shrink: 1;">
             <div class="input-group dashboard-search border rounded-pill overflow-hidden bg-glass-input">
                 <span class="input-group-text bg-transparent border-0 ps-3"><i class="bi bi-search text-muted"></i></span>
                 <input type="text" name="q" class="form-control border-0 bg-transparent shadow-none" placeholder="Search projects, kits, components..." aria-label="Search" value="{{ request.GET.q }}">
@@ -126,21 +126,21 @@
 
         <!-- Links -->
         <div class="collapse navbar-collapse flex-grow-0" id="navbarMain">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 py-3 py-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 py-3 py-lg-0 align-items-lg-center">
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-2 fw-medium nav-hover-effect" href="{% url 'home' %}">Home</a>
+                    <a class="nav-link px-xl-3 px-lg-2 py-2 fw-medium nav-hover-effect" href="{% url 'home' %}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-2 fw-medium nav-hover-effect" href="{% url 'project' %}">Projects</a>
+                    <a class="nav-link px-xl-3 px-lg-2 py-2 fw-medium nav-hover-effect" href="{% url 'project' %}">Projects</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-2 fw-medium nav-hover-effect" href="{% url 'product' %}">Products</a>
+                    <a class="nav-link px-xl-3 px-lg-2 py-2 fw-medium nav-hover-effect" href="{% url 'product' %}">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-2 fw-medium nav-hover-effect text-primary fw-semibold" href="{% url 'blog_list' %}"><i class="fa-solid fa-graduation-cap me-1"></i>Tutorials</a>
+                    <a class="nav-link px-xl-3 px-lg-2 py-2 fw-medium nav-hover-effect" href="{% url 'blog_list' %}">Tutorials</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle px-lg-3 py-2 fw-medium nav-hover-effect" href="#" id="catDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle px-xl-3 px-lg-2 py-2 fw-medium nav-hover-effect" href="#" id="catDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Categories
                     </a>
                     <ul class="dropdown-menu shadow-lg border-0 animate slideIn p-2 mt-lg-3" aria-labelledby="catDropdown" style="border-radius: 12px;">
@@ -150,10 +150,10 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-2 fw-medium nav-hover-effect" href="{% url 'three_d_printing_service' %}"><i class="fas fa-cube me-1 text-primary"></i>3D Printing</a>
+                    <a class="nav-link px-xl-3 px-lg-2 py-2 fw-medium nav-hover-effect" href="{% url 'three_d_printing_service' %}">3D Printing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-lg-3 py-2 fw-medium nav-hover-effect" href="{% url 'contact' %}">Contact</a>
+                    <a class="nav-link px-xl-3 px-lg-2 py-2 fw-medium nav-hover-effect" href="{% url 'contact' %}">Contact</a>
                 </li>
             </ul>
         </div>
@@ -281,6 +281,7 @@
         color: var(--nav-text) !important;
         transition: color 0.3s ease;
         display: inline-block;
+        white-space: nowrap !important;
     }
 
     @media (min-width: 992px) {
