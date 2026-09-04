@@ -47,7 +47,8 @@
     "category": "{{ product.category.name|escapejs }}",
     "brand": {
       "@type": "Brand",
-      "name": "ProjectStore.pk"
+      "name": "ProjectStore.pk",
+      "url": "https://projectstore.pk"
     },
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -66,7 +67,8 @@
       "availability": "{% if product.availability and product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
       "itemCondition": "https://schema.org/NewCondition",
       "seller": {
-        "@type": "Organization",
+        "@type": "OnlineStore",
+        "@id": "https://projectstore.pk/#store",
         "name": "ProjectStore.pk",
         "url": "https://projectstore.pk"
       },
@@ -119,28 +121,6 @@
   }
   </script>
 
-  {% if questions %}
-  <!-- Dynamic FAQPage Schema for AI Search Overviews -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {% for q in questions %}{% if q.answer %}
-      {
-        "@type": "Question",
-        "name": "{{ q.question|escapejs }}",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "{{ q.answer|escapejs }}"
-        }
-      }{% if not forloop.last %},{% endif %}
-      {% endif %}{% endfor %}
-    ]
-  }
-  </script>
-  {% endif %}
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -168,11 +148,22 @@
   }
   </script>
 
+  <!-- Unified FAQPage Schema for AI Search & Google Overviews -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
+      {% if questions %}{% for q in questions %}{% if q.answer %}
+      {
+        "@type": "Question",
+        "name": "{{ q.question|escapejs }}",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "{{ q.answer|escapejs }}"
+        }
+      },
+      {% endif %}{% endfor %}{% endif %}
       {
         "@type": "Question",
         "name": "How long does delivery take for {{ product.name|escapejs }} in Pakistan?",
@@ -187,6 +178,14 @@
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Yes, Cash on Delivery is available nationwide across Pakistan for all orders."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the warranty on {{ product.name|escapejs }}?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All components and DIY kits purchased from ProjectStore.pk come with a 7-day hassle-free replacement warranty."
         }
       }
     ]
