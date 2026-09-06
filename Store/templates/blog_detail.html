@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load youtube_filters %}
 <head>
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ post.meta_title|default:post.title }} | ProjectStore.pk</title>
+  <title>{{ post|blog_seo_title }}</title>
   <meta name="description" content="{{ post.meta_description|default:post.excerpt }}">
   <meta name="keywords" content="{{ post.meta_keywords|default:post.title }}, projectstore, diy pakistan">
   <link rel="canonical" href="https://projectstore.pk{{ post.get_absolute_url }}" />
@@ -13,7 +14,7 @@
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://projectstore.pk{{ post.get_absolute_url }}">
-  <meta property="og:title" content="{{ post.title }} | ProjectStore.pk">
+  <meta property="og:title" content="{{ post|blog_seo_title }}">
   <meta property="og:description" content="{{ post.excerpt }}">
   {% if post.featured_image %}
   <meta property="og:image" content="https://projectstore.pk{{ post.featured_image.url }}">

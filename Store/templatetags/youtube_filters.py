@@ -57,6 +57,53 @@ def seo_title(value, max_len=60):
         return candidate_no_buy
         
     # Truncate at word boundary
-    truncated = clean[:avail].rsplit(' ', 1)[0]
+    truncated = clean[:avail].rsplit(' ', 1)[0].rstrip(':, -/(&')
+    if '(' in truncated and ')' not in truncated:
+        truncated = truncated.split('(')[0].strip().rstrip(':, -/(&')
     return f"{truncated}{brand_suffix}"
+
+
+@register.filter(name='blog_seo_title')
+def blog_seo_title(post, max_len=65):
+    """
+    Formats blog titles cleanly under 65 chars.
+    Prevents duplicate '| ProjectStore.pk' suffixes and trims neatly at word boundaries.
+    """
+    if not post:
+        return "Project Guides & FYP Ideas | ProjectStore.pk"
+    
+    brand = " | ProjectStore.pk"
+    raw = getattr(post, 'meta_title', None) or getattr(post, 'title', str(post))
+    raw = str(raw).strip()
+    
+    # Strip any existing brand suffix
+    clean = raw
+    if clean.endswith(brand):
+        clean = clean[:-len(brand)].strip()
+    elif clean.endswith("| ProjectStore.pk"):
+        clean = clean[:-len("| ProjectStore.pk")].strip()
+        
+    # Strip pipe subtitles and parenthetical remarks if needed
+    clean = clean.split('|')[0].strip()
+    clean = re.sub(r'\s*\([^)]*\)', '', clean).strip()
+    
+    # Shorten common long phrases if close to limit
+    if clean.lower().startswith('how to build an '):
+        shortened = 'Build ' + clean[16:]
+        if len(f"{shortened}{brand}") <= max_len:
+            return f"{shortened}{brand}"
+    elif clean.lower().startswith('how to build '):
+        shortened = 'Build ' + clean[13:]
+        if len(f"{shortened}{brand}") <= max_len:
+            return f"{shortened}{brand}"
+            
+    full = f"{clean}{brand}"
+    if len(full) <= max_len:
+        return full
+        
+    # Truncate at word boundary
+    avail = max_len - len(brand)
+    trimmed = clean[:avail].rsplit(' ', 1)[0].rstrip(':, -')
+    return f"{trimmed}{brand}"
+
 
