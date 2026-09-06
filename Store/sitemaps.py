@@ -74,7 +74,7 @@ class HomeSitemap(Sitemap):
         return ['home']
 
     def location(self, item):
-        return reverse(item)
+        return '/'
 
 class StaticViewSitemap(Sitemap):
     protocol = "https"
