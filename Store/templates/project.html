@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Engineering Projects, Complete DIY Kits & Software Codes | ProjectStore.pk</title>
+  <title>Engineering & FYP Projects with Code | ProjectStore.pk</title>
   
   <meta name="description" content="Explore ready-to-build engineering DIY kits, AI systems, robotics kits, and complete software source codes for students and developers across Pakistan with 100% working hardware support.">
   <meta name="keywords" content="diy kits pakistan, software codes for projects, fyp engineering projects, ai robotics kits, project store pakistan">
@@ -28,7 +28,26 @@
     "mainEntity": {
       "@type": "ItemList",
       "name": "Engineering Projects Catalog",
-      "numberOfItems": {{ projects.count|default:10 }}
+      "url": "https://projectstore.pk/project/",
+      "itemListElement": [
+        {% for category in categories %}{% for product in category.only_projects %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.counter }},
+          "name": "{{ product.name|escapejs }}",
+          "url": "https://projectstore.pk{{ product.get_absolute_url }}",
+          {% if product.main_image %}
+          "image": "https://projectstore.pk{{ product.main_image.url }}",
+          {% endif %}
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "PKR",
+            "price": "{{ product.final_price }}",
+            "availability": "{% if product.availability and product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+          }
+        }{% if not forloop.last or not forloop.parentloop.last %},{% endif %}
+        {% endfor %}{% endfor %}
+      ]
     }
   }
   </script>
@@ -420,7 +439,6 @@
         }
     }
   </style>
-  <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
   {% include 'Includes/metapixel.html' %}
 </head>
 <body>

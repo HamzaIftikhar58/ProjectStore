@@ -6,7 +6,7 @@
   <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>ProjectStore.pk | Premium DIY Store | Kits, Hardware & Software Codes for All</title>
+  <title>ProjectStore.pk | DIY Kits, Hardware & Code in Pakistan</title>
   
   <meta name="description" content="Pakistan's premium DIY store where we sell complete DIY kits, electronic components, and software codes for all. 100% verified stock with nationwide Cash on Delivery.">
   <meta name="keywords" content="premium diy store, diy kits pakistan, software codes for projects, buy arduino esp32 pakistan, electronic components, fyp project kits, projectstore">
@@ -573,7 +573,6 @@
         .hero-h1 { font-size: 2rem; }
     }
   </style>
-  <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
   {% include 'Includes/metapixel.html' %}
 </head>
 <body>
@@ -624,7 +623,7 @@
             <div class="row align-items-center">
               <div class="col-lg-6">
                 <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 fw-bold"><i class="fa-solid fa-truck-fast me-1"></i> 24-48h Nationwide Fast Delivery</span>
-                <h1 class="hero-h1">Ready-to-Build <br><span>Project Kits & Sensors</span></h1>
+                <h2 class="hero-h1">Ready-to-Build <br><span>Project Kits & Sensors</span></h2>
                 <p class="hero-subtitle">Everything in one box: wires, sensors, microcontrollers (ESP32 / Arduino), and complete source codes. Best component prices in Lahore, Karachi, Islamabad & all Pakistan.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
                   <a href="{% url 'product' %}?category=kits" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-box-open me-2"></i>Shop DIY Kits</a>
@@ -644,7 +643,7 @@
             <div class="row align-items-center">
               <div class="col-lg-6">
                 <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 fw-bold"><i class="fa-solid fa-cube me-1"></i> Custom 3D Printing & CAD Prototyping</span>
-                <h1 class="hero-h1">3D Printing <br><span>Custom Services</span></h1>
+                <h2 class="hero-h1">3D Printing <br><span>Custom Services</span></h2>
                 <p class="hero-subtitle">Need a custom casing for your project? We design and 3D print precision PLA+, PETG, and ABS enclosures tailored to your exact electronic components.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
                   <a href="{% url 'three_d_printing_service' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-cube me-2"></i>Instant 3D Quote</a>
@@ -725,7 +724,7 @@
       </div>
       
       <div class="col-lg-3 col-md-6">
-        <a href="/3d-printing/" class="cat-card-link">
+        <a href="{% url 'three_d_printing_service' %}" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
               <img src="{% static 'Images/robot.webp' %}" alt="3D" loading="lazy">

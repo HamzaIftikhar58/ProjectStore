@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load youtube_filters %}
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buy {{ category.name }} Electronic Components Online in Pakistan | ProjectStore.pk</title>
+    <title>{{ category.name|seo_title }}</title>
     <meta name="description" content="Order authentic {{ category.name }} components, sensors & hardware modules online in Pakistan. 100% verified quality, fast 24-48h dispatch & Cash on Delivery.">
     <meta name="keywords" content="{{ category.name }} components pakistan, buy {{ category.name }} online, {{ category.name }} price lahore, electronics pakistan, project store">
     <link rel="canonical" href="https://projectstore.pk/category/{{ category.slug }}/" />
@@ -24,7 +25,25 @@
       "@type": "ItemList",
       "name": "{{ category.name|escapejs }} Projects & Products",
       "url": "https://projectstore.pk/category/{{ category.slug }}/",
-      "numberOfItems": {{ products.count|default:10 }}
+      "itemListElement": [
+        {% for product in products %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.counter }},
+          "name": "{{ product.name|escapejs }}",
+          "url": "https://projectstore.pk{{ product.get_absolute_url }}",
+          {% if product.main_image %}
+          "image": "https://projectstore.pk{{ product.main_image.url }}",
+          {% endif %}
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "PKR",
+            "price": "{{ product.final_price }}",
+            "availability": "{% if product.availability and product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+          }
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+      ]
     }
     </script>
     <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
@@ -395,7 +414,6 @@
         border-radius: 50px;
     }
   </style>
-  <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
   {% include 'Includes/metapixel.html' %}
 </head>
 <body>

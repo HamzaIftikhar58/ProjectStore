@@ -6,7 +6,7 @@ from Store import views
 # from Store.forms import CustomSetPasswordForm
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, RedirectView
 from Store.sitemaps import ProductSitemap, CategorySitemap, StaticViewSitemap, ProjectSitemap, HomeSitemap, BlogSitemap
 
 sitemaps = {
@@ -60,6 +60,7 @@ urlpatterns = [
     path('contact/success/', views.contact_success, name='contact_success'),
     path('return-policy/', views.return_policy, name='return_policy'),
     path('3d-printing-service/', views.three_d_printing_service, name='three_d_printing_service'),
+    path('3d-printing/', RedirectView.as_view(url='/3d-printing-service/', permanent=True)),
     # ── Project Guides & Tutorials Blog ──────────────────────────────────────
     path('blog/', views.blog_list, name='blog_list'),
     path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),

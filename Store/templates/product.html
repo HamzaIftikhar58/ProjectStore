@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if search_query %}Search: {{ search_query }} | DIY Kits & Components | ProjectStore.pk{% else %}Premium DIY Store | Electronic Kits, Components & Software Codes | ProjectStore.pk{% endif %}</title>
+  <title>{% if search_query %}Search: {{ search_query }} | ProjectStore.pk{% else %}Buy Electronic Components & DIY Kits | ProjectStore.pk{% endif %}</title>
   
   <meta name="description" content="{% if search_query %}Order '{{ search_query }}' at ProjectStore.pk. Premium DIY kits, hardware components & software codes with 24-48h fast shipping & COD in Pakistan.{% else %}Pakistan's premium DIY store. Buy complete DIY kits, Arduino, ESP32, sensors, robotics modules & software codes for all. 100% verified stock & nationwide COD.{% endif %}">
   <meta name="keywords" content="premium diy store, diy kits pakistan, software codes for projects, buy electronic components pakistan, esp32 price lahore, arduino sensors online, robotics parts store, project store">
@@ -34,7 +34,26 @@
     "mainEntity": {
       "@type": "ItemList",
       "name": "Electronic Components & Hardware Products",
-      "url": "https://projectstore.pk/product/"
+      "url": "https://projectstore.pk/product/",
+      "itemListElement": [
+        {% for category in categories %}{% for product in category.only_products %}
+        {
+          "@type": "ListItem",
+          "position": {{ forloop.counter }},
+          "name": "{{ product.name|escapejs }}",
+          "url": "https://projectstore.pk{{ product.get_absolute_url }}",
+          {% if product.main_image %}
+          "image": "https://projectstore.pk{{ product.main_image.url }}",
+          {% endif %}
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "PKR",
+            "price": "{{ product.final_price }}",
+            "availability": "{% if product.availability and product.stock > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}"
+          }
+        }{% if not forloop.last or not forloop.parentloop.last %},{% endif %}
+        {% endfor %}{% endfor %}
+      ]
     }
   }
   </script>
@@ -482,7 +501,6 @@
         background: transparent !important;
     }
   </style>
-  <link rel="canonical" href="https://projectstore.pk{{ request.path }}" />
   {% include 'Includes/metapixel.html' %}
 </head>
 <body>
