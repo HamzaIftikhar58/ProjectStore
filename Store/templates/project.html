@@ -497,6 +497,36 @@
   </section>
 
   <main class="main-content" id="main-content">
+    <!-- FYP 2026 Turnkey Fast-Track Card -->
+    <div class="container my-4">
+      <div class="p-4 p-md-5 rounded-4 position-relative overflow-hidden" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.15);">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);">
+              <i class="fa-solid fa-graduation-cap text-danger"></i>
+              <span class="text-danger fw-bold small text-uppercase" style="letter-spacing: 0.5px;">University FYP 2026 Support Hub</span>
+            </div>
+            <h2 class="h3 text-white fw-bold mb-2">Need a Turnkey Final Year Project (FYP) with Working Code & Custom PCB?</h2>
+            <p class="text-white-50 mb-3" style="font-size: 0.95rem; line-height: 1.6;">
+              Avoid viva rejection and broken GitHub code. Every project kit includes 100% verified source code (Python / Arduino / ESP-IDF), circuit diagrams, component hardware, custom 3D printed casing, and report-ready documentation.
+            </p>
+            <div class="d-flex flex-wrap gap-3 text-white-50 small">
+              <span><i class="fa-solid fa-circle-check text-success me-1"></i> Pre-Tested Code</span>
+              <span><i class="fa-solid fa-circle-check text-success me-1"></i> Custom FR4 PCBs by ISOL</span>
+              <span><i class="fa-solid fa-circle-check text-success me-1"></i> 3D Enclosure Casing</span>
+              <span><i class="fa-solid fa-circle-check text-success me-1"></i> Cash on Delivery in Pakistan</span>
+            </div>
+          </div>
+          <div class="col-lg-4 text-lg-end text-center">
+            <a href="https://wa.me/923104505008?text=Hi%20ProjectStore%2C%20I%20need%20technical%20consultation%20and%20hardware%20for%20my%20FYP" target="_blank" rel="noopener" class="btn btn-warning px-4 py-3 rounded-pill fw-bold text-dark shadow-sm d-inline-flex align-items-center gap-2 w-100 justify-content-center mb-2">
+              <i class="fa-brands fa-whatsapp fs-5"></i> Free FYP Consultation
+            </a>
+            <div class="text-white-50" style="font-size: 0.75rem;">Direct chat with our Lead Hardware Engineer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     {% for category in categories %}
       {% if category.only_projects %}
         <section id="{{ category.slug }}" class="category-section {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">

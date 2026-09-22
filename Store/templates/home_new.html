@@ -592,6 +592,7 @@
           <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
           <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
         </div>
 
         <div class="carousel-inner">
@@ -662,6 +663,56 @@
               </div>
             </div>
           </div>
+
+          <!-- Slide 4: University FYP 2026 Fast-Track Hub -->
+          <div class="carousel-item">
+            <div class="row align-items-center">
+              <div class="col-lg-6">
+                <span class="badge bg-danger text-white px-3 py-2 rounded-pill mb-3 fw-bold"><i class="fa-solid fa-graduation-cap me-1"></i> University FYP 2026 Season • Fast-Track</span>
+                <h2 class="hero-h1">Engineering FYP <br><span>Kits, Code & Custom PCBs</span></h2>
+                <p class="hero-subtitle">Don't risk your final semester grade with broken GitHub code. Get 100% pre-tested hardware kits, verified source codes, custom FR4 PCBs by ISOL, and 3D enclosures ready for defense with nationwide Cash on Delivery.</p>
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
+                  <a href="{% url 'project' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-laptop-code me-2"></i>Explore FYP Projects</a>
+                  <a href="https://wa.me/923104505008?text=Hi%20ProjectStore%2C%20I%20need%20guidance%20for%20my%20engineering%20FYP%20kit%20and%20code" target="_blank" rel="noopener" class="btn hero-btn btn-outline-light-custom"><i class="fa-brands fa-whatsapp me-2 text-success"></i>Free FYP Consultation</a>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="hero-img-container text-center">
+                  <div class="p-4 rounded-4 text-start position-relative overflow-hidden" style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); backdrop-filter: blur(12px); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                    <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary-subtle">
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="badge bg-danger bg-opacity-25 text-danger border border-danger small px-2 py-1">2026 TOP PICK</span>
+                        <span class="text-white-50 small fw-semibold">Turnkey Student Packages</span>
+                      </div>
+                      <span class="text-warning small"><i class="fa-solid fa-shield-halved me-1"></i>100% Viva Ready</span>
+                    </div>
+                    <div class="d-flex flex-column gap-2 mb-3">
+                      <div class="d-flex align-items-center gap-2 text-white small">
+                        <i class="fa-solid fa-circle-check text-success"></i>
+                        <span><strong>Tested Source Code</strong> (Python 3.10+, Arduino 2.x, ESP-IDF)</span>
+                      </div>
+                      <div class="d-flex align-items-center gap-2 text-white small">
+                        <i class="fa-solid fa-circle-check text-success"></i>
+                        <span><strong>Complete Circuit Schematics</strong> & Pinout Wiring Diagrams</span>
+                      </div>
+                      <div class="d-flex align-items-center gap-2 text-white small">
+                        <i class="fa-solid fa-circle-check text-success"></i>
+                        <span><strong>Custom 1-6 Layer PCBs</strong> by ISOL Labs (Zero Customs Delay)</span>
+                      </div>
+                      <div class="d-flex align-items-center gap-2 text-white small">
+                        <i class="fa-solid fa-circle-check text-success"></i>
+                        <span><strong>Custom 3D Printed Casing</strong> for Professional Defense Presentation</span>
+                      </div>
+                    </div>
+                    <div class="p-2 rounded-3 bg-white bg-opacity-10 d-flex align-items-center justify-content-between">
+                      <span class="text-white small fw-bold"><i class="fa-solid fa-truck-fast text-info me-2"></i>24-48h Dispatch in Pakistan</span>
+                      <a href="{% url 'project' %}" class="btn btn-sm btn-info text-white fw-bold px-3 rounded-pill">View All &rarr;</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
 
@@ -672,10 +723,10 @@
   <!-- Scrolling Marquee -->
   <div class="scrolling-wrapper">
     <marquee behavior="scroll" direction="left" scrollamount="10">
-      <span class="scrolling-text mx-4">🚀 3D Printing Service Available</span>
-      <span class="scrolling-text mx-4">⚡ Same Day Shipping in Lahore</span>
-      <span class="scrolling-text mx-4">💻 New Python Snippets Uploaded</span>
-      <span class="scrolling-text mx-4">🛠️ Need a Custom Project? Chat with us on WhatsApp!</span>
+      <span class="scrolling-text mx-4">🎓 University FYP 2026 Kits, Verified Source Codes & Custom PCBs Available</span>
+      <span class="scrolling-text mx-4">⚡ 24-48h Fast Dispatch in Pakistan • Cash on Delivery</span>
+      <span class="scrolling-text mx-4">🚀 Custom 3D Printing & Rapid Prototyping</span>
+      <span class="scrolling-text mx-4">🛠️ Need FYP Guidance or Custom PCB? Chat with our Engineers on WhatsApp!</span>
       <span class="scrolling-text mx-4">📦 Free Delivery on Orders above Rs. 5000</span>
     </marquee>
   </div>
