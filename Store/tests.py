@@ -106,6 +106,8 @@ class AIOptimizationTest(TestCase):
         self.assertIn('# ProjectStore.pk', content)
         self.assertIn('Cash on Delivery (COD)', content)
         self.assertIn('https://projectstore.pk/product/', content)
+        self.assertIn('## Frequently Asked Questions (Quick AI Reference)', content)
+        self.assertIn('Volcano Eruption Model', content)
 
     def test_llms_full_txt_catalog_endpoint(self):
         response = self.client.get('/llms-full.txt')
@@ -115,6 +117,7 @@ class AIOptimizationTest(TestCase):
         self.assertIn('L298N Motor Driver Module', content)
         self.assertIn('ai97450', content)
         self.assertIn('PKR 450.00', content)
+        self.assertIn('## Frequently Asked Questions (Quick AI Reference)', content)
 
     def test_home_page_faq_and_website_schema(self):
         response = self.client.get('/')
@@ -347,6 +350,8 @@ class CommunityQATest(TestCase):
         self.assertTrue(ItemQuestion.objects.filter(question__icontains='Python version 3.11').exists())
 
     def test_product_detail_renders_qa_and_schema(self):
+        self.product.youtube_video_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+        self.product.save()
         response = self.client.get(self.product.get_absolute_url())
         self.assertEqual(response.status_code, 200)
         content = response.content.decode('utf-8')
@@ -356,6 +361,12 @@ class CommunityQATest(TestCase):
         self.assertIn('ISOL Engineering Team', content)
         # Check FAQPage Schema for AI Overviews
         self.assertIn('"@type": "FAQPage"', content)
+        # Check VideoObject Schema for Multimodal GEO
+        self.assertIn('"@type": "VideoObject"', content)
+        self.assertIn('https://www.youtube.com/embed/dQw4w9WgXcQ', content)
+        # Check Quick Summary Card
+        self.assertIn('Quick Summary & Specs', content)
+        self.assertIn('24-48h Dispatch', content)
 
     def test_blog_detail_renders_qa_and_schema(self):
         response = self.client.get(self.post.get_absolute_url())
