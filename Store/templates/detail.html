@@ -61,13 +61,34 @@
       {% endfor %}
     ],
     {% endif %}
+    {% if reviews %}
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "{{ avg_rating|default:'4.9' }}",
-      "reviewCount": "{{ product.reviews.count|default:'10' }}",
+      "ratingValue": "{{ avg_rating }}",
+      "reviewCount": "{{ reviews.count }}",
       "bestRating": "5",
       "worstRating": "1"
     },
+    "review": [
+      {% for r in reviews %}
+      {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "{{ r.reviewer_name|escapejs }}"
+        },
+        "datePublished": "{{ r.created_at|date:'Y-m-d' }}",
+        "reviewBody": "{{ r.review|escapejs }}",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "{{ r.rating }}",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ],
+    {% endif %}
     "offers": {
       "@type": "Offer",
       "url": "https://projectstore.pk{{ request.path }}",

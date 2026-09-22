@@ -25,9 +25,9 @@ class UserProfile(models.Model):
 
 class SiteSetting(models.Model):
     """Singleton model for global site settings, including social media links and contact info."""
-    facebook_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.facebook.com/IsolPaki")
-    instagram_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.instagram.com/yourpage")
-    youtube_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.youtube.com/@Isol_pk")
+    facebook_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.facebook.com/ProjectStorePk")
+    instagram_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.instagram.com/projectstorepk/")
+    youtube_url = models.URLField(max_length=255, blank=True, null=True, help_text="e.g. https://www.youtube.com/@ProjectStorePK")
     whatsapp_number = models.CharField(max_length=20, blank=True, null=True, help_text="e.g. 923104505008 (Include country code without +)")
     twitter_url = models.URLField(max_length=255, blank=True, null=True, help_text="X/Twitter Profile URL")
     linkedin_url = models.URLField(max_length=255, blank=True, null=True, help_text="LinkedIn Profile URL")

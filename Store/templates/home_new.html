@@ -91,8 +91,9 @@
           "closes": "21:00"
         },
         "sameAs": [
-          "https://www.facebook.com/IsolPaki",
-          "https://www.youtube.com/@Isol_pk",
+          "https://www.facebook.com/ProjectStorePk",
+          "https://www.instagram.com/projectstorepk/",
+          "https://www.youtube.com/@ProjectStorePK",
           "https://isol.pk"
         ]
       },
@@ -626,7 +627,7 @@
                 <h2 class="hero-h1">Ready-to-Build <br><span>Project Kits & Sensors</span></h2>
                 <p class="hero-subtitle">Everything in one box: wires, sensors, microcontrollers (ESP32 / Arduino), and complete source codes. Best component prices in Lahore, Karachi, Islamabad & all Pakistan.</p>
                 <div class="d-flex flex-wrap gap-2 justify-content-lg-start justify-content-center">
-                  <a href="{% url 'product' %}?category=kits" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-box-open me-2"></i>Shop DIY Kits</a>
+                  <a href="{% url 'category_products' 'diy-project-kits' %}" class="btn hero-btn btn-warning-custom"><i class="fa-solid fa-box-open me-2"></i>Shop DIY Kits</a>
                   <a href="{% url 'product' %}" class="btn hero-btn btn-outline-light-custom"><i class="fa-solid fa-microchip me-2"></i>Browse All Parts</a>
                 </div>
               </div>
@@ -688,37 +689,37 @@
     
     <div class="row g-4">
       <div class="col-lg-3 col-md-6">
-        <a href="{% url 'project' %}" class="cat-card-link">
+        <a href="{% url 'category_products' 'diy-project-kits' %}" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/software.webp' %}" alt="Code" loading="lazy">
+              <img src="{% static 'Images/settings.webp' %}" alt="DIY Kits" loading="lazy">
             </div>
-            <h3 class="cat-title h5">Software & Scripts</h3>
-            <p class="cat-desc">Verified tested code for your applications.</p>
+            <h3 class="cat-title h5">DIY Project Kits</h3>
+            <p class="cat-desc">Complete robotics & STEM kits with code & guides.</p>
           </div>
         </a>
       </div>
       
       <div class="col-lg-3 col-md-6">
-        <a href="{% url 'product' %}?category=kits" class="cat-card-link">
+        <a href="{% url 'category_products' 'school-science-projects' %}" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/settings.webp' %}" alt="Kits" loading="lazy">
+              <img src="{% static 'Images/computer.webp' %}" alt="School Science Projects" loading="lazy">
             </div>
-            <h3 class="cat-title h5">Project Kits</h3>
-            <p class="cat-desc">Complete DIY solutions with components.</p>
+            <h3 class="cat-title h5">School Science 3D</h3>
+            <p class="cat-desc">Handcrafted 3D exhibition models for science fairs.</p>
           </div>
         </a>
       </div>
       
       <div class="col-lg-3 col-md-6">
-        <a href="{% url 'product' %}?category=components" class="cat-card-link">
+        <a href="{% url 'category_products' 'electronics' %}" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/computer.webp' %}" alt="Components" loading="lazy">
+              <img src="{% static 'Images/software.webp' %}" alt="Electronics & Sensors" loading="lazy">
             </div>
-            <h3 class="cat-title h5">Components</h3>
-            <p class="cat-desc">Sensors, Modules, ESP32 & more.</p>
+            <h3 class="cat-title h5">Components & ESP32</h3>
+            <p class="cat-desc">Sensors, modules, Arduino & ESP32 boards.</p>
           </div>
         </a>
       </div>
@@ -727,15 +728,62 @@
         <a href="{% url 'three_d_printing_service' %}" class="cat-card-link">
           <div class="cat-card">
             <div class="cat-icon-wrapper">
-              <img src="{% static 'Images/robot.webp' %}" alt="3D" loading="lazy">
+              <img src="{% static 'Images/robot.webp' %}" alt="3D Printing" loading="lazy">
             </div>
             <h3 class="cat-title h5">3D Printing</h3>
-            <p class="cat-desc">Custom casings designed & printed.</p>
+            <p class="cat-desc">Custom casings & sensor brackets printed.</p>
           </div>
         </a>
       </div>
     </div>
   </section>
+
+  {% if science_projects %}
+  <!-- Featured School Science 3D Exhibition Models -->
+  <section class="container py-4 my-2">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <div>
+        <span class="section-subtitle">Exhibition Ready</span>
+        <h2 class="section-title mb-0">Handcrafted School Science 3D Models</h2>
+      </div>
+      <a href="{% url 'category_products' 'school-science-projects' %}" class="btn btn-outline-primary rounded-pill px-4 d-none d-md-inline-block fw-bold">View All Models <i class="fas fa-arrow-right ms-2"></i></a>
+    </div>
+
+    <div class="row g-4">
+      {% for sprod in science_projects %}
+      <div class="col-lg-3 col-md-6">
+        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="transition: transform 0.3s ease, box-shadow 0.3s ease; background: white;">
+          <div class="position-relative overflow-hidden" style="height: 220px;">
+            <a href="{% url 'product_detail' sprod.slug %}">
+              <img src="{{ sprod.main_image.url }}" alt="{{ sprod.get_alt_text }}" class="w-100 h-100" style="object-fit: cover; transition: transform 0.5s ease;" loading="lazy">
+            </a>
+            {% if sprod.discount_percentage > 0 %}
+            <span class="badge bg-danger position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm">-{{ sprod.discount_percentage }}% OFF</span>
+            {% else %}
+            <span class="badge bg-primary position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill shadow-sm">3D Model</span>
+            {% endif %}
+          </div>
+          <div class="card-body p-4 d-flex flex-column">
+            <span class="text-primary small fw-bold text-uppercase mb-1">{{ sprod.category.name }}</span>
+            <h3 class="h6 fw-bold mb-2">
+              <a href="{% url 'product_detail' sprod.slug %}" class="text-dark text-decoration-none">{{ sprod.name }}</a>
+            </h3>
+            <p class="text-muted small mb-3 flex-grow-1">{{ sprod.description|striptags|truncatewords:12 }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+              <span class="fw-bold text-dark fs-5">Rs {{ sprod.final_price }}</span>
+              <a href="{% url 'product_detail' sprod.slug %}" class="btn btn-sm btn-primary rounded-pill px-3 fw-bold">View Model</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    
+    <div class="text-center mt-4 d-md-none">
+      <a href="{% url 'category_products' 'school-science-projects' %}" class="btn btn-outline-primary rounded-pill px-4 fw-bold">View All Models <i class="fas fa-arrow-right ms-2"></i></a>
+    </div>
+  </section>
+  {% endif %}
 
   <!-- Combined Trust & FAQ Section -->
   <section class="combined-support-section" id="faq">

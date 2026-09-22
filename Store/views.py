@@ -254,7 +254,13 @@ def reset_verify_otp(request):
 
 @cache_control(public=True, max_age=3600)  # Cash for 1 hour
 def home(request):
-         return render(request, 'home_new.html')
+    science_projects = Product.objects.filter(
+        category__slug='school-science-projects',
+        is_active=True
+    ).select_related('category')[:4]
+    return render(request, 'home_new.html', {
+        'science_projects': science_projects
+    })
 
 
 @require_http_methods(["GET", "POST"])

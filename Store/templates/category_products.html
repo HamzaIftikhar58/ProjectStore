@@ -7,15 +7,15 @@
     <link rel="icon" type="image/png" href="{% static 'Images/circle.png' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ category.name|seo_title }}</title>
-    <meta name="description" content="Order authentic {{ category.name }} components, sensors & hardware modules online in Pakistan. 100% verified quality, fast 24-48h dispatch & Cash on Delivery.">
+    <meta name="description" content="{% if category.description %}{{ category.description }}{% else %}Order authentic {{ category.name }} components, sensors & hardware modules online in Pakistan. 100% verified quality, fast 24-48h dispatch & Cash on Delivery.{% endif %}">
     <meta name="keywords" content="{{ category.name }} components pakistan, buy {{ category.name }} online, {{ category.name }} price lahore, electronics pakistan, project store">
     <link rel="canonical" href="https://projectstore.pk/category/{{ category.slug }}/" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://projectstore.pk/category/{{ category.slug }}/">
-    <meta property="og:title" content="Buy {{ category.name }} Electronic Components Online in Pakistan | ProjectStore.pk">
-    <meta property="og:description" content="Order authentic {{ category.name }} components, sensors & hardware modules online in Pakistan with fast shipping & Cash on Delivery.">
+    <meta property="og:title" content="Buy {{ category.name }} Online in Pakistan | ProjectStore.pk">
+    <meta property="og:description" content="{% if category.description %}{{ category.description }}{% else %}Order authentic {{ category.name }} components, sensors & hardware modules online in Pakistan with fast shipping & Cash on Delivery.{% endif %}">
     <meta property="og:site_name" content="ProjectStore.pk">
 
     <!-- JSON-LD Structured Data Schema -->
@@ -46,11 +46,19 @@
       ]
     }
     </script>
-    <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/all.min.css' %}" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Critical CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/google-fonts.css' %}">
+
+    <!-- Non-blocking asynchronous CSS for icons & swiper -->
+    <link rel="preload" href="{% static 'css/bootstrap-icons.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{% static 'css/all.min.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="{% static 'css/swiper-bundle.min.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+      <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
+    </noscript>
   <style>
     :root {
       --primary-dark: #0f172a;
@@ -453,7 +461,7 @@
         </div>
     </header>
 
-    <div class="container mb-5">
+    <main class="container mb-5" id="main-content">
         <div class="row g-4">
             <!-- Sidebar Filters -->
             <aside class="col-lg-3">
@@ -533,7 +541,7 @@
                                 <span class="badge-discount">-{{ product.discount_percentage }}% OFF</span>
                                 {% endif %}
                                 <a href="{% url 'product_detail' product.slug %}">
-                                    <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
+                                    <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}" width="300" height="300" {% if forloop.counter <= 2 %}loading="eager" fetchpriority="high"{% else %}loading="lazy" decoding="async"{% endif %}>
                                 </a>
                             </div>
                             <div class="premium-card-body">
@@ -550,8 +558,8 @@
                                         <span class="price-tag">Rs {{ product.price }}</span>
                                         {% endif %}
                                     </div>
-                                    <a href="{% url 'product_detail' product.slug %}" class="btn-view-product" title="View Project">
-                                        <i class="fas fa-arrow-right"></i>
+                                    <a href="{% url 'product_detail' product.slug %}" class="btn-view-product" title="View Project" aria-label="View {{ product.name }}">
+                                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </div>
@@ -615,13 +623,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     {% include 'Includes/footer.html' %}
 
-    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}" defer></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'js/swiper-bundle.min.js' %}" defer></script>
     <script>
         // Get CSRF token for AJAX requests
         function getCookie(name) {

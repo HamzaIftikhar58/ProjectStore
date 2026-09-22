@@ -84,16 +84,19 @@
   </script>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="{% static 'css/google-fonts.css' %}" rel="stylesheet">
   
-  <!-- CSS Libraries -->
+  <!-- Critical CSS Libraries -->
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
-  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
-  <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}">
   <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- Deferred Non-Critical Icon CSS -->
+  <link rel="preload" href="{% static 'css/bootstrap-icons.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}"></noscript>
+
+  <link rel="preload" href="{% static 'css/all.min.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="{% static 'css/all.min.css' %}"></noscript>
 
   <style>
     :root {
@@ -197,9 +200,37 @@
         transform: translateY(-3px);
     }
 
-    /* Premium Compact Product Cards */
+    /* Swiper Base Layout to Prevent Cumulative Layout Shift (CLS) */
     .swiper {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
         padding: 10px 10px 50px !important;
+    }
+    .swiper-wrapper {
+        display: flex;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        box-sizing: content-box;
+    }
+    .swiper-slide {
+        flex-shrink: 0;
+        width: 100%;
+        position: relative;
+    }
+    @media (min-width: 1200px) {
+        .swiper-slide { width: calc((100% - 90px) / 4); margin-right: 30px; }
+    }
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .swiper-slide { width: calc((100% - 60px) / 3); margin-right: 30px; }
+    }
+    @media (min-width: 768px) and (max-width: 991px) {
+        .swiper-slide { width: calc((100% - 25px) / 2); margin-right: 25px; }
+    }
+    @media (min-width: 576px) and (max-width: 767px) {
+        .swiper-slide { width: calc((100% - 25px) / 1.5); margin-right: 25px; }
     }
 
     .product-card {
@@ -238,14 +269,14 @@
         position: absolute;
         top: 15px;
         right: 15px;
-        background: #ef4444;
-        color: white;
+        background: #b91c1c;
+        color: #ffffff;
         padding: 5px 12px;
         border-radius: 10px;
         font-size: 0.75rem;
         font-weight: 800;
         z-index: 5;
-        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        box-shadow: 0 4px 12px rgba(185, 28, 28, 0.4);
         animation: pulseDiscount 2s infinite;
     }
 
@@ -363,12 +394,15 @@
         border-radius: 14px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         color: white !important;
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), background-color 0.4s ease, border-color 0.4s ease;
         border: 2px solid rgba(59, 130, 246, 0.3); /* Soft blue border */
         z-index: 100 !important;
         display: flex !important;
         align-items: center;
         justify-content: center;
+        margin-top: 0 !important;
+        top: 50% !important;
+        transform: translateY(-50%) !important;
     }
 
     .swiper-button-next {
@@ -413,11 +447,26 @@
             height: 60px;
         }
     }
+    
+    .swiper-pagination-bullet {
+        position: relative;
+        width: 12px !important;
+        height: 12px !important;
+        margin: 0 8px !important;
+    }
+    .swiper-pagination-bullet::after {
+        content: '';
+        position: absolute;
+        top: -18px;
+        bottom: -18px;
+        left: -18px;
+        right: -18px;
+    }
 
     .swiper-pagination-bullet-active {
         background: var(--primary-blue) !important;
-        width: 20px !important;
-        border-radius: 4px !important;
+        width: 24px !important;
+        border-radius: 6px !important;
     }
 
     /* Cart Sidebar */
@@ -500,6 +549,16 @@
     .main-content > section:first-child {
         background: transparent !important;
     }
+
+    .reveal-pending {
+        opacity: 0;
+        transform: translateY(16px);
+        transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .revealed {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
   </style>
   {% include 'Includes/metapixel.html' %}
 </head>
@@ -525,7 +584,7 @@
     </div>
   </section>
 
-  <div class="main-content">
+  <main class="main-content" id="main-content">
     {% for category in categories %}
       {% if category.only_products or category.slug == 'search-results' %}
         <section id="{{ category.slug }}" class="category-section {% if forloop.counter|divisibleby:2 %}bg-white{% else %}bg-light{% endif %}">
@@ -533,7 +592,7 @@
             <div class="category-header">
               <h2 class="category-title">{{ category.name }}</h2>
               {% if category.slug != 'search-results' %}
-              <a href="{% url 'category_products' category.slug %}" class="btn-view-all">View All <i class="fa-solid fa-arrow-right-long ms-2"></i></a>
+              <a href="{% url 'category_products' category.slug %}" class="btn-view-all" aria-label="View all products in {{ category.name }}">View All <i class="fa-solid fa-arrow-right-long ms-2" aria-hidden="true"></i></a>
               {% endif %}
             </div>
 
@@ -549,7 +608,10 @@
                       {% if product.discount_percentage > 0 %}
                       <span class="badge-discount">-{{ product.discount_percentage }}%</span>
                       {% endif %}
-                      <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
+                      <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}"
+                           width="280" height="280"
+                           {% if forloop.counter <= 4 %}fetchpriority="high" loading="eager"{% else %}loading="lazy" decoding="async"{% endif %}
+                           style="width:100%;height:100%;object-fit:contain;aspect-ratio:1/1;">
                     </div>
                     <div class="product-info">
                       <h3 class="product-title">{{ product.name }}</h3>
@@ -563,8 +625,8 @@
                           <span class="product-price">Rs {{ product.price }}</span>
                           {% endif %}
                         </div>
-                        <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details">
-                          <i class="fa-solid fa-arrow-right"></i>
+                        <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details" aria-label="View Details for {{ product.name }}">
+                          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                         </a>
                       </div>
                     </div>
@@ -630,7 +692,10 @@
                         {% if product.discount_percentage > 0 %}
                         <span class="badge-discount">-{{ product.discount_percentage }}%</span>
                         {% endif %}
-                        <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}">
+                        <img src="{{ product.main_image.url }}" alt="{{ product.get_alt_text }}"
+                             width="280" height="280"
+                             {% if forloop.parentloop.first and forloop.counter <= 2 %}fetchpriority="high" loading="eager"{% else %}loading="lazy" decoding="async"{% endif %}
+                             style="width:100%;height:100%;object-fit:contain;aspect-ratio:1/1;">
                       </div>
                       <div class="product-info">
                         <h3 class="product-title">{{ product.name }}</h3>
@@ -644,8 +709,8 @@
                             <span class="product-price">Rs {{ product.price }}</span>
                             {% endif %}
                           </div>
-                          <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details">
-                            <i class="fa-solid fa-arrow-right"></i>
+                          <a href="{% url 'product_detail' product.slug %}" class="btn-details" title="View Details" aria-label="View Details for {{ product.name }}">
+                            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                           </a>
                         </div>
                       </div>
@@ -671,16 +736,14 @@
         </section>
       {% endif %}
     {% endfor %}
-  </div>
-
-  </div>
+  </main>
 
   {% include 'Includes/footer.html' %}
 
   <!-- Scripts -->
-  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
-  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-  <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}" defer></script>
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
+  <script src="{% static 'js/swiper-bundle.min.js' %}" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.swiper').forEach(swiperElement => {
@@ -704,26 +767,23 @@
           });
         });
         
-        // Reveal animation setup
-        const cards = document.querySelectorAll('.product-card');
-        cards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)';
-        });
-        
-        const revealOnScroll = () => {
-            cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                if (cardTop < window.innerHeight * 0.9) {
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }
+        // High-performance GPU intersection observer (eliminates forced reflows and LCP delay)
+        if ('IntersectionObserver' in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px 50px 0px' });
+            
+            // Only observe cards in subsequent categories, leave above-the-fold immediately visible
+            document.querySelectorAll('.category-section:not(:first-child) .product-card').forEach(card => {
+                card.classList.add('reveal-pending');
+                observer.observe(card);
             });
-        };
-        
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll(); // trigger once on load
+        }
     });
 </script>
 </body>

@@ -164,3 +164,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
 SITE_ID = 1
+
+# MCP Integration Token
+PROJECTSTORE_MCP_TOKEN = os.environ.get('PROJECTSTORE_MCP_TOKEN', 'b6b53f43ba12d0f230a77374f35b0adef01d25c6bd4e0c8d4362ecb2a756d7b7')

@@ -165,7 +165,7 @@ class CatalogAndProductSEOTest(TestCase):
         response = self.client.get('/product/')
         self.assertEqual(response.status_code, 200)
         content = response.content.decode('utf-8')
-        self.assertIn('<title>Premium DIY Store | Electronic Kits, Components & Software Codes | ProjectStore.pk</title>', content)
+        self.assertIn('<title>Buy Electronic Components & DIY Kits | ProjectStore.pk</title>', content)
         self.assertIn("Pakistan's premium DIY store. Buy complete DIY kits", content)
         self.assertIn('<link rel="canonical" href="https://projectstore.pk/product/" />', content)
 

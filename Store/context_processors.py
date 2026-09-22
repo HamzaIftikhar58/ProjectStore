@@ -1,12 +1,14 @@
+from django.db.models import Count
 from .models import Category, SiteSetting
 from django.contrib.sites.shortcuts import get_current_site
 
 def categories(request):
     """
     Context processor to make categories and site settings available in all templates.
+    Only categories with is_active=True and at least 1 product are returned to eliminate Soft 404s.
     """
     return {
-        'categories': Category.objects.filter(is_active=True),
+        'categories': Category.objects.filter(is_active=True).annotate(num_prods=Count('products')).filter(num_prods__gt=0).order_by('-num_prods', 'name'),
         'site_settings': SiteSetting.objects.first()
     }
 

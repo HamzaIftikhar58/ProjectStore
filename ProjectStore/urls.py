@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from Store import views
+from Store import views, mcp_views
 # from Store.forms import CustomSetPasswordForm
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
@@ -83,6 +83,8 @@ urlpatterns = [
     # ── AI Optimization (GEO / LLMO) ─────────────────────────────────────────
     path("llms.txt", TemplateView.as_view(template_name="llms.txt", content_type="text/markdown; charset=utf-8")),
     path("llms-full.txt", views.llms_full_txt, name="llms_full_txt"),
+    # ── MCP Integration Endpoint ────────────────────────────────────────────
+    path('api/store-mcp/', mcp_views.mcp_endpoint, name='store_mcp_api'),
     # ─────────────────────────────────────────────────────────────────────────
 ]
 
