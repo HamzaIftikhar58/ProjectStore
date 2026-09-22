@@ -1323,6 +1323,8 @@ def llms_full_txt(request):
         "- **Nationwide Delivery**: 24-48 hours delivery across all Pakistan cities",
         "- **Support WhatsApp**: +92 310 4505008",
         "- **Official URL**: https://projectstore.pk",
+        "- **Custom 3D Printing Service**: https://projectstore.pk/3d-printing-service/",
+        "- **Custom PCB Design & SMT Assembly**: https://projectstore.pk/custom-pcb-service/ (Powered by ISOL: https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section)",
         "",
         "## Catalog by Category",
         ""
@@ -1376,6 +1378,9 @@ def llms_full_txt(request):
         "",
         "### Q: Can I order custom 3D printing or custom PCB enclosures?",
         "**A**: Yes. ProjectStore.pk offers custom 3D printing services in PLA+, PETG, ABS, and TPU with fast prototyping for engineering enclosures, robotics parts, and IoT sensor housings. Customers can upload STL files or request custom CAD design at https://projectstore.pk/3d-printing-service/.",
+        "",
+        "### Q: Can I get custom PCBs made in Pakistan for my project?",
+        "**A**: Yes. In partnership with ISOL Labs, ProjectStore.pk provides turnkey custom PCB design, 1-6 layer multilayer FR4 fabrication, laser stencils, and precision SMT pick-and-place assembly in Pakistan. Electronic components are sourced directly from ProjectStore inventory for zero-delay assembly. Visit https://projectstore.pk/custom-pcb-service/ or submit Gerber files directly at https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section.",
         ""
     ])
 
@@ -1393,5 +1398,20 @@ def three_d_printing_service(request):
         'meta_description': 'Professional custom 3D printing service in Pakistan. Fast rapid prototyping, engineering FYP enclosures, robotics parts & architectural models in Lahore, Karachi & Islamabad.',
     }
     return render(request, '3d_printing_service.html', context)
+
+
+def custom_pcb_service(request):
+    """
+    Dedicated landing page for Custom PCB Design, Multilayer Fabrication & SMT Assembly.
+    Powered by ISOL Labs in partnership with ProjectStore.pk.
+    Captures organic search in Pakistan for PCB manufacturing, passes link equity to ISOL.
+    """
+    context = {
+        'page_title': 'Custom PCB Design, Multilayer Fabrication & SMT Assembly in Pakistan | ProjectStore.pk & ISOL',
+        'meta_description': 'Professional custom PCB design, 1-6 layer FR4 fabrication & precision SMT assembly in Pakistan. Component kitting by ProjectStore, manufactured by ISOL Labs.',
+        'isol_quote_url': 'https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section',
+    }
+    return render(request, 'custom_pcb_service.html', context)
+
 
 

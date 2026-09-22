@@ -61,6 +61,9 @@ urlpatterns = [
     path('return-policy/', views.return_policy, name='return_policy'),
     path('3d-printing-service/', views.three_d_printing_service, name='three_d_printing_service'),
     path('3d-printing/', RedirectView.as_view(url='/3d-printing-service/', permanent=True)),
+    path('custom-pcb-service/', views.custom_pcb_service, name='custom_pcb_service'),
+    path('pcb-fabrication-pakistan/', RedirectView.as_view(url='/custom-pcb-service/', permanent=True)),
+    path('pcb-service/', RedirectView.as_view(url='/custom-pcb-service/', permanent=True)),
     # ── Project Guides & Tutorials Blog ──────────────────────────────────────
     path('blog/', views.blog_list, name='blog_list'),
     path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),

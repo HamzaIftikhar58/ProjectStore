@@ -108,6 +108,7 @@ class AIOptimizationTest(TestCase):
         self.assertIn('https://projectstore.pk/product/', content)
         self.assertIn('## Frequently Asked Questions (Quick AI Reference)', content)
         self.assertIn('Volcano Eruption Model', content)
+        self.assertIn('Custom PCB Design, Multilayer Fabrication', content)
 
     def test_llms_full_txt_catalog_endpoint(self):
         response = self.client.get('/llms-full.txt')
@@ -118,6 +119,18 @@ class AIOptimizationTest(TestCase):
         self.assertIn('ai97450', content)
         self.assertIn('PKR 450.00', content)
         self.assertIn('## Frequently Asked Questions (Quick AI Reference)', content)
+        self.assertIn('custom-pcb-service', content)
+
+    def test_custom_pcb_service_landing_page(self):
+        response = self.client.get('/custom-pcb-service/')
+        self.assertEqual(response.status_code, 200)
+        content = response.content.decode('utf-8')
+        self.assertIn('Custom PCB Design', content)
+        self.assertIn('Multilayer Fabrication', content)
+        self.assertIn('https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section', content)
+        self.assertIn('"@type": "Service"', content)
+        self.assertIn('"@type": "FAQPage"', content)
+        self.assertIn('Free DFM Check', content)
 
     def test_home_page_faq_and_website_schema(self):
         response = self.client.get('/')

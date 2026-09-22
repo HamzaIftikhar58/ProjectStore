@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="{% static 'Images/project_store_logo.webp' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Custom PCB Design, Multilayer Fabrication & SMT Assembly in Pakistan | ProjectStore.pk & ISOL</title>
+  <meta name="description" content="Professional custom PCB design, 1-6 layer FR4 fabrication & precision SMT assembly in Pakistan. Powered by ISOL Labs with pre-tested components from ProjectStore.pk. Fast delivery to Lahore, Karachi & Islamabad.">
+  <meta name="keywords" content="pcb manufacturing pakistan, custom pcb printing pakistan, pcb fabrication lahore, gerber file printing pakistan, smt assembly pakistan, pcb design service pakistan, fyp pcb manufacturing, isol pcb, projectstore pcb">
+  <meta name="author" content="ProjectStore.pk & ISOL">
+  <link rel="canonical" href="https://projectstore.pk/custom-pcb-service/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://projectstore.pk/custom-pcb-service/">
+  <meta property="og:title" content="Custom PCB Design, Multilayer Fabrication & SMT Assembly in Pakistan | ISOL & ProjectStore">
+  <meta property="og:description" content="Turnkey custom PCB fabrication, 1-6 layers, ENIG/HASL, solder paste stencils & SMT assembly in Pakistan. Get instant quotes with direct component sourcing.">
+  <meta property="og:image" content="https://projectstore.pk/static/Images/project_store_logo.webp">
+  <meta property="og:site_name" content="ProjectStore.pk">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Custom PCB Design & Fabrication in Pakistan | ISOL & ProjectStore">
+  <meta name="twitter:description" content="1-6 Layer custom PCB manufacturing and automated SMT pick-and-place assembly across Pakistan. Instant quotation & express delivery.">
+  <meta name="twitter:image" content="https://projectstore.pk/static/Images/project_store_logo.webp">
+
+  <!-- JSON-LD Structured Data (SEO / AIO / GEO Optimization) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://projectstore.pk/custom-pcb-service/#service",
+        "name": "Custom PCB Design, Multilayer Fabrication & SMT Assembly in Pakistan",
+        "serviceType": "Electronics Manufacturing & PCB Prototyping",
+        "description": "Turnkey custom printed circuit board (PCB) design, 1-6 layer multilayer FR4 fabrication, laser cut SMD stencils, component sourcing, and precision SMT pick-and-place assembly across Pakistan.",
+        "provider": {
+          "@type": "Organization",
+          "@id": "https://www.isol.pk/#organization",
+          "name": "ISOL Labs & ProjectStore.pk",
+          "url": "https://www.isol.pk",
+          "sameAs": [
+            "https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section",
+            "https://projectstore.pk"
+          ],
+          "telephone": "+923104505008",
+          "email": "info@isol.pk",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "2nd Floor, 72, Westend Plaza, Shahrah-e-Quaid-e-Azam, Mozang Chungi",
+            "addressLocality": "Lahore",
+            "addressRegion": "Punjab",
+            "postalCode": "54000",
+            "addressCountry": "PK"
+          }
+        },
+        "areaServed": [
+          "PK", "Lahore", "Karachi", "Islamabad", "Rawalpindi", "Faisalabad", "Multan", "Peshawar", "Quetta"
+        ],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "PCB Manufacturing & Prototyping Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "2-Layer Standard FR4 PCB Rapid Prototyping"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "4-Layer & 6-Layer High-Density Interconnect (HDI) PCBs"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "SMT Pick-and-Place Assembly & Solder Stencils"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Full Turnkey Prototyping with ProjectStore In-Stock Components"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://projectstore.pk/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Custom PCB Services",
+            "item": "https://projectstore.pk/custom-pcb-service/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://projectstore.pk/custom-pcb-service/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do I order custom PCBs in Pakistan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Export your standard Gerber RS-274X files and drill files from your PCB software (Altium, KiCad, Proteus, or EasyEDA) in a .ZIP format. Upload them to the ISOL quote portal at https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section or share via WhatsApp at +92 310 4505008 for an instant review and quotation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long does PCB fabrication take in Pakistan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Standard 2-layer and 4-layer FR4 prototypes are fabricated, electrically tested, and delivered within 7 to 10 working days across Lahore, Karachi, Islamabad, and other major Pakistani cities."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you assemble SMT components onto my PCBs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! ISOL provides complete automated SMT pick-and-place assembly as well as through-hole manual soldering. Components can be sourced directly from ProjectStore.pk verified inventory (ESP32, STM32, sensors, ICs, passives), eliminating weeks of foreign parts shipping."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you offer discounts for University Final Year Projects (FYP)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! Engineering students from UET, NUST, FAST, GIKI, COMSATS, NED, and other institutions across Pakistan receive dedicated student pricing and free Design for Manufacturing (DFM) schematic checks to guarantee zero board failures on their first revision."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What surface finishes are available for PCBs?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We provide Lead-Free HASL (standard eco-friendly hot air solder leveling), ENIG (Electroless Nickel Immersion Gold for high-precision BGA and fine-pitch SMD chips), and Organic Solderability Preservatives (OSP)."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Preconnect and Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="{% static 'css/google-fonts.css' %}" rel="stylesheet">
+
+  <!-- Core CSS Libraries -->
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="preload" as="style" href="{% static 'css/all.min.css' %}" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" as="style" href="{% static 'css/bootstrap-icons.css' %}" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-icons.css' %}">
+  </noscript>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <style>
+    :root {
+      --primary-dark: #0f172a;
+      --secondary-dark: #1e293b;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-orange: #f59e0b;
+      --text-light: #f8fafc;
+      --text-muted: #94a3b8;
+      --glass-bg: rgba(30, 41, 59, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      background-color: var(--primary-dark);
+      color: var(--text-light);
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+    }
+
+    /* Hero Section */
+    .pcb-hero {
+      position: relative;
+      padding: 90px 0 60px;
+      background: radial-gradient(circle at top right, rgba(6, 182, 212, 0.15), transparent 50%),
+                  radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.15), transparent 50%);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: var(--accent-cyan);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 2.8rem;
+      line-height: 1.2;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    .hero-lead {
+      color: var(--text-muted);
+      font-size: 1.15rem;
+      line-height: 1.7;
+      max-width: 680px;
+      margin-bottom: 35px;
+    }
+
+    .btn-pcb-primary {
+      background: linear-gradient(135deg, #0284c7, #06b6d4);
+      color: white;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 14px;
+      border: none;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .btn-pcb-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(6, 182, 212, 0.45);
+      color: white;
+    }
+
+    .btn-pcb-whatsapp {
+      background: rgba(37, 211, 102, 0.1);
+      color: #25d366;
+      border: 1px solid rgba(37, 211, 102, 0.3);
+      font-weight: 700;
+      padding: 16px 28px;
+      border-radius: 14px;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .btn-pcb-whatsapp:hover {
+      background: #25d366;
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+    }
+
+    /* Cards & Grids */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(6, 182, 212, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .icon-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+
+    .icon-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+    .icon-blue { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
+    .icon-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+    .icon-orange { background: rgba(245, 158, 11, 0.15); color: var(--accent-orange); }
+
+    /* Specs Table */
+    .specs-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+
+    .specs-table th {
+      background: rgba(15, 23, 42, 0.8);
+      padding: 16px 20px;
+      font-size: 0.95rem;
+      color: var(--accent-cyan);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .specs-table td {
+      background: rgba(30, 41, 59, 0.5);
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #e2e8f0;
+      font-size: 0.9rem;
+    }
+
+    .specs-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Workflow Steps */
+    .step-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+      color: white;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    /* Accordion FAQ */
+    .accordion-item {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px !important;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .accordion-button {
+      background: transparent !important;
+      color: white !important;
+      font-weight: 600;
+      padding: 20px 24px;
+      box-shadow: none !important;
+    }
+
+    .accordion-button::after {
+      filter: invert(1);
+    }
+
+    .accordion-body {
+      padding: 0 24px 24px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Banner CTA */
+    .cta-banner {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(6, 182, 212, 0.1));
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 28px;
+      padding: 50px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { font-size: 2.1rem; }
+      .cta-banner { padding: 35px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  {% include 'Includes/navbar.html' %}
+
+  <!-- Hero Section -->
+  <header class="pcb-hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <div class="hero-badge">
+            <i class="bi bi-cpu-fill"></i> Powered by ISOL Labs & ProjectStore
+          </div>
+          <h1 class="hero-title">Custom PCB Design, Multilayer Fabrication & SMT Assembly in Pakistan</h1>
+          <p class="hero-lead">
+            Turn your circuit schematics and CAD files into professional, industry-grade PCBs. From 1 to 6 layers FR4 prototyping to automated SMT pick-and-place assembly, with pre-tested components sourced directly from ProjectStore inventory.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section" target="_blank" rel="noopener" class="btn-pcb-primary">
+              <i class="bi bi-cloud-arrow-up-fill fs-5"></i> Upload Gerber & Get Quote on ISOL
+            </a>
+            <a href="https://wa.me/923104505008?text=Hi%2C+I+need+custom+PCB+design+and+fabrication+in+Pakistan" target="_blank" rel="noopener" class="btn-pcb-whatsapp">
+              <i class="fab fa-whatsapp fs-5"></i> Consult Engineer on WhatsApp
+            </a>
+          </div>
+          <div class="d-flex flex-wrap gap-4 mt-4 pt-2 text-muted small">
+            <span><i class="bi bi-check-circle-fill text-success me-1"></i> Free DFM Check</span>
+            <span><i class="bi bi-check-circle-fill text-success me-1"></i> 7-10 Days Turnaround</span>
+            <span><i class="bi bi-check-circle-fill text-success me-1"></i> COD & Bank Transfer</span>
+            <span><i class="bi bi-check-circle-fill text-success me-1"></i> Academic FYP Discounts</span>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="glass-card p-4 text-center border-info">
+            <div class="p-3 mb-3 rounded-4" style="background: rgba(15, 23, 42, 0.6);">
+              <i class="bi bi-layers-fill text-info" style="font-size: 3.5rem;"></i>
+            </div>
+            <h2 class="h4 text-white mb-2">Turnkey Prototyping Ecosystem</h2>
+            <p class="text-muted small mb-4">
+              Eliminate international customs delays and clearance hassles. Get circuit boards fabricated with tested microcontrollers (ESP32, STM32, Arduino) and sensors supplied in Pakistan.
+            </p>
+            <div class="row g-2 text-start small">
+              <div class="col-6">
+                <div class="p-2 rounded bg-dark border border-secondary-subtle">
+                  <div class="text-muted" style="font-size: 0.75rem;">LAYER COUNT</div>
+                  <strong class="text-white">1, 2, 4, 6 Layers</strong>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-2 rounded bg-dark border border-secondary-subtle">
+                  <div class="text-muted" style="font-size: 0.75rem;">SURFACE FINISH</div>
+                  <strong class="text-white">ENIG Gold / HASL</strong>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-2 rounded bg-dark border border-secondary-subtle">
+                  <div class="text-muted" style="font-size: 0.75rem;">SMT ASSEMBLY</div>
+                  <strong class="text-white">0402, BGA, QFN</strong>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="p-2 rounded bg-dark border border-secondary-subtle">
+                  <div class="text-muted" style="font-size: 0.75rem;">PARTS SOURCING</div>
+                  <strong class="text-white">Direct ProjectStore</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Core Capabilities Section -->
+  <section class="py-5 my-4">
+    <div class="container">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-info fw-bold small text-uppercase" style="letter-spacing: 1px;">Industrial Standards</span>
+        <h2 class="display-6 text-white mt-1">Full-Stack Electronics Fabrication</h2>
+        <p class="text-muted">Designed for engineering university FYPs, industrial IoT prototypes, and commercial hardware production.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Feature 1 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="glass-card">
+            <div class="icon-box icon-cyan"><i class="bi bi-hdd-stack"></i></div>
+            <h3 class="h5 text-white mb-2">Multilayer FR4 Fabrication</h3>
+            <p class="text-muted small">
+              Precision 1-layer, 2-layer, 4-layer, and 6-layer high-TG FR4 boards with controlled impedance for RF, ESP32, and high-speed USB/Ethernet traces.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="glass-card">
+            <div class="icon-box icon-blue"><i class="bi bi-robot"></i></div>
+            <h3 class="h5 text-white mb-2">Precision SMT Assembly</h3>
+            <p class="text-muted small">
+              Automated pick-and-place SMT assembly supporting 0402 passives, fine-pitch QFN, BGA, and SOIC ICs, plus manual through-hole component soldering.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="glass-card">
+            <div class="icon-box icon-green"><i class="bi bi-box-seam"></i></div>
+            <h3 class="h5 text-white mb-2">Integrated Parts Kitting</h3>
+            <p class="text-muted small">
+              Don't wait weeks for foreign component deliveries. ISOL sources authenticated microcontrollers, power regulators, and sensors directly from ProjectStore.
+            </p>
+          </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="col-md-6 col-lg-3">
+          <div class="glass-card">
+            <div class="icon-box icon-orange"><i class="bi bi-shield-check"></i></div>
+            <h3 class="h5 text-white mb-2">DFM & Flying Probe Testing</h3>
+            <p class="text-muted small">
+              Every PCB design undergoes comprehensive Design for Manufacturing (DFM) verification and 100% electrical flying probe testing before dispatch.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Technical Specifications Table -->
+  <section class="py-5 bg-dark bg-opacity-50 border-top border-bottom border-secondary-subtle">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-5">
+          <span class="text-info fw-bold small text-uppercase">Precision Standards</span>
+          <h2 class="text-white mt-1 mb-3">PCB Technical Capabilities</h2>
+          <p class="text-muted mb-4">
+            We adhere to IPC-A-600 and IPC-A-610 Class 2 standards for reliable high-speed digital, analog, and power electronics performance.
+          </p>
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex align-items-center gap-3">
+              <i class="bi bi-check-circle-fill text-info fs-5"></i>
+              <span><strong>Supported CAD Softwares</strong>: KiCad, Altium Designer, Proteus, EasyEDA, Autodesk Eagle</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <i class="bi bi-check-circle-fill text-info fs-5"></i>
+              <span><strong>File Formats</strong>: Gerber RS-274X, Excellon Drill, IPC-2581, ODB++</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <i class="bi bi-check-circle-fill text-info fs-5"></i>
+              <span><strong>Turnaround Time</strong>: 7 to 10 working days anywhere in Pakistan</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="table-responsive">
+            <table class="specs-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Standard Capability</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Layer Count</strong></td>
+                  <td>1 to 6 Layers</td>
+                </tr>
+                <tr>
+                  <td><strong>Base Materials</strong></td>
+                  <td>FR-4 Standard (TG130-140), High-TG (TG170), Aluminum Core</td>
+                </tr>
+                <tr>
+                  <td><strong>Board Thickness</strong></td>
+                  <td>0.8mm, 1.0mm, 1.2mm, 1.6mm, 2.0mm</td>
+                </tr>
+                <tr>
+                  <td><strong>Copper Weight</strong></td>
+                  <td>1 oz (35µm) Standard, 2 oz for Power Inverters</td>
+                </tr>
+                <tr>
+                  <td><strong>Min Trace Width / Spacing</strong></td>
+                  <td>3.5 mil / 3.5 mil (0.09mm)</td>
+                </tr>
+                <tr>
+                  <td><strong>Min Drill Size</strong></td>
+                  <td>0.2mm (8 mil) Via Drills</td>
+                </tr>
+                <tr>
+                  <td><strong>Surface Finish</strong></td>
+                  <td>Lead-Free HASL, ENIG (Immersion Gold), OSP</td>
+                </tr>
+                <tr>
+                  <td><strong>Solder Mask Colors</strong></td>
+                  <td>Matte Black, Classic Green, Royal Blue, Signal Red, Pure White, Yellow</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Turnkey Process / How It Works -->
+  <section class="py-5 my-4">
+    <div class="container">
+      <div class="text-center max-w-700 mx-auto mb-5">
+        <span class="text-info fw-bold small text-uppercase">Streamlined Workflow</span>
+        <h2 class="display-6 text-white mt-1">From Schematic to Working Hardware</h2>
+        <p class="text-muted">Five simple steps to get your custom circuit boards manufactured and delivered.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="glass-card">
+            <div class="step-badge">1</div>
+            <h3 class="h5 text-white">Generate Gerber Files</h3>
+            <p class="text-muted small">
+              Export standard Gerber files (RS-274X) and Drill files (.DRL) from KiCad, Altium, or Proteus into a single .ZIP folder.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="glass-card">
+            <div class="step-badge">2</div>
+            <h3 class="h5 text-white">Submit to ISOL Portal</h3>
+            <p class="text-muted small">
+              Upload your .ZIP file on the <a href="https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section" target="_blank" rel="noopener" class="text-info">ISOL PCB Portal</a> or forward via WhatsApp for instant quotation.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="glass-card">
+            <div class="step-badge">3</div>
+            <h3 class="h5 text-white">Free DFM Engineering Check</h3>
+            <p class="text-muted small">
+              Our hardware engineers inspect your trace clearances, drill alignments, and power plane nets to catch design flaws before manufacturing.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="glass-card">
+            <div class="step-badge">4</div>
+            <h3 class="h5 text-white">Fabrication & SMT Assembly</h3>
+            <p class="text-muted small">
+              High-precision photolithography etching, solder masking, ENIG plating, laser stencil cutting, and automated pick-and-place assembly using ProjectStore components.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="glass-card">
+            <div class="step-badge">5</div>
+            <h3 class="h5 text-white">Quality Testing & Nationwide Express Delivery</h3>
+            <p class="text-muted small">
+              100% flying probe continuity testing and automated optical inspection (AOI), followed by secure anti-static packaging and express delivery to your doorstep.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section (AIO / GEO Optimized) -->
+  <section class="py-5 bg-dark bg-opacity-50 border-top border-secondary-subtle" id="faq">
+    <div class="container" style="max-width: 900px;">
+      <div class="text-center mb-5">
+        <span class="text-info fw-bold small text-uppercase">Frequently Asked Questions</span>
+        <h2 class="text-white mt-1">PCB Manufacturing & SMT Assembly in Pakistan</h2>
+      </div>
+
+      <div class="accordion" id="pcbFaqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+              How do I place an order for custom PCBs in Pakistan?
+            </button>
+          </h2>
+          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#pcbFaqAccordion">
+            <div class="accordion-body">
+              Export your Gerber files (RS-274X) and Drill files (.DRL) in a .ZIP format from your CAD tool (Altium, KiCad, Proteus, or EasyEDA). Then submit them through the <a href="https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section" target="_blank" rel="noopener" class="text-info fw-bold">ISOL PCB Quote Portal</a> or WhatsApp us at +92 310 4505008. You will receive an exact quote and turnaround timeline within 2 hours.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+              Can I get components assembled directly onto the PCB?
+            </button>
+          </h2>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#pcbFaqAccordion">
+            <div class="accordion-body">
+              Yes! ISOL provides automated Surface Mount Technology (SMT) pick-and-place assembly as well as manual through-hole soldering. Because we are integrated with ProjectStore.pk, your passives, ICs, microcontrollers (ESP32, STM32, Arduino), and sensors are sourced directly from verified local inventory with zero customs hassle.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+              How long does PCB manufacturing and delivery take?
+            </button>
+          </h2>
+          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#pcbFaqAccordion">
+            <div class="accordion-body">
+              Standard 2-layer and 4-layer FR4 PCB prototypes are manufactured and delivered within 7 to 10 working days. SMT assembly requires an additional 2 to 3 days depending on bill of materials (BOM) complexity. Parcels are delivered nationwide via TCS / Leopards couriers across Lahore, Karachi, Islamabad, Rawalpindi, Peshawar, Multan, and Faisalabad.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+              Do university engineering students get FYP discounts?
+            </button>
+          </h2>
+          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#pcbFaqAccordion">
+            <div class="accordion-body">
+              Yes! University engineering students from FAST, NUST, UET, GIKI, COMSATS, NED, and other institutions across Pakistan receive dedicated student discounts. Our engineering team also conducts a complimentary Design for Manufacturing (DFM) schematic check to ensure your Final Year Project (FYP) works on the first spin.
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+              What payment methods do you accept for PCB orders?
+            </button>
+          </h2>
+          <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#pcbFaqAccordion">
+            <div class="accordion-body">
+              We accept Online Bank Transfers (Meezan Bank, HBL, Allied Bank), JazzCash, EasyPaisa, and Cash on Delivery (COD) for standard prototype batches across Pakistan.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Big Call to Action Banner -->
+  <section class="py-5 my-5">
+    <div class="container">
+      <div class="cta-banner">
+        <span class="hero-badge mb-3"><i class="bi bi-lightning-charge-fill"></i> Fast Prototyping</span>
+        <h2 class="display-6 text-white mb-3">Ready to Fabricate Your Custom PCB?</h2>
+        <p class="text-muted max-w-700 mx-auto mb-4">
+          Upload your Gerber files to ISOL's quotation portal or speak directly with an ISOL hardware engineer on WhatsApp for an instant technical evaluation.
+        </p>
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+          <a href="https://www.isol.pk/isol/services/pcb-design-and-fabrication-pakistan/#quote-section" target="_blank" rel="noopener" class="btn-pcb-primary">
+            <i class="bi bi-upload fs-5"></i> Submit Gerber on ISOL Portal
+          </a>
+          <a href="https://wa.me/923104505008?text=Hello+ISOL+Team%2C+I+want+to+order+custom+PCBs+in+Pakistan" target="_blank" rel="noopener" class="btn-pcb-whatsapp">
+            <i class="fab fa-whatsapp fs-5"></i> Chat on WhatsApp (+92 310 4505008)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {% include 'Includes/footer.html' %}
+
+  <!-- Bootstrap JS (Deferred) -->
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
+</body>
+</html>
